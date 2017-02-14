@@ -8,15 +8,7 @@
 
 import Foundation
 
-public protocol MailboxProtocol {
-    
-    associatedtype MessageType
-    
-    func subscribe(subscriber: @escaping (MessageType) -> ())
-    
-}
-
-public final class Mailbox<MessageType>: MailboxProtocol {
+public final class Mailbox<MessageType> {
     
     fileprivate var subscribers: [(MessageType) -> ()] = []
     

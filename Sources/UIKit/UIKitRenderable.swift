@@ -332,7 +332,7 @@ public struct UIKitComponentRenderer<MessageType>: Renderer {
 }
 
 public final class PortalViewController<MessageType, RendererType: Renderer>: UIViewController
-    where RendererType.MessageType == MessageType, RendererType.MailboxType == Mailbox<MessageType> {
+    where RendererType.MessageType == MessageType {
     
     public typealias RendererFactory = (UIView) -> RendererType
     
@@ -704,7 +704,7 @@ fileprivate extension UIKitComponentManager {
 }
 
 fileprivate enum RootController<MessageType, RendererType: Renderer>
-    where RendererType.MessageType == MessageType, RendererType.MailboxType == Mailbox<MessageType> {
+    where RendererType.MessageType == MessageType {
     
     case empty
     case navigationController(PortalNavigationController, topController: PortalViewController<MessageType, RendererType>)
@@ -713,7 +713,7 @@ fileprivate enum RootController<MessageType, RendererType: Renderer>
 }
 
 fileprivate struct WindowManager<MessageType, RendererType: Renderer>
-    where RendererType.MessageType == MessageType, RendererType.MailboxType == Mailbox<MessageType> {
+    where RendererType.MessageType == MessageType {
     
     fileprivate var rootController: RootController<MessageType, RendererType> {
         set {

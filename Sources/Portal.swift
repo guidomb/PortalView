@@ -26,12 +26,10 @@ public struct TabBar<MessageType> {
 public protocol Renderer {
     
     associatedtype MessageType
-    associatedtype MailboxType: MailboxProtocol
-
     
     var isDebugModeEnabled: Bool { get set }
     
-    func render(component: Component<MessageType>) -> MailboxType
+    func render(component: Component<MessageType>) -> Mailbox<MessageType>
     
 }
 
