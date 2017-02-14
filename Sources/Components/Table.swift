@@ -23,7 +23,7 @@ public struct TableProperties<MessageType> {
     public let showsVerticalScrollIndicator: Bool
     public let showsHorizontalScrollIndicator: Bool
     
-    internal init(
+    fileprivate init(
         items: [TableItemProperties<MessageType>] = [],
         showsVerticalScrollIndicator: Bool = true,
         showsHorizontalScrollIndicator: Bool = true) {
@@ -47,10 +47,10 @@ public struct TableItemProperties<MessageType> {
     public let selectionStyle: TableItemSelectionStyle
     public let renderer: Renderer
     
-    public init(
+    fileprivate init(
         height: UInt,
-        onTap: MessageType? = .none,
-        selectionStyle: TableItemSelectionStyle = .`default`,
+        onTap: MessageType?,
+        selectionStyle: TableItemSelectionStyle,
         renderer: @escaping Renderer) {
         self.height = height
         self.onTap = onTap
@@ -105,22 +105,30 @@ public func table<MessageType>(
     return .table(TableProperties(items: items), style, layout)
 }
 
+public func tableItem<MessageType>(
+    height: UInt,
+    onTap: MessageType? = .none,
+    selectionStyle: TableItemSelectionStyle = .`default`,
+    renderer: @escaping TableItemProperties<MessageType>.Renderer) -> TableItemProperties<MessageType> {
+    return TableItemProperties(height: height, onTap: onTap, selectionStyle: selectionStyle, renderer: renderer)
+}
+
 
 // MARK: - Style sheet
 
 public struct TableStyleSheet {
     
-    static let `default` = StyleSheet<TableStyleSheet>(component: TableStyleSheet())
+    public static let `default` = StyleSheet<TableStyleSheet>(component: TableStyleSheet())
     
     public var separatorColor: Color
     
-    public init(separatorColor: Color = Color.clear) {
+    fileprivate init(separatorColor: Color = Color.clear) {
         self.separatorColor = separatorColor
     }
     
 }
 
-public func tableStyleSheet(configure: (inout BaseStyleSheet, inout TableStyleSheet) -> () = { _ in }) -> StyleSheet<TableStyleSheet> {
+public func styleSheet(configure: (inout BaseStyleSheet, inout TableStyleSheet) -> () = { _ in }) -> StyleSheet<TableStyleSheet> {
     var base = BaseStyleSheet()
     var component = TableStyleSheet()
     configure(&base, &component)

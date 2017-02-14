@@ -21,7 +21,7 @@ public struct NavigationBarProperties<MessageType> {
     public let title: NavigationBarTitle<MessageType>
     public let hideBackButtonTitle: Bool
     
-    internal init(title: NavigationBarTitle<MessageType>, hideBackButtonTitle: Bool = false) {
+    fileprivate init(title: NavigationBarTitle<MessageType>, hideBackButtonTitle: Bool) {
         self.title = title
         self.hideBackButtonTitle = hideBackButtonTitle
     }
@@ -33,25 +33,35 @@ public struct NavigationBar<MessageType> {
     public let properties: NavigationBarProperties<MessageType>
     public let style: StyleSheet<NavigationBarStyleSheet>
     
+    fileprivate init(properties: NavigationBarProperties<MessageType>, style: StyleSheet<NavigationBarStyleSheet>) {
+        self.properties = properties
+        self.style = style
+    }
+    
 }
 
 public func navigationBar<MessageType>(
     properties: NavigationBarProperties<MessageType>,
-    style: StyleSheet<NavigationBarStyleSheet> = navigationBarStyleSheet()) -> NavigationBar<MessageType> {
+    style: StyleSheet<NavigationBarStyleSheet> = styleSheet()) -> NavigationBar<MessageType> {
     return NavigationBar(properties: properties, style: style)
 }
 
 public func navigationBar<MessageType>(
     title: String,
-    style: StyleSheet<NavigationBarStyleSheet> = navigationBarStyleSheet()) -> NavigationBar<MessageType> {
-    return NavigationBar(properties: NavigationBarProperties(title: .text(title)), style: style)
+    style: StyleSheet<NavigationBarStyleSheet> = styleSheet()) -> NavigationBar<MessageType> {
+    return NavigationBar(properties: properties(title: .text(title)), style: style)
 }
 
 public func navigationBar<MessageType>(
     title: Image,
-    style: StyleSheet<NavigationBarStyleSheet> = navigationBarStyleSheet()) -> NavigationBar<MessageType> {
-    let properties = NavigationBarProperties<MessageType>(title: .image(title))
-    return NavigationBar(properties: properties, style: style)
+    style: StyleSheet<NavigationBarStyleSheet> = styleSheet()) -> NavigationBar<MessageType> {
+    return NavigationBar(properties: properties(title: .image(title)), style: style)
+}
+
+public func properties<MessageType>(
+    title: NavigationBarTitle<MessageType>,
+    hideBackButtonTitle: Bool = false) -> NavigationBarProperties<MessageType> {
+    return NavigationBarProperties(title: title, hideBackButtonTitle: hideBackButtonTitle)
 }
 
 // MARK: - Style sheet
@@ -60,7 +70,7 @@ public let defaultNavigationBarTitleFontSize: UInt = 17
 
 public struct NavigationBarStyleSheet {
     
-    static let `default` = StyleSheet<NavigationBarStyleSheet>(component: NavigationBarStyleSheet())
+    public static let `default` = StyleSheet<NavigationBarStyleSheet>(component: NavigationBarStyleSheet())
     
     public var tintColor: Color
     public var titleTextColor: Color
@@ -69,7 +79,7 @@ public struct NavigationBarStyleSheet {
     public var isTranslucent: Bool
     public var statusBarStyle: StatusBarStyle
     
-    public init(
+    fileprivate init(
         tintColor: Color = .black,
         titleTextColor: Color = .black,
         titleTextFont: Font = defaultFont,
@@ -86,7 +96,7 @@ public struct NavigationBarStyleSheet {
     
 }
 
-public func navigationBarStyleSheet(configure: (inout BaseStyleSheet, inout NavigationBarStyleSheet) -> () = { _ in }) -> StyleSheet<NavigationBarStyleSheet> {
+public func styleSheet(configure: (inout BaseStyleSheet, inout NavigationBarStyleSheet) -> () = { _ in }) -> StyleSheet<NavigationBarStyleSheet> {
     var base = BaseStyleSheet()
     var component = NavigationBarStyleSheet()
     configure(&base, &component)

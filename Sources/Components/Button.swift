@@ -15,7 +15,7 @@ public struct ButtonProperties<MessageType> {
     public var icon: Image?
     public var onTap: MessageType?
     
-    public init(
+    fileprivate init(
         text: String? = .none,
         isActive: Bool = false,
         icon: Image? = .none,
@@ -26,6 +26,10 @@ public struct ButtonProperties<MessageType> {
         self.onTap = onTap
     }
     
+}
+
+public extension ButtonProperties {
+    
     public func map<NewMessageType>(_ transform: (MessageType) -> NewMessageType) -> ButtonProperties<NewMessageType> {
         return ButtonProperties<NewMessageType>(
             text: self.text,
@@ -34,7 +38,6 @@ public struct ButtonProperties<MessageType> {
             onTap: self.onTap.map(transform)
         )
     }
-
     
 }
 
@@ -63,7 +66,7 @@ public func properties<MessageType>(configure: (inout ButtonProperties<MessageTy
 
 public struct ButtonStyleSheet {
     
-    static let defaultStyleSheet = StyleSheet<ButtonStyleSheet>(component: ButtonStyleSheet())
+    public static let defaultStyleSheet = StyleSheet<ButtonStyleSheet>(component: ButtonStyleSheet())
     
     public var textColor: Color
     public var textFont: Font
@@ -80,7 +83,7 @@ public struct ButtonStyleSheet {
     
 }
 
-public func buttonStyleSheet(configure: (inout BaseStyleSheet, inout ButtonStyleSheet) -> ()) -> StyleSheet<ButtonStyleSheet> {
+public func styleSheet(configure: (inout BaseStyleSheet, inout ButtonStyleSheet) -> ()) -> StyleSheet<ButtonStyleSheet> {
     var base = BaseStyleSheet()
     var custom = ButtonStyleSheet()
     configure(&base, &custom)

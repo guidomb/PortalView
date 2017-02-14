@@ -13,7 +13,7 @@ public struct LabelProperties {
     public let text: String
     public let textAfterLayout: String?
     
-    init(text: String = "", textAfterLayout: String? = .none) {
+    fileprivate init(text: String, textAfterLayout: String?) {
         self.text = text
         self.textAfterLayout = textAfterLayout
     }
@@ -24,14 +24,18 @@ public func label<MessageType>(
     text: String = "",
     style: StyleSheet<LabelStyleSheet> = LabelStyleSheet.`default`,
     layout: Layout = Layout()) -> Component<MessageType> {
-    return .label(LabelProperties(text: text), style, layout)
+    return .label(properties(text: text), style, layout)
 }
 
 public func label<MessageType>(
-    properties: LabelProperties = LabelProperties(),
+    properties: LabelProperties = properties(),
     style: StyleSheet<LabelStyleSheet> = LabelStyleSheet.`default`,
     layout: Layout = Layout()) -> Component<MessageType> {
     return .label(properties, style, layout)
+}
+
+public func properties(text: String = "", textAfterLayout: String? = .none) -> LabelProperties {
+    return LabelProperties(text: text, textAfterLayout: textAfterLayout)
 }
 
 // MARK: - Style sheet
@@ -67,7 +71,7 @@ public struct LabelStyleSheet {
     
 }
 
-public func labelStyleSheet(configure: (inout BaseStyleSheet, inout LabelStyleSheet) -> () = { _ in }) -> StyleSheet<LabelStyleSheet> {
+public func styleSheet(configure: (inout BaseStyleSheet, inout LabelStyleSheet) -> () = { _ in }) -> StyleSheet<LabelStyleSheet> {
     var base = BaseStyleSheet()
     var component = LabelStyleSheet()
     configure(&base, &component)

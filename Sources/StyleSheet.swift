@@ -77,7 +77,7 @@ public struct StyleSheet<ComponentStyleSheet> {
     public var base: BaseStyleSheet
     public var component: ComponentStyleSheet
     
-    public init(component: ComponentStyleSheet, base: BaseStyleSheet = BaseStyleSheet()) {
+    internal init(component: ComponentStyleSheet, base: BaseStyleSheet = BaseStyleSheet()) {
         self.component = component
         self.base = base
     }
