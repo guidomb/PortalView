@@ -56,7 +56,8 @@ func tableCellComponent(index: Int, text: String, backgroundColor: Color, itemMa
     )
 }
 
-func dynamicHeightTable<String>() -> Component<String> {
+func dynamicHeightTable() -> Component<String> {
+    
     let backgroundColors = [
         Color.blue,
         Color.red,
@@ -71,26 +72,22 @@ func dynamicHeightTable<String>() -> Component<String> {
     ]
     
     let content = (0 ... 20).map { ($0, texts.sample(), backgroundColors.sample()) }
-    
-    func cellRenderer(itemMaxHeight: UInt) -> String {
-        let b = TableItemRender(
-            component: button(text: "", onTap: ""),
-            typeIdentifier: "Cell"
-        )
-        let c = b.typeIdentifier
-        return c
+    let items = content.map { index, text, backgroundColor in
+        tableItem(height: 90) {
+            TableItemRender(
+                component: tableCellComponent(
+                    index: index,
+                    text: text,
+                    backgroundColor: backgroundColor,
+                    itemMaxHeight: $0
+                ),
+                typeIdentifier: "Cell"
+            )
+        }
     }
     
-//    let items: [TableItemProperties<String>] = content.map { index, text, backgroundColor in
-//        return tableItem(height: 90) { itemMaxHeight in
-//            let a =
-//            let b = TableItemRender<String>(component: a, typeIdentifier: "Cell")
-//            return b
-//        }
-//    }
-    
     return table(
-        items: [],
+        items: items,
         style: tableStyleSheet() { base, table in
             table.separatorColor = .black
         },
@@ -100,4 +97,5 @@ func dynamicHeightTable<String>() -> Component<String> {
             }
         }
     )
+    
 }
