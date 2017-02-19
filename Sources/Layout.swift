@@ -234,7 +234,7 @@ public struct Layout {
     public var aspectRatio: AspectRatio?
     public var direction: Direction
 
-    public init(
+    fileprivate init(
         flex: Flex = Flex(),
         justifyContent: JustifyContent = .flexStart,
         width: Dimension? = .none,

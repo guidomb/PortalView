@@ -42,19 +42,19 @@ public struct NavigationBar<MessageType> {
 
 public func navigationBar<MessageType>(
     properties: NavigationBarProperties<MessageType>,
-    style: StyleSheet<NavigationBarStyleSheet> = styleSheet()) -> NavigationBar<MessageType> {
+    style: StyleSheet<NavigationBarStyleSheet> = navigationBarStyleSheet()) -> NavigationBar<MessageType> {
     return NavigationBar(properties: properties, style: style)
 }
 
 public func navigationBar<MessageType>(
     title: String,
-    style: StyleSheet<NavigationBarStyleSheet> = styleSheet()) -> NavigationBar<MessageType> {
+    style: StyleSheet<NavigationBarStyleSheet> = navigationBarStyleSheet()) -> NavigationBar<MessageType> {
     return NavigationBar(properties: properties(title: .text(title)), style: style)
 }
 
 public func navigationBar<MessageType>(
     title: Image,
-    style: StyleSheet<NavigationBarStyleSheet> = styleSheet()) -> NavigationBar<MessageType> {
+    style: StyleSheet<NavigationBarStyleSheet> = navigationBarStyleSheet()) -> NavigationBar<MessageType> {
     return NavigationBar(properties: properties(title: .image(title)), style: style)
 }
 
@@ -96,7 +96,7 @@ public struct NavigationBarStyleSheet {
     
 }
 
-public func styleSheet(configure: (inout BaseStyleSheet, inout NavigationBarStyleSheet) -> () = { _ in }) -> StyleSheet<NavigationBarStyleSheet> {
+public func navigationBarStyleSheet(configure: (inout BaseStyleSheet, inout NavigationBarStyleSheet) -> () = { _ in }) -> StyleSheet<NavigationBarStyleSheet> {
     var base = BaseStyleSheet()
     var component = NavigationBarStyleSheet()
     configure(&base, &component)

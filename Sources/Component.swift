@@ -82,6 +82,6 @@ extension Component {
 public func container<MessageType>(
     children: [Component<MessageType>] = [],
     style: StyleSheet<EmptyStyleSheet> = EmptyStyleSheet.`default`,
-    layout: Layout = Layout()) -> Component<MessageType> {
+    layout: Layout = layout()) -> Component<MessageType> {
     return .container(children, style, layout)
 }

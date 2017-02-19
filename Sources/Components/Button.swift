@@ -45,14 +45,14 @@ public func button<MessageType>(
     text: String,
     onTap: MessageType,
     style: StyleSheet<ButtonStyleSheet> = ButtonStyleSheet.defaultStyleSheet,
-    layout: Layout = Layout()) -> Component<MessageType> {
+    layout: Layout = layout()) -> Component<MessageType> {
     return .button(ButtonProperties<MessageType>(text: text, onTap: onTap), style, layout)
 }
 
 public func button<MessageType>(
     properties: ButtonProperties<MessageType> = ButtonProperties<MessageType>(),
     style: StyleSheet<ButtonStyleSheet> = ButtonStyleSheet.defaultStyleSheet,
-    layout: Layout = Layout()) -> Component<MessageType> {
+    layout: Layout = layout()) -> Component<MessageType> {
     return .button(properties, style, layout)
 }
 
@@ -83,7 +83,7 @@ public struct ButtonStyleSheet {
     
 }
 
-public func styleSheet(configure: (inout BaseStyleSheet, inout ButtonStyleSheet) -> ()) -> StyleSheet<ButtonStyleSheet> {
+public func buttonStyleSheet(configure: (inout BaseStyleSheet, inout ButtonStyleSheet) -> ()) -> StyleSheet<ButtonStyleSheet> {
     var base = BaseStyleSheet()
     var custom = ButtonStyleSheet()
     configure(&base, &custom)

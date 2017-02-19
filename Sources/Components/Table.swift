@@ -78,6 +78,11 @@ public struct TableItemRender<MessageType> {
     public let component: Component<MessageType>
     public let typeIdentifier: String
     
+    public init(component: Component<MessageType>, typeIdentifier: String) {
+        self.component = component
+        self.typeIdentifier = typeIdentifier
+    }
+    
 }
 
 extension TableItemRender {
@@ -85,7 +90,7 @@ extension TableItemRender {
     public func map<NewMessageType>(_ transform: @escaping (MessageType) -> NewMessageType) -> TableItemRender<NewMessageType> {
         return TableItemRender<NewMessageType>(
             component: self.component.map(transform),
-            typeIdentifier: typeIdentifier
+            typeIdentifier: self.typeIdentifier
         )
     }
     
@@ -94,14 +99,14 @@ extension TableItemRender {
 public func table<MessageType>(
     properties: TableProperties<MessageType> = TableProperties(),
     style: StyleSheet<TableStyleSheet> = TableStyleSheet.default,
-    layout: Layout = Layout()) -> Component<MessageType> {
+    layout: Layout = layout()) -> Component<MessageType> {
     return .table(properties, style, layout)
 }
 
 public func table<MessageType>(
     items: [TableItemProperties<MessageType>] = [],
     style: StyleSheet<TableStyleSheet> = TableStyleSheet.default,
-    layout: Layout = Layout()) -> Component<MessageType> {
+    layout: Layout = layout()) -> Component<MessageType> {
     return .table(TableProperties(items: items), style, layout)
 }
 
@@ -128,7 +133,7 @@ public struct TableStyleSheet {
     
 }
 
-public func styleSheet(configure: (inout BaseStyleSheet, inout TableStyleSheet) -> () = { _ in }) -> StyleSheet<TableStyleSheet> {
+public func tableStyleSheet(configure: (inout BaseStyleSheet, inout TableStyleSheet) -> () = { _ in }) -> StyleSheet<TableStyleSheet> {
     var base = BaseStyleSheet()
     var component = TableStyleSheet()
     configure(&base, &component)

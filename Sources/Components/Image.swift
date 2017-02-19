@@ -24,6 +24,6 @@ public protocol ImageType {
 public func imageView<MessageType>(
     image: Image,
     style: StyleSheet<EmptyStyleSheet> = EmptyStyleSheet.`default`,
-    layout: Layout = Layout()) -> Component<MessageType> {
+    layout: Layout = layout()) -> Component<MessageType> {
     return .imageView(image, style, layout)
 }

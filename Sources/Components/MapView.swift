@@ -58,14 +58,14 @@ public struct MapProperties {
 public func mapView<MessageType>(
     properties: MapProperties = MapProperties(),
     style: StyleSheet<EmptyStyleSheet> = EmptyStyleSheet.`default`,
-    layout: Layout = Layout()) -> Component<MessageType> {
+    layout: Layout = layout()) -> Component<MessageType> {
     return .mapView(properties, style, layout)
 }
 
 public func mapView<MessageType>(
     placemarks: [MapPlacemark] = [],
     style: StyleSheet<EmptyStyleSheet> = EmptyStyleSheet.`default`,
-    layout: Layout = Layout()) -> Component<MessageType> {
+    layout: Layout = layout()) -> Component<MessageType> {
     return .mapView(MapProperties(placemarks: placemarks), style, layout)
 }
 
