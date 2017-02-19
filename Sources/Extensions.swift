@@ -22,7 +22,7 @@ internal func |><A>(lhs: A?, rhs: (A) -> ()) {
 
 extension Optional {
     
-    func apply(function: (Wrapped) -> ()) {
+    internal func apply(function: (Wrapped) -> ()) {
         if let value = self {
             function(value)
         }
