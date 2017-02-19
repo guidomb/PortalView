@@ -5,7 +5,7 @@
       location = "group:PortalViewExamples/PortalViewExamples.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:PortalViewPlayground.playground">
+      location = "group:/Users/guidomb/Documents/projects/guidomb/PortalView/PortalView.playground">
    </FileRef>
    <FileRef
       location = "group:PortalView.xcodeproj">
