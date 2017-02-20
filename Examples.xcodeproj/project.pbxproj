@@ -7,72 +7,88 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9D57F8C71E5950AB0023EBFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D57F8C61E5950AB0023EBFD /* AppDelegate.swift */; };
-		9D57F8CE1E5950AB0023EBFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D57F8CD1E5950AB0023EBFD /* Assets.xcassets */; };
-		9D57F8D11E5950AB0023EBFD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D57F8CF1E5950AB0023EBFD /* LaunchScreen.storyboard */; };
-		9D57F8DA1E5950E00023EBFD /* PortalView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D57F8D91E5950E00023EBFD /* PortalView.framework */; };
-		9D57F8DC1E5950F10023EBFD /* YogaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D57F8DB1E5950F10023EBFD /* YogaKit.framework */; };
-		9D57F8DE1E59517D0023EBFD /* DynamicHeightTableCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D57F8DD1E59517D0023EBFD /* DynamicHeightTableCells.swift */; };
+		9D3C0A941E59807D008F63A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3C0A931E59807D008F63A4 /* AppDelegate.swift */; };
+		9D3C0A9B1E59807D008F63A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D3C0A9A1E59807D008F63A4 /* Assets.xcassets */; };
+		9D3C0A9E1E59807D008F63A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D3C0A9C1E59807D008F63A4 /* LaunchScreen.storyboard */; };
+		9D3C0AA91E5980F5008F63A4 /* YogaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D3C0AA81E5980F5008F63A4 /* YogaKit.framework */; };
+		9D3C0AAB1E59811A008F63A4 /* DynamicHeightTableCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3C0AAA1E59811A008F63A4 /* DynamicHeightTableCells.swift */; };
+		9D3C0ABA1E5A87D9008F63A4 /* PortalView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D3C0AB91E5A87D9008F63A4 /* PortalView.framework */; };
+		9D3C0ABB1E5A87D9008F63A4 /* PortalView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9D3C0AB91E5A87D9008F63A4 /* PortalView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		9D3C0ABC1E5A87D9008F63A4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9D3C0ABB1E5A87D9008F63A4 /* PortalView.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		9D57F8C31E5950AB0023EBFD /* PortalViewExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PortalViewExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D57F8C61E5950AB0023EBFD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9D57F8CD1E5950AB0023EBFD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9D57F8D01E5950AB0023EBFD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9D57F8D21E5950AB0023EBFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9D57F8D91E5950E00023EBFD /* PortalView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PortalView.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/PortalView-gltkjvdqhldyxhhhkxcurodhugja/Build/Products/Debug-iphonesimulator/PortalView.framework"; sourceTree = "<group>"; };
-		9D57F8DB1E5950F10023EBFD /* YogaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YogaKit.framework; path = ../Carthage/Build/iOS/YogaKit.framework; sourceTree = "<group>"; };
-		9D57F8DD1E59517D0023EBFD /* DynamicHeightTableCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicHeightTableCells.swift; sourceTree = "<group>"; };
+		9D3C0A901E59807D008F63A4 /* Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Examples.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D3C0A931E59807D008F63A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9D3C0A9A1E59807D008F63A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9D3C0A9D1E59807D008F63A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9D3C0A9F1E59807D008F63A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9D3C0AA81E5980F5008F63A4 /* YogaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YogaKit.framework; path = Carthage/Build/iOS/YogaKit.framework; sourceTree = "<group>"; };
+		9D3C0AAA1E59811A008F63A4 /* DynamicHeightTableCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicHeightTableCells.swift; sourceTree = "<group>"; };
+		9D3C0AB91E5A87D9008F63A4 /* PortalView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PortalView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9D57F8C01E5950AB0023EBFD /* Frameworks */ = {
+		9D3C0A8D1E59807D008F63A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D57F8DC1E5950F10023EBFD /* YogaKit.framework in Frameworks */,
-				9D57F8DA1E5950E00023EBFD /* PortalView.framework in Frameworks */,
+				9D3C0AA91E5980F5008F63A4 /* YogaKit.framework in Frameworks */,
+				9D3C0ABA1E5A87D9008F63A4 /* PortalView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9D57F8BA1E5950AB0023EBFD = {
+		9D3C0A871E59807D008F63A4 = {
 			isa = PBXGroup;
 			children = (
-				9D57F8C51E5950AB0023EBFD /* PortalViewExamples */,
-				9D57F8C41E5950AB0023EBFD /* Products */,
-				9D57F8D81E5950E00023EBFD /* Frameworks */,
+				9D3C0A921E59807D008F63A4 /* Sources */,
+				9D3C0A911E59807D008F63A4 /* Products */,
+				9D3C0AA51E5980EA008F63A4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		9D57F8C41E5950AB0023EBFD /* Products */ = {
+		9D3C0A911E59807D008F63A4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9D57F8C31E5950AB0023EBFD /* PortalViewExamples.app */,
+				9D3C0A901E59807D008F63A4 /* Examples.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9D57F8C51E5950AB0023EBFD /* PortalViewExamples */ = {
+		9D3C0A921E59807D008F63A4 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				9D57F8C61E5950AB0023EBFD /* AppDelegate.swift */,
-				9D57F8DD1E59517D0023EBFD /* DynamicHeightTableCells.swift */,
-				9D57F8CD1E5950AB0023EBFD /* Assets.xcassets */,
-				9D57F8CF1E5950AB0023EBFD /* LaunchScreen.storyboard */,
-				9D57F8D21E5950AB0023EBFD /* Info.plist */,
+				9D3C0AAA1E59811A008F63A4 /* DynamicHeightTableCells.swift */,
+				9D3C0A931E59807D008F63A4 /* AppDelegate.swift */,
+				9D3C0A9A1E59807D008F63A4 /* Assets.xcassets */,
+				9D3C0A9C1E59807D008F63A4 /* LaunchScreen.storyboard */,
+				9D3C0A9F1E59807D008F63A4 /* Info.plist */,
 			);
-			path = PortalViewExamples;
+			name = Sources;
+			path = Examples;
 			sourceTree = "<group>";
 		};
-		9D57F8D81E5950E00023EBFD /* Frameworks */ = {
+		9D3C0AA51E5980EA008F63A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9D57F8DB1E5950F10023EBFD /* YogaKit.framework */,
-				9D57F8D91E5950E00023EBFD /* PortalView.framework */,
+				9D3C0AB91E5A87D9008F63A4 /* PortalView.framework */,
+				9D3C0AA81E5980F5008F63A4 /* YogaKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -80,41 +96,42 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9D57F8C21E5950AB0023EBFD /* PortalViewExamples */ = {
+		9D3C0A8F1E59807D008F63A4 /* Examples */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9D57F8D51E5950AB0023EBFD /* Build configuration list for PBXNativeTarget "PortalViewExamples" */;
+			buildConfigurationList = 9D3C0AA21E59807D008F63A4 /* Build configuration list for PBXNativeTarget "Examples" */;
 			buildPhases = (
-				9D57F8BF1E5950AB0023EBFD /* Sources */,
-				9D57F8C01E5950AB0023EBFD /* Frameworks */,
-				9D57F8C11E5950AB0023EBFD /* Resources */,
-				9D57F8E01E5956520023EBFD /* Carthage */,
+				9D3C0A8C1E59807D008F63A4 /* Sources */,
+				9D3C0A8D1E59807D008F63A4 /* Frameworks */,
+				9D3C0A8E1E59807D008F63A4 /* Resources */,
+				9D3C0AAC1E598132008F63A4 /* Carthage */,
+				9D3C0ABC1E5A87D9008F63A4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = PortalViewExamples;
-			productName = PortalViewExamples;
-			productReference = 9D57F8C31E5950AB0023EBFD /* PortalViewExamples.app */;
+			name = Examples;
+			productName = Examples;
+			productReference = 9D3C0A901E59807D008F63A4 /* Examples.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		9D57F8BB1E5950AB0023EBFD /* Project object */ = {
+		9D3C0A881E59807D008F63A4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Guido Marucci Blas";
 				TargetAttributes = {
-					9D57F8C21E5950AB0023EBFD = {
+					9D3C0A8F1E59807D008F63A4 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = 9D57F8BE1E5950AB0023EBFD /* Build configuration list for PBXProject "PortalViewExamples" */;
+			buildConfigurationList = 9D3C0A8B1E59807D008F63A4 /* Build configuration list for PBXProject "Examples" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -122,36 +139,36 @@
 				en,
 				Base,
 			);
-			mainGroup = 9D57F8BA1E5950AB0023EBFD;
-			productRefGroup = 9D57F8C41E5950AB0023EBFD /* Products */;
+			mainGroup = 9D3C0A871E59807D008F63A4;
+			productRefGroup = 9D3C0A911E59807D008F63A4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9D57F8C21E5950AB0023EBFD /* PortalViewExamples */,
+				9D3C0A8F1E59807D008F63A4 /* Examples */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		9D57F8C11E5950AB0023EBFD /* Resources */ = {
+		9D3C0A8E1E59807D008F63A4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D57F8D11E5950AB0023EBFD /* LaunchScreen.storyboard in Resources */,
-				9D57F8CE1E5950AB0023EBFD /* Assets.xcassets in Resources */,
+				9D3C0A9E1E59807D008F63A4 /* LaunchScreen.storyboard in Resources */,
+				9D3C0A9B1E59807D008F63A4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9D57F8E01E5956520023EBFD /* Carthage */ = {
+		9D3C0AAC1E598132008F63A4 /* Carthage */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/../Carthage/Build/iOS/YogaKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/YogaKit.framework",
 			);
 			name = Carthage;
 			outputPaths = (
@@ -163,22 +180,22 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9D57F8BF1E5950AB0023EBFD /* Sources */ = {
+		9D3C0A8C1E59807D008F63A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D57F8C71E5950AB0023EBFD /* AppDelegate.swift in Sources */,
-				9D57F8DE1E59517D0023EBFD /* DynamicHeightTableCells.swift in Sources */,
+				9D3C0A941E59807D008F63A4 /* AppDelegate.swift in Sources */,
+				9D3C0AAB1E59811A008F63A4 /* DynamicHeightTableCells.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		9D57F8CF1E5950AB0023EBFD /* LaunchScreen.storyboard */ = {
+		9D3C0A9C1E59807D008F63A4 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9D57F8D01E5950AB0023EBFD /* Base */,
+				9D3C0A9D1E59807D008F63A4 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -186,7 +203,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		9D57F8D31E5950AB0023EBFD /* Debug */ = {
+		9D3C0AA01E59807D008F63A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -236,7 +253,7 @@
 			};
 			name = Debug;
 		};
-		9D57F8D41E5950AB0023EBFD /* Release */ = {
+		9D3C0AA11E59807D008F63A4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -279,27 +296,35 @@
 			};
 			name = Release;
 		};
-		9D57F8D61E5950AB0023EBFD /* Debug */ = {
+		9D3C0AA31E59807D008F63A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = ../Carthage/Build/iOS;
-				INFOPLIST_FILE = PortalViewExamples/Info.plist;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = Examples/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.guidomb.PortalViewExamples;
+				PRODUCT_BUNDLE_IDENTIFIER = me.guidomb.PortalView.Examples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
-		9D57F8D71E5950AB0023EBFD /* Release */ = {
+		9D3C0AA41E59807D008F63A4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = ../Carthage/Build/iOS;
-				INFOPLIST_FILE = PortalViewExamples/Info.plist;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = Examples/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.guidomb.PortalViewExamples;
+				PRODUCT_BUNDLE_IDENTIFIER = me.guidomb.PortalView.Examples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -308,24 +333,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9D57F8BE1E5950AB0023EBFD /* Build configuration list for PBXProject "PortalViewExamples" */ = {
+		9D3C0A8B1E59807D008F63A4 /* Build configuration list for PBXProject "Examples" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9D57F8D31E5950AB0023EBFD /* Debug */,
-				9D57F8D41E5950AB0023EBFD /* Release */,
+				9D3C0AA01E59807D008F63A4 /* Debug */,
+				9D3C0AA11E59807D008F63A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9D57F8D51E5950AB0023EBFD /* Build configuration list for PBXNativeTarget "PortalViewExamples" */ = {
+		9D3C0AA21E59807D008F63A4 /* Build configuration list for PBXNativeTarget "Examples" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9D57F8D61E5950AB0023EBFD /* Debug */,
-				9D57F8D71E5950AB0023EBFD /* Release */,
+				9D3C0AA31E59807D008F63A4 /* Debug */,
+				9D3C0AA41E59807D008F63A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 9D57F8BB1E5950AB0023EBFD /* Project object */;
+	rootObject = 9D3C0A881E59807D008F63A4 /* Project object */;
 }

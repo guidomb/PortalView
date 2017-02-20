@@ -2,12 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:PortalViewExamples/PortalViewExamples.xcodeproj">
+      location = "group:PortalView.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:/Users/guidomb/Documents/projects/guidomb/PortalView/PortalView.playground">
    </FileRef>
    <FileRef
-      location = "group:PortalView.xcodeproj">
+      location = "container:Examples.xcodeproj">
    </FileRef>
 </Workspace>
