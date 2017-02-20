@@ -19,9 +19,9 @@ public enum TableItemSelectionStyle {
 
 public struct TableProperties<MessageType> {
     
-    public let items: [TableItemProperties<MessageType>]
-    public let showsVerticalScrollIndicator: Bool
-    public let showsHorizontalScrollIndicator: Bool
+    public var items: [TableItemProperties<MessageType>]
+    public var showsVerticalScrollIndicator: Bool
+    public var showsHorizontalScrollIndicator: Bool
     
     fileprivate init(
         items: [TableItemProperties<MessageType>] = [],
@@ -118,6 +118,11 @@ public func tableItem<MessageType>(
     return TableItemProperties(height: height, onTap: onTap, selectionStyle: selectionStyle, renderer: renderer)
 }
 
+public func properties<MessageType>(configure: (inout TableProperties<MessageType>) -> ()) -> TableProperties<MessageType> {
+    var properties = TableProperties<MessageType>()
+    configure(&properties)
+    return properties
+}
 
 // MARK: - Style sheet
 
