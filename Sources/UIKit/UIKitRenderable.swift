@@ -36,7 +36,7 @@ public struct UIImageContainer: ImageType, UIImageConvertible {
     
     private let image: UIImage
     
-    internal init(image: UIImage) {
+    public init(image: UIImage) {
         self.image = image
     }
     
