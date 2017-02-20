@@ -8,3 +8,13 @@ cd PortalView
 carthage bootstrap
 open PortalView.xcworkspace
 ```
+
+## Example
+
+For some examples of how the API looks like and how to use check 
+
+ * The [examples](./Examples.xcodeproj) project in this repository.
+ * [This](https://github.com/guidomb/SyrmoPortalExample) example project
+ * The following video
+ 
+[![PortalView live reload example](https://img.youtube.com/vi/Xaj6vdNLC5k/0.jpg)](https://www.youtube.com/watch?v=Xaj6vdNLC5k)
