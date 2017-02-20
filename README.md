@@ -11,7 +11,7 @@ open PortalView.xcworkspace
 
 ## Example
 
-For some examples of how the API looks like and how to use check 
+For some examples on how the API looks like and how to use this library check 
 
  * The [examples](./Examples.xcodeproj) project in this repository.
  * [This](https://github.com/guidomb/SyrmoPortalExample) example project
