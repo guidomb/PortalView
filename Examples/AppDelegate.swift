@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let presenter = UIKitComponentManager<String>(window: window!)
         presenter.isDebugModeEnabled = false
-        presenter.present(component:  dynamicHeightTable(), with: .simple)
+        presenter.present(component:  dynamicHeightTable(), with: .simple, modally: false)
         
         window?.makeKeyAndVisible()
         return true

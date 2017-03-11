@@ -23,43 +23,46 @@ public final class UIKitComponentManager<MessageType>: Presenter, Renderer {
         self.layoutEngine = layoutEngine
     }
     
-    public func present(component: Component<MessageType>, with root: RootComponent<MessageType>) {
-        switch root {
-            
-        case .simple:
-            let rootController = controller(forComponent: component)
-            rootController.mailbox.forward(to: mailbox)
-            window.rootController = .single(rootController)
-            
-        case .stack(let navigationBar):
-            present(component: component, with: navigationBar)
+    public func present(component: Component<MessageType>, with root: RootComponent<MessageType>, modally: Bool) {
+        switch (window.rootController, root, modally) {
+        
+        case (.some(.single(let presenter)), _, true):
+            presentModally(component: component, root: root, onTopOf: presenter)
+        
+        case (.some(.navigationController(let presenter, _)), _, true):
+            presentModally(component: component, root: root, onTopOf: presenter)
+        
+        case (.some(.navigationController(let navigationController, _)), .stack(let navigationBar), false):
+            let containedController = controller(for: component)
+            navigationController.push(controller: containedController, with: navigationBar, animated: true)
             
         default:
-            assertionFailure("Case not implemented")
-            
+            let rootController = controller(for: component, root: root)
+            window.rootController = rootController
+            rootController.mailbox.forward(to: mailbox)
         }
     }
     
     public func render(component: Component<MessageType>) -> Mailbox<MessageType> {
         switch window.rootController {
             
-        case .empty:
-            let rootController = controller(forComponent: component)
-            window.rootController = .single(rootController)
-            rootController.mailbox.forward(to: mailbox)
-            return rootController.mailbox
-            
-        case .single(let controller):
+        case .some(.single(let controller)):
             controller.component = component
             controller.render()
             controller.mailbox.forward(to: mailbox)
             return controller.mailbox
             
-        case .navigationController(_, let topController):
+        case .some(.navigationController(_, let topController)):
             topController.component = component
             topController.render()
             topController.mailbox.forward(to: mailbox)
             return topController.mailbox
+            
+        default:
+            let rootController = controller(for: component)
+            window.rootController = .single(rootController)
+            rootController.mailbox.forward(to: mailbox)
+            return rootController.mailbox
             
         }
     }
@@ -68,50 +71,36 @@ public final class UIKitComponentManager<MessageType>: Presenter, Renderer {
 
 fileprivate extension UIKitComponentManager {
     
-    fileprivate func present(component: Component<MessageType>, with navigationBar: NavigationBar<MessageType>) {
+    fileprivate func presentModally(component: Component<MessageType>, root: RootComponent<MessageType>,
+                                    onTopOf presenter: UIViewController) {
+        let rootController = controller(for: component, root: root)
+        rootController.mailbox.forward(to: mailbox)
+        presenter.present(rootController.renderableController, animated: true, completion: nil)
+    }
+    
+    fileprivate func controller(for component: Component<MessageType>, root: RootComponent<MessageType>)
+        -> RootController<MessageType, UIKitComponentRenderer<MessageType>> {
+        switch root {
         
-        let navigationBarSize: CGSize
-        let containedController = controller(forComponent: component)
-        
-        if case .navigationController(let navigationController, _) = window.rootController {
-            navigationController.pushViewController(containedController, animated: true)
-            navigationBarSize = navigationController.navigationBar.bounds.size
-        } else {
-            let navigationController = PortalNavigationController(
-                rootViewController: containedController,
+        case .simple:
+            return .single(controller(for: component))
+            
+        case .stack(let navigationBar):
+            let navigationController = PortalNavigationController<MessageType, UIKitComponentRenderer<MessageType>>(
+                layoutEngine: layoutEngine,
                 statusBarStyle: navigationBar.style.component.statusBarStyle.asUIStatusBarStyle
             )
-            navigationBarSize = navigationController.navigationBar.bounds.size
-            window.rootController = .navigationController(navigationController, topController: containedController)
+            let containedController = controller(for: component)
+            navigationController.push(controller: containedController, with: navigationBar, animated: false)
+            return .navigationController(navigationController, topController: containedController)
+            
+        case .tab(let tabBar):
+            fatalError("Root component 'tab' not supported")
+            return .single(controller(for: component))
         }
-        
-        containedController.navigationController?.navigationBar.apply(style: navigationBar.style)
-        containedController.mailbox.forward(to: mailbox)
-        
-        render(navigationBar: navigationBar, of: navigationBarSize, inside: containedController.navigationItem)
     }
     
-    fileprivate func render(navigationBar: NavigationBar<MessageType>, of navigationBarSize: CGSize, inside navigationItem: UINavigationItem) {
-        
-        if navigationBar.properties.hideBackButtonTitle {
-            navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain,target: nil, action: nil)
-        }
-        
-        render(navigationBarTitle: navigationBar.properties.title, of: navigationBarSize, inside: navigationItem)
-    }
-    
-    fileprivate func render(navigationBarTitle: NavigationBarTitle<MessageType>, of navigationBarSize: CGSize, inside navigationItem: UINavigationItem) {
-        
-        let renderer = NavigationBarTitleRenderer(
-            navigationBarTitle: navigationBarTitle,
-            navigationItem: navigationItem,
-            navigationBarSize: navigationBarSize
-        )
-        
-        renderer.render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled) |> { $0.forward(to: mailbox) }
-    }
-    
-    fileprivate func controller(forComponent component: Component<MessageType>) -> PortalViewController<MessageType, UIKitComponentRenderer<MessageType>> {
+    fileprivate func controller(for component: Component<MessageType>) -> PortalViewController<MessageType, UIKitComponentRenderer<MessageType>> {
         
         return PortalViewController(component: component) {
             var renderer = UIKitComponentRenderer<MessageType>(containerView: $0, layoutEngine: self.layoutEngine)
@@ -125,15 +114,15 @@ fileprivate extension UIKitComponentManager {
 fileprivate struct WindowManager<MessageType, RendererType: Renderer>
     where RendererType.MessageType == MessageType {
     
-    fileprivate var rootController: RootController<MessageType, RendererType> {
+    fileprivate var rootController: RootController<MessageType, RendererType>? {
         set {
-            switch newValue {
-            case .single(let controller):
-                window.rootViewController = controller
-            case .navigationController(let navigationController, _):
-                window.rootViewController = navigationController
-            case .empty:
-                window.rootViewController = .none
+            window.rootViewController = newValue.map {
+                switch $0 {
+                case .single(let controller):
+                    return controller
+                case .navigationController(let navigationController, _):
+                    return navigationController
+                }
             }
             _rootController = newValue
         }
@@ -143,12 +132,12 @@ fileprivate struct WindowManager<MessageType, RendererType: Renderer>
     }
     
     private let window: UIWindow
-    private var _rootController: RootController<MessageType, RendererType>
+    private var _rootController: RootController<MessageType, RendererType>?
     
     init(window: UIWindow) {
         self.window = window
-        self._rootController = .empty
-        self.rootController = .empty
+        self._rootController = .none
+        self.rootController = .none
     }
     
 }
@@ -156,8 +145,25 @@ fileprivate struct WindowManager<MessageType, RendererType: Renderer>
 fileprivate enum RootController<MessageType, RendererType: Renderer>
     where RendererType.MessageType == MessageType {
     
-    case empty
-    case navigationController(PortalNavigationController, topController: PortalViewController<MessageType, RendererType>)
+    case navigationController(PortalNavigationController<MessageType, RendererType>, topController: PortalViewController<MessageType, RendererType>)
     case single(PortalViewController<MessageType, RendererType>)
+    
+    var renderableController: UIViewController {
+        switch self {
+        case .navigationController(let navigationController, _):
+            return navigationController
+        case .single(let controller):
+            return controller
+        }
+    }
+    
+    var mailbox: Mailbox<MessageType> {
+        switch self {
+        case .navigationController(let navigationController, _):
+            return navigationController.mailbox
+        case .single(let controller):
+            return controller.mailbox
+        }
+    }
     
 }
