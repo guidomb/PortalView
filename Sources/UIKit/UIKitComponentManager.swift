@@ -94,9 +94,8 @@ fileprivate extension UIKitComponentManager {
             navigationController.push(controller: containedController, with: navigationBar, animated: false)
             return .navigationController(navigationController, topController: containedController)
             
-        case .tab(let tabBar):
+        case .tab(_):
             fatalError("Root component 'tab' not supported")
-            return .single(controller(for: component))
         }
     }
     

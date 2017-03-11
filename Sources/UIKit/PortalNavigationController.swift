@@ -35,14 +35,15 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
               with navigationBar: NavigationBar<MessageType>, animated: Bool) {
         pushViewController(controller, animated: animated)
         self.navigationBar.apply(style: navigationBar.style)
-        render(navigationBar: navigationBar)
+        self.render(navigationBar: navigationBar, inside: controller.navigationItem)
+        controller.mailbox.forward(to: mailbox)
     }
     
 }
 
 fileprivate extension PortalNavigationController {
     
-    fileprivate func render(navigationBar: NavigationBar<MessageType>) {
+    fileprivate func render(navigationBar: NavigationBar<MessageType>, inside navigationItem: UINavigationItem) {
         if navigationBar.properties.hideBackButtonTitle {
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         }
