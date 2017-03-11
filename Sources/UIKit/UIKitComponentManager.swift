@@ -23,15 +23,15 @@ public final class UIKitComponentManager<MessageType>: Presenter, Renderer {
         self.layoutEngine = layoutEngine
     }
     
-    public func present(component rootComponent: RootComponent<MessageType>) {
-        switch rootComponent {
+    public func present(component: Component<MessageType>, with root: RootComponent<MessageType>) {
+        switch root {
             
-        case .simple(let component):
+        case .simple:
             let rootController = controller(forComponent: component)
             rootController.mailbox.forward(to: mailbox)
             window.rootController = .single(rootController)
             
-        case .withNavigationBar(let navigationBar, let component):
+        case .stack(let navigationBar):
             present(component: component, with: navigationBar)
             
         default:

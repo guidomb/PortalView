@@ -18,10 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        let root = RootComponent<String>.simple(component: dynamicHeightTable())
         let presenter = UIKitComponentManager<String>(window: window!)
         presenter.isDebugModeEnabled = false
-        presenter.present(component: root)
+        presenter.present(component:  dynamicHeightTable(), with: .simple)
         
         window?.makeKeyAndVisible()
         return true

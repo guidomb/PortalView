@@ -45,7 +45,7 @@ public protocol Presenter {
 
     associatedtype MessageType
     
-    func present(component: RootComponent<MessageType>)
+    func present(component: Component<MessageType>, with root: RootComponent<MessageType>)
     
 }
 

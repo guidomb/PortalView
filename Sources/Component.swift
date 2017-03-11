@@ -9,9 +9,9 @@ import Foundation
 
 public enum RootComponent<MessageType> {
     
-    case simple(component: Component<MessageType>)
-    case withNavigationBar(NavigationBar<MessageType>, component: Component<MessageType>)
-    case withTabBar(TabBar<MessageType>, component: Component<MessageType>)
+    case simple
+    case stack(NavigationBar<MessageType>)
+    case tab(TabBar<MessageType>)
     
 }
 
