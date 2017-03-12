@@ -90,6 +90,7 @@ fileprivate extension UIKitComponentManager {
                 layoutEngine: layoutEngine,
                 statusBarStyle: navigationBar.style.component.statusBarStyle.asUIStatusBarStyle
             )
+            navigationController.isDebugModeEnabled = isDebugModeEnabled
             let containedController = controller(for: component)
             navigationController.push(controller: containedController, with: navigationBar, animated: false)
             return .navigationController(navigationController, topController: containedController)
