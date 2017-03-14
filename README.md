@@ -8,25 +8,26 @@ PortalView
 
 A (potentially) cross-platform, declarative and immutable Swift library for building user interfaces.
 
-**WARNING!: This is still a work-in-progress, although the minimum features are available to create real world applications the API is still under design and some key optimizations are still missing. Use at your own risk**
+**WARNING!: This is still a work-in-progress, although the minimum features are available to create real world applications the API is still under design and some key optimizations are still missing. Use at your own risk.**
 
-## TL; DR
+## TL; DR;
 
  * Declarative API inspired by [Elm](http://elm-lang.org/) and [React](https://facebook.github.io/react/).
- * 100% in Swift and decoupled from UIKit which makes it potentially cross-platform.
+ * 100% in Swift and decoupled from UIKit which makes it (potentially) cross-platform.
  * Uses facebook's [Yoga](http://github.com/facebook/yoga). A cross-platform layout engine that implements [Flexbox](https://www.w3schools.com/CSS/css3_flexbox.asp) which is used by [ReactNative](https://github.com/facebook/react-native).
+ * Leverage the Swift compiler in order to have a strongly type-safe API.
 
-The API looks like this
+Here is a sneak peak of the API but you can also check [this examples](https://github.com/guidomb/PortalView#example) or read the library [overview](./Documentation/Overview.md) to learn more about the main concepts.
 
 ```swift
-enum Action {
+enum Message {
 
   case like
   case goToDetailScreen
 
 }
 
-let component: Component<Action> = container(
+let component: Component<Message> = container(
   children: [
     label(
       text: "Hello PortalView!",
@@ -79,13 +80,7 @@ github "guidomb/PortalView" "master"
 
 TODO
 
-## About
-
-### Cross platform
-
-PortalView is 100% written in Swift and it is (potentially) cross-platform platform because it does not depend on UIKit at all.
-
-### Example
+## Example
 
 For some examples on how the API looks like and how to use this library check
 
@@ -94,6 +89,11 @@ For some examples on how the API looks like and how to use this library check
  * The following video
 
 [![PortalView live reload example](https://img.youtube.com/vi/Xaj6vdNLC5k/0.jpg)](https://www.youtube.com/watch?v=Xaj6vdNLC5k)
+
+## Documentation
+
+PortalView is still a work-in-progress. Documentation will be added as the library matures inside the [Documentation](./Documentation) directory.
+You can read the library [overview](./Documentation/Overview.md) to learn more about the main concepts.
 
 ## Contribute
 
