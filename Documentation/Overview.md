@@ -128,7 +128,7 @@ func postActionBar(for post: Post) -> Component<Message> {
 
 where `Post` is a model object with the following properties
 
-```
+```swift
 struct Post {
 
 	let id: String
