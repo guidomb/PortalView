@@ -116,14 +116,7 @@ fileprivate struct WindowManager<MessageType, RendererType: Renderer>
     
     fileprivate var rootController: RootController<MessageType, RendererType>? {
         set {
-            window.rootViewController = newValue.map {
-                switch $0 {
-                case .single(let controller):
-                    return controller
-                case .navigationController(let navigationController, _):
-                    return navigationController
-                }
-            }
+            window.rootViewController = newValue?.renderableController
             _rootController = newValue
         }
         get {
