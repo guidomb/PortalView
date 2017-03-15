@@ -60,7 +60,7 @@ There quite a few things to notice about the previous code snippet:
 
 [`Component`](https://github.com/guidomb/PortalView/blob/master/Sources/Component.swift) is an `enum` (or sum type) where each of its possible values correspond to a core UI widget that can be found in any modern mobile UI library, like UIKit.
 
-Because Portal was conceived with the idea of making iOS applications there is almost a one to one relation between Portal's components and UIKit components. But this does not mean that there cannot or won't be differences. Portal's spirit is to make common tasks easier, that is why you'll notice that some things that required several lines of code tweaking a UIKit component can be achieved but one or two lines in Portal.
+Because Portal was conceived with the idea of making iOS applications there is almost a one to one relation between Portal's components and UIKit components. But this does not mean that there cannot or won't be differences. Portal's spirit is to make common tasks easier, that is why you'll notice that some things that required several lines of code tweaking a UIKit component can be achieved with one or two lines in Portal.
 
 #### Organizing components
 
