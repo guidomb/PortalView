@@ -49,13 +49,11 @@ public final class UIKitComponentManager<MessageType>: Presenter, Renderer {
         case .some(.single(let controller)):
             controller.component = component
             controller.render()
-            controller.mailbox.forward(to: mailbox)
             return controller.mailbox
             
         case .some(.navigationController(_, let topController)):
             topController.component = component
             topController.render()
-            topController.mailbox.forward(to: mailbox)
             return topController.mailbox
             
         default:
