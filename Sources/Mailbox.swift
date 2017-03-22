@@ -32,6 +32,10 @@ public final class Mailbox<MessageType> {
 
 extension Mailbox {
     
+    internal func unregisterSubscribers() {
+        subscribers = []
+    }
+    
     internal func dispatch(message: MessageType) {
         subscribers.forEach { $0(message) }
     }

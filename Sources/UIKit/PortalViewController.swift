@@ -38,6 +38,7 @@ public final class PortalViewController<MessageType, RendererType: Renderer>: UI
         // parent is a navigation controller because if not the view
         // does not take into account the navigation bar in order
         // to sets its visible size.
+        mailbox.unregisterSubscribers()
         self.view = UIView(frame: calculateViewBounds())
         let renderer = createRenderer(view)
         let componentMailbox = renderer.render(component: component)
