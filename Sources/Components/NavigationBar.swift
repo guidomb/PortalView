@@ -18,12 +18,17 @@ public enum NavigationBarTitle<MessageType> {
 
 public struct NavigationBarProperties<MessageType> {
     
-    public let title: NavigationBarTitle<MessageType>
-    public let hideBackButtonTitle: Bool
+    public var title: NavigationBarTitle<MessageType>?
+    public var hideBackButtonTitle: Bool
+    public var onBack: MessageType?
     
-    fileprivate init(title: NavigationBarTitle<MessageType>, hideBackButtonTitle: Bool) {
+    fileprivate init(
+        title: NavigationBarTitle<MessageType>? = .none,
+        hideBackButtonTitle: Bool = false,
+        onBack: MessageType? = .none) {
         self.title = title
         self.hideBackButtonTitle = hideBackButtonTitle
+        self.onBack = onBack
     }
     
 }
@@ -48,20 +53,34 @@ public func navigationBar<MessageType>(
 
 public func navigationBar<MessageType>(
     title: String,
+    onBack: MessageType,
     style: StyleSheet<NavigationBarStyleSheet> = navigationBarStyleSheet()) -> NavigationBar<MessageType> {
-    return NavigationBar(properties: properties(title: .text(title)), style: style)
+    return NavigationBar(
+        properties: properties() {
+            $0.title = .text(title)
+            $0.onBack = onBack
+        },
+        style: style
+    )
 }
 
 public func navigationBar<MessageType>(
     title: Image,
+    onBack: MessageType,
     style: StyleSheet<NavigationBarStyleSheet> = navigationBarStyleSheet()) -> NavigationBar<MessageType> {
-    return NavigationBar(properties: properties(title: .image(title)), style: style)
+    return NavigationBar(
+        properties: properties() {
+            $0.title = .image(title)
+            $0.onBack = onBack
+        },
+        style: style
+    )
 }
 
-public func properties<MessageType>(
-    title: NavigationBarTitle<MessageType>,
-    hideBackButtonTitle: Bool = false) -> NavigationBarProperties<MessageType> {
-    return NavigationBarProperties(title: title, hideBackButtonTitle: hideBackButtonTitle)
+public func properties<MessageType>(configure: (inout NavigationBarProperties<MessageType>) -> ()) -> NavigationBarProperties<MessageType> {
+    var properties = NavigationBarProperties<MessageType>()
+    configure(&properties)
+    return properties
 }
 
 // MARK: - Style sheet
