@@ -19,6 +19,7 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
     private let statusBarStyle: UIStatusBarStyle
     private var pushingViewController = false
     private var currentNavigationBarOnBack: MessageType? = .none
+    private var onControllerDidShow: () -> Void = { }
     
     init(layoutEngine: LayoutEngine, statusBarStyle: UIStatusBarStyle = .`default`) {
         self.statusBarStyle = statusBarStyle
@@ -46,15 +47,38 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
     }
     
     public func navigationController(_ navigationController: UINavigationController,
-                                     didShow viewController: UIViewController, animated: Bool) {
+                                     willShow viewController: UIViewController, animated: Bool) {
         if pushingViewController {
             pushingViewController = false
+            onControllerDidShow = { }
         } else if !pushingViewController && topViewController != .none {
             // If a controller is not being pushed and the top view controller
             // is not nil then the navigation controller is poping the top view controller.
             // In which case the `onBack` message should be dispatched.
-            currentNavigationBarOnBack |> { self.mailbox.dispatch(message: $0) }
+            //
+            // The reason we need 'onControllerDidShow' is due to the fact that UIKit is calling
+            // navigationController(didShow:,animated:) method twice. Apparently only when the pushed
+            // controller is the first controller in the navigation stack.
+            //
+            // navigationController(willShow:,animated:) seems to be called only once so I decided to place
+            // the logic to decide wether to dispatch the onBack message here but the message MUST be dispatched
+            // in navigationController(didShow:,animated:) because that is when UIKit guarantees that transition
+            // animation was completed. If you do things while being on a transition weird things happen or the 
+            // app can crash. 
+            //
+            // To sumarize DO NOT dispatch a message inside this delegate's method. Do not trust UIKit.
+            if let message = currentNavigationBarOnBack {
+                onControllerDidShow = { self.mailbox.dispatch(message: message) }
+            } else {
+                onControllerDidShow = { }
+            }
         }
+    }
+    
+    public func navigationController(_ navigationController: UINavigationController,
+                                     didShow viewController: UIViewController, animated: Bool) {
+        onControllerDidShow()
+        onControllerDidShow = { }
     }
     
 }
