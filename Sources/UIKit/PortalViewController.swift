@@ -33,12 +33,12 @@ public final class PortalViewController<MessageType, RendererType: Renderer>: UI
     }
     
     public func render() {
-        // For some reason, probably related to Yoga, we need to create
-        // a new view when updating a contained controller's view whos
+        // For some reason we need to calculate the view's frame
+        // when updating a contained controller's view whos
         // parent is a navigation controller because if not the view
-        // does not take into account the navigation bar in order
+        // does not take into account the navigation and status bar in order
         // to sets its visible size.
-        self.view = UIView(frame: calculateViewBounds())
+        view.frame = calculateViewFrame()
         let renderer = createRenderer(view)
         let componentMailbox = renderer.render(component: component)
         componentMailbox.forward(to: mailbox)
@@ -64,14 +64,14 @@ fileprivate extension PortalViewController {
     /// viewWillAppear because some views, like UITableView have unexpected behavior.
     ///
     /// - Returns: The view bounds that should be used to render the component's view
-    fileprivate func calculateViewBounds() -> CGRect {
-        var bounds = view.bounds
+    fileprivate func calculateViewFrame() -> CGRect {
+        var bounds = UIScreen.main.bounds
         bounds.size.height -= statusBarHeight
-        bounds.origin.x += statusBarHeight
+        bounds.origin.y += statusBarHeight
         
         if let navBarBounds = navigationController?.navigationBar.bounds {
             bounds.size.height -= navBarBounds.size.height
-            bounds.origin.x += navBarBounds.size.height
+            bounds.origin.y += navBarBounds.size.height
         }
         
         return bounds

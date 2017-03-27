@@ -23,7 +23,7 @@ internal struct YogaLayoutEngine : LayoutEngine {
         container.yoga.width = container.bounds.size.width
         container.yoga.height = container.bounds.size.height
         container.addSubview(view)
-        container.yoga.applyLayout()
+        container.yoga.applyLayout(preservingOrigin: true)
     }
 
     func apply(layout: Layout, to view: UIView) {
