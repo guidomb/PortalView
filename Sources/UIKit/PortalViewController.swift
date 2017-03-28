@@ -66,12 +66,10 @@ fileprivate extension PortalViewController {
     /// - Returns: The view bounds that should be used to render the component's view
     fileprivate func calculateViewFrame() -> CGRect {
         var bounds = UIScreen.main.bounds
-        bounds.size.height -= statusBarHeight
-        bounds.origin.y += statusBarHeight
         
         if let navBarBounds = navigationController?.navigationBar.bounds {
-            bounds.size.height -= navBarBounds.size.height
-            bounds.origin.y += navBarBounds.size.height
+            bounds.size.height -= statusBarHeight + navBarBounds.size.height
+            bounds.origin.y += statusBarHeight + navBarBounds.size.height
         }
         
         return bounds
