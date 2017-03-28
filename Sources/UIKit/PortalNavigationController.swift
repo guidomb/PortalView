@@ -36,14 +36,30 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
         return statusBarStyle
     }
     
-    func push(controller: PortalViewController<MessageType, RendererType>,
+    public func push(controller: PortalViewController<MessageType, RendererType>,
               with navigationBar: NavigationBar<MessageType>, animated: Bool) {
         pushingViewController = true
-        currentNavigationBarOnBack = navigationBar.properties.onBack
         pushViewController(controller, animated: animated)
-        self.navigationBar.apply(style: navigationBar.style)
-        self.render(navigationBar: navigationBar, inside: controller.navigationItem)
+        render(navigationBar: navigationBar, inside: controller.navigationItem)
         controller.mailbox.forward(to: mailbox)
+    }
+    
+    public func render(navigationBar: NavigationBar<MessageType>, inside navigationItem: UINavigationItem) {
+        currentNavigationBarOnBack = navigationBar.properties.onBack
+        self.navigationBar.apply(style: navigationBar.style)
+        
+        if navigationBar.properties.hideBackButtonTitle {
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        }
+        
+        if let title = navigationBar.properties.title {
+            let renderer = NavigationBarTitleRenderer(
+                navigationBarTitle: title,
+                navigationItem: navigationItem,
+                navigationBarSize: self.navigationBar.bounds.size
+            )
+            renderer.render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled) |> { $0.forward(to: mailbox) }
+        }
     }
     
     public func navigationController(_ navigationController: UINavigationController,
@@ -79,25 +95,6 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
                                      didShow viewController: UIViewController, animated: Bool) {
         onControllerDidShow()
         onControllerDidShow = { }
-    }
-    
-}
-
-fileprivate extension PortalNavigationController {
-    
-    fileprivate func render(navigationBar: NavigationBar<MessageType>, inside navigationItem: UINavigationItem) {
-        if navigationBar.properties.hideBackButtonTitle {
-            navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        }
-        
-        if let title = navigationBar.properties.title {
-            let renderer = NavigationBarTitleRenderer(
-                navigationBarTitle: title,
-                navigationItem: navigationItem,
-                navigationBarSize: self.navigationBar.bounds.size
-            )
-            renderer.render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled) |> { $0.forward(to: mailbox) }
-        }
     }
     
 }

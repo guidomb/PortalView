@@ -30,7 +30,7 @@ public protocol Renderer {
     var isDebugModeEnabled: Bool { get set }
     
     func render(component: Component<MessageType>) -> Mailbox<MessageType>
-    
+        
 }
 
 public enum PresentationMode {

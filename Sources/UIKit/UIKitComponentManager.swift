@@ -65,6 +65,25 @@ public final class UIKitComponentManager<MessageType>: Presenter, Renderer {
         }
     }
     
+    public func render(component: Component<MessageType>, with root: RootComponent<MessageType>) {
+        switch (window.rootController, root) {
+            
+        case (.some(.single(let controller)), .simple):
+            controller.component = component
+            controller.render()
+            
+        case (.some(.navigationController(let navigationController, let topController)), .stack(let navigationBar)):
+            topController.component = component
+            topController.render()
+            navigationController.render(navigationBar: navigationBar, inside: topController.navigationItem)
+            
+        default:
+            let rootController = controller(for: component, root: root)
+            window.rootController = rootController
+            rootController.mailbox.forward(to: mailbox)
+        }
+    }
+    
 }
 
 fileprivate extension UIKitComponentManager {
