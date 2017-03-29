@@ -8,7 +8,7 @@
 
 import UIKit
 
-public final class UIKitComponentManager<MessageType>: Presenter, Renderer {
+public final class UIKitComponentManager<MessageType>: Renderer {
     
     public var isDebugModeEnabled: Bool = false
     
@@ -23,23 +23,25 @@ public final class UIKitComponentManager<MessageType>: Presenter, Renderer {
         self.layoutEngine = layoutEngine
     }
     
-    public func present(component: Component<MessageType>, with root: RootComponent<MessageType>, modally: Bool) {
+    public func present(component: Component<MessageType>, with root: RootComponent<MessageType>, modally: Bool) -> UIViewController {
         switch (window.rootController, root, modally) {
         
         case (.some(.single(let presenter)), _, true):
-            presentModally(component: component, root: root, onTopOf: presenter)
+            return presentModally(component: component, root: root, onTopOf: presenter)
         
         case (.some(.navigationController(let presenter, _)), _, true):
-            presentModally(component: component, root: root, onTopOf: presenter)
+            return presentModally(component: component, root: root, onTopOf: presenter)
         
         case (.some(.navigationController(let navigationController, _)), .stack(let navigationBar), false):
             let containedController = controller(for: component)
             navigationController.push(controller: containedController, with: navigationBar, animated: true)
+            return navigationController
             
         default:
             let rootController = controller(for: component, root: root)
             window.rootController = rootController
             rootController.mailbox.forward(to: mailbox)
+            return rootController.renderableController
         }
     }
     
@@ -89,10 +91,11 @@ public final class UIKitComponentManager<MessageType>: Presenter, Renderer {
 fileprivate extension UIKitComponentManager {
     
     fileprivate func presentModally(component: Component<MessageType>, root: RootComponent<MessageType>,
-                                    onTopOf presenter: UIViewController) {
+                                    onTopOf presenter: UIViewController) -> UIViewController {
         let rootController = controller(for: component, root: root)
         rootController.mailbox.forward(to: mailbox)
         presenter.present(rootController.renderableController, animated: true, completion: nil)
+        return rootController.renderableController
     }
     
     fileprivate func controller(for component: Component<MessageType>, root: RootComponent<MessageType>)

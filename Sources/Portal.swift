@@ -14,10 +14,6 @@ public protocol Font {
     
 }
 
-
-
-
-
 public struct TabBar<MessageType> {
     
 }
@@ -32,22 +28,3 @@ public protocol Renderer {
     func render(component: Component<MessageType>) -> Mailbox<MessageType>
         
 }
-
-public enum PresentationMode {
-    
-    case modal
-    case replace
-    case push
-    
-}
-
-public protocol Presenter {
-
-    associatedtype MessageType
-    
-    func present(component: Component<MessageType>, with root: RootComponent<MessageType>, modally: Bool)
-    
-}
-
-
-
