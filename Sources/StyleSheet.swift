@@ -88,13 +88,19 @@ public struct BaseStyleSheet {
     
     public var backgroundColor: Color
     public var cornerRadius: Float?
+    public var borderColor: Color
+    public var borderWidth: Float
     
     public init(
         backgroundColor: Color = .clear,
-        cornerRadius: Float? = .none
+        cornerRadius: Float? = .none,
+        borderColor: Color = .clear,
+        borderWidth: Float = 0.0
     ) {
         self.backgroundColor = backgroundColor
         self.cornerRadius = cornerRadius
+        self.borderColor = borderColor
+        self.borderWidth = borderWidth
     }
     
 }
