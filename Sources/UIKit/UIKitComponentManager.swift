@@ -14,6 +14,10 @@ public final class UIKitComponentManager<MessageType>: Renderer {
     
     public let mailbox = Mailbox<MessageType>()
     
+    public var rootController: RootController<MessageType, UIKitComponentRenderer<MessageType>>? {
+        return window.rootController
+    }
+    
     fileprivate let layoutEngine: LayoutEngine
     
     fileprivate var window: WindowManager<MessageType, UIKitComponentRenderer<MessageType>>
@@ -139,31 +143,7 @@ fileprivate extension UIKitComponentManager {
     
 }
 
-fileprivate struct WindowManager<MessageType, RendererType: Renderer>
-    where RendererType.MessageType == MessageType {
-    
-    fileprivate var rootController: RootController<MessageType, RendererType>? {
-        set {
-            window.rootViewController = newValue?.renderableController
-            _rootController = newValue
-        }
-        get {
-            return _rootController
-        }
-    }
-    
-    private let window: UIWindow
-    private var _rootController: RootController<MessageType, RendererType>?
-    
-    init(window: UIWindow) {
-        self.window = window
-        self._rootController = .none
-        self.rootController = .none
-    }
-    
-}
-
-fileprivate enum RootController<MessageType, RendererType: Renderer>
+public enum RootController<MessageType, RendererType: Renderer>
     where RendererType.MessageType == MessageType {
     
     case navigationController(PortalNavigationController<MessageType, RendererType>)
@@ -185,6 +165,30 @@ fileprivate enum RootController<MessageType, RendererType: Renderer>
         case .single(let controller):
             return controller.mailbox
         }
+    }
+    
+}
+
+fileprivate struct WindowManager<MessageType, RendererType: Renderer>
+    where RendererType.MessageType == MessageType {
+    
+    fileprivate var rootController: RootController<MessageType, RendererType>? {
+        set {
+            window.rootViewController = newValue?.renderableController
+            _rootController = newValue
+        }
+        get {
+            return _rootController
+        }
+    }
+    
+    private let window: UIWindow
+    private var _rootController: RootController<MessageType, RendererType>?
+    
+    init(window: UIWindow) {
+        self.window = window
+        self._rootController = .none
+        self.rootController = .none
     }
     
 }

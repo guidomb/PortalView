@@ -24,6 +24,7 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
     private var pushingViewController = false
     private var currentNavigationBarOnBack: MessageType? = .none
     private var onControllerDidShow: () -> Void = { }
+    private var onPop: (() -> Void)? = .none
     
     init(layoutEngine: LayoutEngine, statusBarStyle: UIStatusBarStyle = .`default`) {
         self.statusBarStyle = statusBarStyle
@@ -46,6 +47,11 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
         pushViewController(controller, animated: animated)
         render(navigationBar: navigationBar, inside: controller.navigationItem)
         controller.mailbox.forward(to: mailbox)
+    }
+    
+    public func popTopController(completion: @escaping () -> Void) {
+        onPop = completion
+        popViewController(animated: true)
     }
     
     public func render(navigationBar: NavigationBar<MessageType>, inside navigationItem: UINavigationItem) {
@@ -87,7 +93,9 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
             // app can crash. 
             //
             // To sumarize DO NOT dispatch a message inside this delegate's method. Do not trust UIKit.
-            if let message = currentNavigationBarOnBack {
+            if let onPop = self.onPop {
+                onControllerDidShow = onPop
+            } else if let message = currentNavigationBarOnBack {
                 onControllerDidShow = { self.mailbox.dispatch(message: message) }
             } else {
                 onControllerDidShow = { }
