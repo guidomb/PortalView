@@ -29,6 +29,13 @@ public final class PortalViewController<MessageType, RendererType: Renderer>: UI
     }
     
     public override func viewDidLoad() {
+        // Not really sure why this is necessary but some users where having
+        // issues when pushing controllers into Portal's navigation controller.
+        // For some reason the pushed controller's view was being positioned
+        // at {0,0} instead at {0, statusBarHeight + navBarHeight}. What was
+        // even weirder was that this did not happend for all users.
+        // This setting seems to fix the issue.
+        edgesForExtendedLayout = []
         render()
     }
     
