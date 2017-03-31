@@ -13,6 +13,10 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
     
     public let mailbox = Mailbox<MessageType>()
     public var isDebugModeEnabled: Bool = false
+    
+    public var topController: PortalViewController<MessageType, RendererType>? {
+        return self.topViewController as? PortalViewController<MessageType, RendererType>
+    }
 
     fileprivate let layoutEngine: LayoutEngine
     

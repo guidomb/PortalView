@@ -29,10 +29,10 @@ public final class UIKitComponentManager<MessageType>: Renderer {
         case (.some(.single(let presenter)), _, true):
             return presentModally(component: component, root: root, onTopOf: presenter)
         
-        case (.some(.navigationController(let presenter, _)), _, true):
+        case (.some(.navigationController(let presenter)), _, true):
             return presentModally(component: component, root: root, onTopOf: presenter)
         
-        case (.some(.navigationController(let navigationController, _)), .stack(let navigationBar), false):
+        case (.some(.navigationController(let navigationController)), .stack(let navigationBar), false):
             let containedController = controller(for: component)
             navigationController.push(controller: containedController, with: navigationBar, animated: true)
             return navigationController
@@ -53,7 +53,11 @@ public final class UIKitComponentManager<MessageType>: Renderer {
             controller.render()
             return controller.mailbox
             
-        case .some(.navigationController(_, let topController)):
+        case .some(.navigationController(let navigationController)):
+            guard let topController = navigationController.topController else {
+                // TODO better handle this case
+                return Mailbox()
+            }
             topController.component = component
             topController.render()
             return topController.mailbox
@@ -74,7 +78,11 @@ public final class UIKitComponentManager<MessageType>: Renderer {
             controller.component = component
             controller.render()
             
-        case (.some(.navigationController(let navigationController, let topController)), .stack(let navigationBar)):
+        case (.some(.navigationController(let navigationController)), .stack(let navigationBar)):
+            guard let topController = navigationController.topController else {
+                // TODO better handle this case
+                return
+            }
             topController.component = component
             topController.render()
             navigationController.render(navigationBar: navigationBar, inside: topController.navigationItem)
@@ -113,7 +121,7 @@ fileprivate extension UIKitComponentManager {
             navigationController.isDebugModeEnabled = isDebugModeEnabled
             let containedController = controller(for: component)
             navigationController.push(controller: containedController, with: navigationBar, animated: false)
-            return .navigationController(navigationController, topController: containedController)
+            return .navigationController(navigationController)
             
         case .tab(_):
             fatalError("Root component 'tab' not supported")
@@ -158,12 +166,12 @@ fileprivate struct WindowManager<MessageType, RendererType: Renderer>
 fileprivate enum RootController<MessageType, RendererType: Renderer>
     where RendererType.MessageType == MessageType {
     
-    case navigationController(PortalNavigationController<MessageType, RendererType>, topController: PortalViewController<MessageType, RendererType>)
+    case navigationController(PortalNavigationController<MessageType, RendererType>)
     case single(PortalViewController<MessageType, RendererType>)
     
     var renderableController: UIViewController {
         switch self {
-        case .navigationController(let navigationController, _):
+        case .navigationController(let navigationController):
             return navigationController
         case .single(let controller):
             return controller
@@ -172,7 +180,7 @@ fileprivate enum RootController<MessageType, RendererType: Renderer>
     
     var mailbox: Mailbox<MessageType> {
         switch self {
-        case .navigationController(let navigationController, _):
+        case .navigationController(let navigationController):
             return navigationController.mailbox
         case .single(let controller):
             return controller.mailbox
