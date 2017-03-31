@@ -66,6 +66,9 @@ extension UIView {
     internal func apply(style: BaseStyleSheet) {
         style.backgroundColor   |> { self.backgroundColor = $0.asUIColor }
         style.cornerRadius      |> { self.layer.cornerRadius = CGFloat($0) }
+        style.borderColor       |> { self.layer.borderColor = $0.asUIColor.cgColor }
+        style.borderWidth       |> { self.layer.borderWidth = CGFloat($0) }
+        
     }
     
 }
