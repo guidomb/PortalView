@@ -226,7 +226,7 @@ public struct Layout {
     public var justifyContent: JustifyContent
     public var width: Dimension?
     public var height: Dimension?
-    public var aligment: Alignment
+    public var alignment: Alignment
     public var position: Position
     public var margin: Margin?
     public var padding: Padding?
@@ -239,7 +239,7 @@ public struct Layout {
         justifyContent: JustifyContent = .flexStart,
         width: Dimension? = .none,
         height: Dimension? = .none,
-        aligment: Alignment = Alignment(),
+        alignment: Alignment = Alignment(),
         position: Position = .relative,
         margin: Margin? = .none,
         padding: Padding? = .none,
@@ -251,7 +251,7 @@ public struct Layout {
       self.justifyContent = justifyContent
       self.width = width
       self.height = height
-      self.aligment = aligment
+      self.alignment = alignment
       self.position = position
       self.margin = margin
       self.padding = padding

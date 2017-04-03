@@ -31,7 +31,7 @@ internal struct YogaLayoutEngine : LayoutEngine {
 
         apply(flex: layout.flex, to: view)
         apply(justifyContent: layout.justifyContent, to: view)
-        apply(aligment: layout.aligment, to: view)
+        apply(alignment: layout.alignment, to: view)
         apply(position: layout.position, to: view)
         apply(direction: layout.direction, to: view)
 
@@ -71,10 +71,10 @@ fileprivate extension YogaLayoutEngine {
         height.maximum  |> { view.yoga.maxHeight = CGFloat($0) }
     }
 
-    fileprivate func apply(aligment: Alignment, to view: UIView) {
-        view.yoga.alignContent = aligment.content.yg_alignContent
-        view.yoga.alignItems = aligment.items.yg_alignItems
-        aligment.`self` |> { view.yoga.alignSelf = $0.yg_alignSelf }
+    fileprivate func apply(alignment: Alignment, to view: UIView) {
+        view.yoga.alignContent = alignment.content.yg_alignContent
+        view.yoga.alignItems = alignment.items.yg_alignItems
+        alignment.`self` |> { view.yoga.alignSelf = $0.yg_alignSelf }
     }
 
     fileprivate func apply(position: Position, to view: UIView) {
