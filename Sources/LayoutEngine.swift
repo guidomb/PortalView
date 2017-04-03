@@ -71,7 +71,7 @@ fileprivate extension YogaLayoutEngine {
         height.maximum  |> { view.yoga.maxHeight = CGFloat($0) }
     }
 
-    fileprivate func apply(aligment: Aligment, to view: UIView) {
+    fileprivate func apply(aligment: Alignment, to view: UIView) {
         view.yoga.alignContent = aligment.content.yg_alignContent
         view.yoga.alignItems = aligment.items.yg_alignItems
         aligment.`self` |> { view.yoga.alignSelf = $0.yg_alignSelf }

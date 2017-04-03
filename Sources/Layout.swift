@@ -133,7 +133,7 @@ public enum Position {
 
 }
 
-public struct Aligment {
+public struct Alignment {
 
     public var content: AlignContent
     public var `self`: AlignSelf?
@@ -226,7 +226,7 @@ public struct Layout {
     public var justifyContent: JustifyContent
     public var width: Dimension?
     public var height: Dimension?
-    public var aligment: Aligment
+    public var aligment: Alignment
     public var position: Position
     public var margin: Margin?
     public var padding: Padding?
@@ -239,7 +239,7 @@ public struct Layout {
         justifyContent: JustifyContent = .flexStart,
         width: Dimension? = .none,
         height: Dimension? = .none,
-        aligment: Aligment = Aligment(),
+        aligment: Alignment = Alignment(),
         position: Position = .relative,
         margin: Margin? = .none,
         padding: Padding? = .none,
@@ -280,8 +280,8 @@ public func dimension(configure: (inout Dimension) -> () = { _ in }) -> Dimensio
     return object
 }
 
-public func aligment(configure: (inout Aligment) -> () = { _ in }) -> Aligment {
-    var object = Aligment()
+public func aligment(configure: (inout Alignment) -> () = { _ in }) -> Alignment {
+    var object = Alignment()
     configure(&object)
     return object
 }
