@@ -37,6 +37,10 @@ extension Component: UIKitRenderer {
             return TableRenderer(properties: properties, style: style, layout: layout)
                 .render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
             
+        case .touchable(let gesture, let child):
+            return TouchableRenderer(child: child, gesture: gesture)
+                .render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
+            
         }
     }
     

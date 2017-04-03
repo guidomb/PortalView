@@ -44,6 +44,7 @@
 		9D6AD9811E53612500DDD9D8 /* UIKitComponentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9801E53612500DDD9D8 /* UIKitComponentManager.swift */; };
 		9D6AD9831E5362E900DDD9D8 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9821E5362E900DDD9D8 /* UIViewExtensions.swift */; };
 		9D6AD9851E5363FD00DDD9D8 /* MessageDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9841E5363FD00DDD9D8 /* MessageDispatcher.swift */; };
+		9D7824031E92A27C004455B1 /* TouchableRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7824021E92A27C004455B1 /* TouchableRenderer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		9D6AD9801E53612500DDD9D8 /* UIKitComponentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIKitComponentManager.swift; path = Sources/UIKit/UIKitComponentManager.swift; sourceTree = "<group>"; };
 		9D6AD9821E5362E900DDD9D8 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = Sources/UIKit/UIViewExtensions.swift; sourceTree = "<group>"; };
 		9D6AD9841E5363FD00DDD9D8 /* MessageDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageDispatcher.swift; path = Sources/UIKit/MessageDispatcher.swift; sourceTree = "<group>"; };
+		9D7824021E92A27C004455B1 /* TouchableRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TouchableRenderer.swift; path = Sources/UIKit/Renderers/TouchableRenderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,7 @@
 				9D6AD9761E535DDA00DDD9D8 /* ImageViewRenderer.swift */,
 				9D6AD97A1E535F2000DDD9D8 /* ComponentRenderer.swift */,
 				9D6AD97E1E535FE000DDD9D8 /* NavigationBarTitleRenderer.swift */,
+				9D7824021E92A27C004455B1 /* TouchableRenderer.swift */,
 			);
 			name = Renderers;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				9D6AD94A1E534C9700DDD9D8 /* UIKitRenderable.swift in Sources */,
 				9D6AD9441E534C7600DDD9D8 /* Extensions.swift in Sources */,
 				9D6AD9651E53581000DDD9D8 /* LabelRenderer.swift in Sources */,
+				9D7824031E92A27C004455B1 /* TouchableRenderer.swift in Sources */,
 				9D6AD9561E534CAF00DDD9D8 /* Label.swift in Sources */,
 				9D6AD9411E534C7600DDD9D8 /* LayoutEngine.swift in Sources */,
 				9D6AD9811E53612500DDD9D8 /* UIKitComponentManager.swift in Sources */,
