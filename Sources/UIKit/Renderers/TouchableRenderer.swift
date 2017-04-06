@@ -15,6 +15,9 @@ internal struct TouchableRenderer<MessageType>: UIKitRenderer {
     
     func render(with layoutEngine: LayoutEngine, isDebugModeEnabled: Bool) -> Render<MessageType> {
         var result = child.render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
+        
+        result.view.isUserInteractionEnabled = true
+        
         switch gesture {
             
         case .tap(let message):
