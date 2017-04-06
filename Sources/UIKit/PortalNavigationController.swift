@@ -120,12 +120,12 @@ fileprivate extension PortalNavigationController {
     fileprivate func render(buttonItem: NavigationBarButton<MessageType>) -> UIBarButtonItem {
         switch buttonItem {
             
-        case .textBased(let title, let message):
+        case .textButton(let title, let message):
             let button = UIBarButtonItem(title: title)
             button.onTap(dispatch: message, to: mailbox)
             return button
             
-        case .imageBased(let icon, let message):
+        case .imageButton(let icon, let message):
             let button = UIBarButtonItem(icon: icon)
             button.onTap(dispatch: message, to: mailbox)
             return button

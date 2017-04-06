@@ -18,8 +18,8 @@ public enum NavigationBarTitle<MessageType> {
 
 public enum NavigationBarButton<MessageType> {
     
-    case textBased(title: String, message: MessageType)
-    case imageBased(icon: Image, message: MessageType)
+    case textButton(title: String, onTap: MessageType)
+    case imageButton(icon: Image, onTap: MessageType)
     
 }
 
