@@ -30,7 +30,7 @@ internal struct SegmentedRenderer<MessageType>: UIKitRenderer {
             segmentedControl.setEnabled(item.isEnabled, forSegmentAt: index)
         }
         
-        segmentedControl.selectedSegmentIndex = Int(properties.selectedSegment)
+        segmentedControl.selectedSegmentIndex = Int(properties.selectedIndex)
         
         segmentedControl.apply(style: style.base)
         segmentedControl.apply(style: style.component)

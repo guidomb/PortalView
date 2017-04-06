@@ -10,14 +10,29 @@ import UIKit
 
 public struct SegmentedProperties<MessageType> {
     
-    public var segments: [SegmentProperties<MessageType>]
-    public var selectedSegment: UInt
+    public var leftSegments: [SegmentProperties<MessageType>]
+    public var selectedSegment: SegmentProperties<MessageType>
+    public var rightSegments: [SegmentProperties<MessageType>]
+    
+    public var selectedIndex: UInt {
+        return UInt(leftSegments.count)
+    }
     
     fileprivate init(
-        segments: [SegmentProperties<MessageType>] = [],
-        selectedSegment: UInt = 0) {
-        self.segments = segments
+        leftSegments: [SegmentProperties<MessageType>] = [],
+        selectedSegment: SegmentProperties<MessageType> = segment(title: ""),
+        rightSegments: [SegmentProperties<MessageType>] = []) {
+        self.leftSegments = leftSegments
         self.selectedSegment = selectedSegment
+        self.rightSegments = rightSegments
+    }
+    
+}
+
+extension SegmentedProperties {
+    
+    var segments: [SegmentProperties<MessageType>] {
+        return leftSegments + [selectedSegment] + rightSegments
     }
     
 }
@@ -49,16 +64,30 @@ public struct SegmentProperties<MessageType> {
 public extension SegmentedProperties {
     
     public func map<NewMessageType>(_ transform: @escaping (MessageType) -> NewMessageType) -> SegmentedProperties<NewMessageType> {
-        let newSegments = segments.map {
+        let newLeftSegments = leftSegments.map {
             return SegmentProperties(
                 content: $0.content,
                 onTap: $0.onTap.map(transform),
                 isEnabled: $0.isEnabled
             )
         }
+        let newSelectedSegment = SegmentProperties(
+            content: selectedSegment.content,
+            onTap: selectedSegment.onTap.map(transform),
+            isEnabled: selectedSegment.isEnabled
+        )
+        let newRightSegments = rightSegments.map {
+            return SegmentProperties(
+                content: $0.content,
+                onTap: $0.onTap.map(transform),
+                isEnabled: $0.isEnabled
+            )
+        }
+        
         return SegmentedProperties<NewMessageType>(
-            segments: newSegments,
-            selectedSegment: self.selectedSegment
+            leftSegments: newLeftSegments,
+            selectedSegment: newSelectedSegment,
+            rightSegments: newRightSegments
         )
     }
     
@@ -72,11 +101,20 @@ public func segmented<MessageType>(
 }
 
 public func segmented<MessageType>(
-    segments: [SegmentProperties<MessageType>] = [],
-    selectedSegment: UInt = 0,
+    leftSegments: [SegmentProperties<MessageType>] = [],
+    selectedSegment: SegmentProperties<MessageType> = segment(title: ""),
+    rightSegments: [SegmentProperties<MessageType>] = [],
     style: StyleSheet<SegmentedStyleSheet> = SegmentedStyleSheet.default,
     layout: Layout = layout()) -> Component<MessageType> {
-    return .segmented(SegmentedProperties(segments: segments, selectedSegment: selectedSegment), style, layout)
+    return .segmented(
+        SegmentedProperties(
+            leftSegments: leftSegments,
+            selectedSegment: selectedSegment,
+            rightSegments: rightSegments
+        ),
+        style,
+        layout
+    )
 }
 
 public func segment<MessageType>(
