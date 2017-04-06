@@ -20,7 +20,7 @@ internal struct TouchableRenderer<MessageType>: UIKitRenderer {
         case .tap(let message):
             let dispatcher: MessageDispatcher<MessageType>
             if let mailbox = result.mailbox {
-                dispatcher = MessageDispatcher(mailbox: mailbox) { _ in return message }
+              dispatcher = MessageDispatcher(mailbox: mailbox, message: message)
             } else {
                 dispatcher = MessageDispatcher(message: message)
                 result = Render(view: result.view, mailbox: dispatcher.mailbox, executeAfterLayout: result.afterLayout)

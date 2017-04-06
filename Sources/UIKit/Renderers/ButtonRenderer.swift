@@ -41,7 +41,7 @@ internal struct ButtonRenderer<MessageType>: UIKitRenderer {
 extension UIButton {
     
     fileprivate func dispatch<MessageType>(message: MessageType, for event: UIControlEvents, with mailbox: Mailbox<MessageType> = Mailbox()) -> Mailbox<MessageType> {
-        let dispatcher = MessageDispatcher(mailbox: mailbox) { _ in return message }
+        let dispatcher = MessageDispatcher(mailbox: mailbox, message: message)
         self.register(dispatcher: dispatcher)
         self.addTarget(dispatcher, action: #selector(MessageDispatcher<MessageType>.dispatch), for: event)
         return dispatcher.mailbox
