@@ -58,9 +58,13 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
         currentNavigationBarOnBack = navigationBar.properties.onBack
         self.navigationBar.apply(style: navigationBar.style)
         
-        if navigationBar.properties.hideBackButtonTitle {
+        if let leftButtonItems = navigationBar.properties.leftButtonItems {
+            navigationItem.leftBarButtonItems = leftButtonItems.map(render)
+        } else if navigationBar.properties.hideBackButtonTitle {
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         }
+        navigationItem.rightBarButtonItems = navigationBar.properties.rightButtonItems.map { $0.map(render) }
+        
         
         if let title = navigationBar.properties.title {
             let renderer = NavigationBarTitleRenderer(
@@ -111,3 +115,43 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
     
 }
 
+fileprivate extension PortalNavigationController {
+    
+    fileprivate func render(buttonItem: NavigationBarButton<MessageType>) -> UIBarButtonItem {
+        switch buttonItem {
+            
+        case .textBased(let title, let message):
+            let button = UIBarButtonItem(title: title)
+            button.onTap(dispatch: message, to: mailbox)
+            return button
+            
+        case .imageBased(let icon, let message):
+            let button = UIBarButtonItem(icon: icon)
+            button.onTap(dispatch: message, to: mailbox)
+            return button
+            
+        }
+    }
+    
+}
+
+fileprivate var messageDispatcherAssociationKey = 0
+
+fileprivate extension UIBarButtonItem {
+    
+    fileprivate convenience init(title: String) {
+        self.init(title: title, style: .plain, target: nil, action: nil)
+    }
+    
+    fileprivate convenience init(icon: Image) {
+        self.init(image: icon.asUIImage, style: .plain, target: nil, action: nil)
+    }
+    
+    fileprivate func onTap<MessageType>(dispatch message: MessageType, to mailbox: Mailbox<MessageType>) {
+        let dispatcher = MessageDispatcher(mailbox: mailbox, message: message)
+        objc_setAssociatedObject(self, &messageDispatcherAssociationKey, dispatcher, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        self.target = dispatcher
+        self.action = dispatcher.selector
+    }
+    
+}
