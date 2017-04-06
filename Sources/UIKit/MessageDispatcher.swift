@@ -30,3 +30,11 @@ internal final class MessageDispatcher<MessageType>: NSObject {
     }
     
 }
+
+extension MessageDispatcher {
+
+    var selector: Selector {
+        return #selector(MessageDispatcher<MessageType>.dispatch)
+    }
+    
+}

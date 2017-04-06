@@ -60,7 +60,7 @@ extension UISegmentedControl {
             return index < messages.count ? messages[index] : .none
         }
         self.register(dispatcher: dispatcher)
-        self.addTarget(dispatcher, action: #selector(MessageDispatcher<MessageType>.dispatch), for: event)
+        self.addTarget(dispatcher, action: dispatcher.selector, for: event)
         return dispatcher.mailbox
     }
     

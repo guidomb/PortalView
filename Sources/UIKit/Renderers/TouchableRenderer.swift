@@ -29,7 +29,7 @@ internal struct TouchableRenderer<MessageType>: UIKitRenderer {
                 result = Render(view: result.view, mailbox: dispatcher.mailbox, executeAfterLayout: result.afterLayout)
             }
             result.view.register(dispatcher: dispatcher)
-            let recognizer = UITapGestureRecognizer(target: dispatcher, action: #selector(MessageDispatcher<MessageType>.dispatch))
+            let recognizer = UITapGestureRecognizer(target: dispatcher, action: dispatcher.selector)
             result.view.addGestureRecognizer(recognizer)
             
         }
