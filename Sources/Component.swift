@@ -43,6 +43,7 @@ public indirect enum Component<MessageType> {
     case container([Component<MessageType>], StyleSheet<EmptyStyleSheet>, Layout)
     case table(TableProperties<MessageType>, StyleSheet<TableStyleSheet>, Layout)
     case touchable(gesture: Gesture<MessageType>, child: Component<MessageType>)
+    case segmented(SegmentedProperties<MessageType>, StyleSheet<SegmentedStyleSheet>, Layout)
     //    case custom(ComponentProtocol, ComponentRenderer)
     
     public var layout: Layout {
@@ -68,6 +69,9 @@ public indirect enum Component<MessageType> {
             
         case .touchable(_, let child):
             return child.layout
+            
+        case .segmented(_, _, let layout):
+            return layout
             
         }
     }
@@ -100,6 +104,8 @@ extension Component {
         case .touchable(let gesture, let child):
             return .touchable(gesture: gesture.map(transform), child: child.map(transform))
             
+        case .segmented(let properties, let style, let layout):
+            return .segmented(properties.map(transform), style, layout)
         }
     }
     
