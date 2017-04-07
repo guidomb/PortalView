@@ -45,6 +45,7 @@
 		9D6AD9831E5362E900DDD9D8 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9821E5362E900DDD9D8 /* UIViewExtensions.swift */; };
 		9D6AD9851E5363FD00DDD9D8 /* MessageDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9841E5363FD00DDD9D8 /* MessageDispatcher.swift */; };
 		9D7824031E92A27C004455B1 /* TouchableRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7824021E92A27C004455B1 /* TouchableRenderer.swift */; };
+		9DDF07A11E97054A00ABEB33 /* ZipList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDF07A01E97054A00ABEB33 /* ZipList.swift */; };
 		D86738751E94374300B42F37 /* Segmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86738741E94374300B42F37 /* Segmented.swift */; };
 		D86738771E9437F600B42F37 /* SegmentedRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86738761E9437F600B42F37 /* SegmentedRenderer.swift */; };
 /* End PBXBuildFile section */
@@ -99,6 +100,7 @@
 		9D6AD9821E5362E900DDD9D8 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = Sources/UIKit/UIViewExtensions.swift; sourceTree = "<group>"; };
 		9D6AD9841E5363FD00DDD9D8 /* MessageDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageDispatcher.swift; path = Sources/UIKit/MessageDispatcher.swift; sourceTree = "<group>"; };
 		9D7824021E92A27C004455B1 /* TouchableRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TouchableRenderer.swift; path = Sources/UIKit/Renderers/TouchableRenderer.swift; sourceTree = "<group>"; };
+		9DDF07A01E97054A00ABEB33 /* ZipList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZipList.swift; path = Sources/ZipList.swift; sourceTree = "<group>"; };
 		D86738741E94374300B42F37 /* Segmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Segmented.swift; path = Sources/Components/Segmented.swift; sourceTree = "<group>"; };
 		D86738761E9437F600B42F37 /* SegmentedRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegmentedRenderer.swift; path = Sources/UIKit/Renderers/SegmentedRenderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,6 +157,7 @@
 				9D6AD93A1E534C7600DDD9D8 /* Extensions.swift */,
 				9D6AD93C1E534C7600DDD9D8 /* Component.swift */,
 				9D6AD9391E534C7600DDD9D8 /* Info.plist */,
+				9DDF07A01E97054A00ABEB33 /* ZipList.swift */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				D86738751E94374300B42F37 /* Segmented.swift in Sources */,
 				9D6AD9571E534CAF00DDD9D8 /* Image.swift in Sources */,
 				9D6AD97D1E535F7100DDD9D8 /* PortalNavigationController.swift in Sources */,
+				9DDF07A11E97054A00ABEB33 /* ZipList.swift in Sources */,
 				9D6AD9671E53589600DDD9D8 /* ButtonRenderer.swift in Sources */,
 				9D6AD9791E535E5100DDD9D8 /* UIKitRenderer.swift in Sources */,
 				9D6AD9541E534CAF00DDD9D8 /* NavigationBar.swift in Sources */,

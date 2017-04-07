@@ -41,8 +41,8 @@ extension Component: UIKitRenderer {
       return TouchableRenderer(child: child, gesture: gesture)
         .render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
       
-    case .segmented(let properties, let style, let layout):
-      return SegmentedRenderer(properties: properties, style: style, layout: layout)
+    case .segmented(let segments, let style, let layout):
+      return SegmentedRenderer(segments: segments, style: style, layout: layout)
         .render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
     }
     
