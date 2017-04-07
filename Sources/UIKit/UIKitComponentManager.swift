@@ -149,7 +149,7 @@ public enum RootController<MessageType, RendererType: Renderer>
     case navigationController(PortalNavigationController<MessageType, RendererType>)
     case single(PortalViewController<MessageType, RendererType>)
     
-    var renderableController: UIViewController {
+    public var renderableController: UIViewController {
         switch self {
         case .navigationController(let navigationController):
             return navigationController
@@ -158,7 +158,7 @@ public enum RootController<MessageType, RendererType: Renderer>
         }
     }
     
-    var mailbox: Mailbox<MessageType> {
+    public var mailbox: Mailbox<MessageType> {
         switch self {
         case .navigationController(let navigationController):
             return navigationController.mailbox
