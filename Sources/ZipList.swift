@@ -52,7 +52,7 @@ public struct ZipList<Element>: Collection, CustomDebugStringConvertible {
         } else if index == left.count {
             return center
         } else {
-            return right[index - 2]
+            return right[index - left.count - 1]
         }
     }
     
