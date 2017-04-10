@@ -21,6 +21,14 @@ public enum Gesture<MessageType> {
     
 }
 
+public enum TextFieldMessage {
+    
+    case onEditingBegin
+    case onEditingChanged
+    case onEditingEnd
+    
+}
+
 public extension Gesture {
     
     public func map<NewMessageType>(_ transform: @escaping (MessageType) -> NewMessageType) -> Gesture<NewMessageType> {
@@ -44,6 +52,7 @@ public indirect enum Component<MessageType> {
     case table(TableProperties<MessageType>, StyleSheet<TableStyleSheet>, Layout)
     case touchable(gesture: Gesture<MessageType>, child: Component<MessageType>)
     case segmented(ZipList<SegmentProperties<MessageType>>, StyleSheet<SegmentedStyleSheet>, Layout)
+    case textField(TextFieldProperties<MessageType>, StyleSheet<TextFieldStyleSheet>, Layout)
     //    case custom(ComponentProtocol, ComponentRenderer)
     
     public var layout: Layout {
@@ -53,6 +62,9 @@ public indirect enum Component<MessageType> {
             return layout
             
         case .label(_, _, let layout):
+            return layout
+            
+        case .textField(_, _, let layout):
             return layout
             
         case .mapView(_, _, let layout):
@@ -88,6 +100,9 @@ extension Component {
             
         case .label(let properties, let style, let layout):
             return .label(properties, style, layout)
+            
+        case .textField(let properties, let style, let layout):
+            return .textField(properties.map(transform),style,layout)
             
         case .mapView(let properties, let style, let layout):
             return .mapView(properties, style, layout)

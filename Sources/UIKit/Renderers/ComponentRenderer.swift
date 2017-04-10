@@ -20,6 +20,10 @@ extension Component: UIKitRenderer {
     case .label(let properties, let style, let layout):
       return LabelRenderer(properties: properties, style: style, layout: layout)
         .render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
+        
+    case .textField(let properties, let style, let layout):
+        return TextFieldRenderer(properties: properties, style: style, layout: layout)
+            .render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
       
     case .mapView(let properties, let style, let layout):
       return MapViewRenderer(properties: properties, style: style, layout: layout)
