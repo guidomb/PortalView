@@ -38,13 +38,13 @@
 		9D6AD9751E535D8000DDD9D8 /* ContainerRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9741E535D8000DDD9D8 /* ContainerRenderer.swift */; };
 		9D6AD9771E535DDA00DDD9D8 /* ImageViewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9761E535DDA00DDD9D8 /* ImageViewRenderer.swift */; };
 		9D6AD9791E535E5100DDD9D8 /* UIKitRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9781E535E5100DDD9D8 /* UIKitRenderer.swift */; };
-		9D6AD97B1E535F2000DDD9D8 /* ComponentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD97A1E535F2000DDD9D8 /* ComponentRenderer.swift */; };
 		9D6AD97D1E535F7100DDD9D8 /* PortalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD97C1E535F7100DDD9D8 /* PortalNavigationController.swift */; };
 		9D6AD97F1E535FE000DDD9D8 /* NavigationBarTitleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD97E1E535FE000DDD9D8 /* NavigationBarTitleRenderer.swift */; };
 		9D6AD9811E53612500DDD9D8 /* UIKitComponentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9801E53612500DDD9D8 /* UIKitComponentManager.swift */; };
 		9D6AD9831E5362E900DDD9D8 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9821E5362E900DDD9D8 /* UIViewExtensions.swift */; };
 		9D6AD9851E5363FD00DDD9D8 /* MessageDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9841E5363FD00DDD9D8 /* MessageDispatcher.swift */; };
 		9D7824031E92A27C004455B1 /* TouchableRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7824021E92A27C004455B1 /* TouchableRenderer.swift */; };
+		9D93F2201E9C4FBB00B36914 /* ComponentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D93F21F1E9C4FBB00B36914 /* ComponentRenderer.swift */; };
 		9DDF07A11E97054A00ABEB33 /* ZipList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDF07A01E97054A00ABEB33 /* ZipList.swift */; };
 		D86738751E94374300B42F37 /* Segmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86738741E94374300B42F37 /* Segmented.swift */; };
 		D86738771E9437F600B42F37 /* SegmentedRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86738761E9437F600B42F37 /* SegmentedRenderer.swift */; };
@@ -93,13 +93,13 @@
 		9D6AD9741E535D8000DDD9D8 /* ContainerRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContainerRenderer.swift; path = Sources/UIKit/Renderers/ContainerRenderer.swift; sourceTree = "<group>"; };
 		9D6AD9761E535DDA00DDD9D8 /* ImageViewRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageViewRenderer.swift; path = Sources/UIKit/Renderers/ImageViewRenderer.swift; sourceTree = "<group>"; };
 		9D6AD9781E535E5100DDD9D8 /* UIKitRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIKitRenderer.swift; path = Sources/UIKit/UIKitRenderer.swift; sourceTree = "<group>"; };
-		9D6AD97A1E535F2000DDD9D8 /* ComponentRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ComponentRenderer.swift; path = Sources/UIKit/Renderers/ComponentRenderer.swift; sourceTree = "<group>"; };
 		9D6AD97C1E535F7100DDD9D8 /* PortalNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PortalNavigationController.swift; path = Sources/UIKit/PortalNavigationController.swift; sourceTree = "<group>"; };
 		9D6AD97E1E535FE000DDD9D8 /* NavigationBarTitleRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationBarTitleRenderer.swift; path = Sources/UIKit/Renderers/NavigationBarTitleRenderer.swift; sourceTree = "<group>"; };
 		9D6AD9801E53612500DDD9D8 /* UIKitComponentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIKitComponentManager.swift; path = Sources/UIKit/UIKitComponentManager.swift; sourceTree = "<group>"; };
 		9D6AD9821E5362E900DDD9D8 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = Sources/UIKit/UIViewExtensions.swift; sourceTree = "<group>"; };
 		9D6AD9841E5363FD00DDD9D8 /* MessageDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageDispatcher.swift; path = Sources/UIKit/MessageDispatcher.swift; sourceTree = "<group>"; };
 		9D7824021E92A27C004455B1 /* TouchableRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TouchableRenderer.swift; path = Sources/UIKit/Renderers/TouchableRenderer.swift; sourceTree = "<group>"; };
+		9D93F21F1E9C4FBB00B36914 /* ComponentRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ComponentRenderer.swift; path = Sources/UIKit/Renderers/ComponentRenderer.swift; sourceTree = "<group>"; };
 		9DDF07A01E97054A00ABEB33 /* ZipList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZipList.swift; path = Sources/ZipList.swift; sourceTree = "<group>"; };
 		D86738741E94374300B42F37 /* Segmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Segmented.swift; path = Sources/Components/Segmented.swift; sourceTree = "<group>"; };
 		D86738761E9437F600B42F37 /* SegmentedRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegmentedRenderer.swift; path = Sources/UIKit/Renderers/SegmentedRenderer.swift; sourceTree = "<group>"; };
@@ -221,10 +221,10 @@
 				9D6AD9721E535C0300DDD9D8 /* MapViewRenderer.swift */,
 				9D6AD9741E535D8000DDD9D8 /* ContainerRenderer.swift */,
 				9D6AD9761E535DDA00DDD9D8 /* ImageViewRenderer.swift */,
-				9D6AD97A1E535F2000DDD9D8 /* ComponentRenderer.swift */,
 				9D6AD97E1E535FE000DDD9D8 /* NavigationBarTitleRenderer.swift */,
 				9D7824021E92A27C004455B1 /* TouchableRenderer.swift */,
 				D86738761E9437F600B42F37 /* SegmentedRenderer.swift */,
+				9D93F21F1E9C4FBB00B36914 /* ComponentRenderer.swift */,
 			);
 			name = Renderers;
 			sourceTree = "<group>";
@@ -367,9 +367,9 @@
 				9D6AD96B1E535A9B00DDD9D8 /* PortalTableView.swift in Sources */,
 				9D6AD9731E535C0300DDD9D8 /* MapViewRenderer.swift in Sources */,
 				9D6AD9581E534CAF00DDD9D8 /* Button.swift in Sources */,
-				9D6AD97B1E535F2000DDD9D8 /* ComponentRenderer.swift in Sources */,
 				9D6AD9531E534CAF00DDD9D8 /* Table.swift in Sources */,
 				9D6AD96F1E535B1E00DDD9D8 /* PortalViewController.swift in Sources */,
+				9D93F2201E9C4FBB00B36914 /* ComponentRenderer.swift in Sources */,
 				9D6AD9421E534C7600DDD9D8 /* Layout.swift in Sources */,
 				D86738771E9437F600B42F37 /* SegmentedRenderer.swift in Sources */,
 				9D6AD9831E5362E900DDD9D8 /* UIViewExtensions.swift in Sources */,

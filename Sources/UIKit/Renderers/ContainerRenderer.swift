@@ -8,8 +8,10 @@
 
 import UIKit
 
-internal struct ContainerRenderer<MessageType>: UIKitRenderer {
+internal struct ContainerRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIKitRenderer
+    where CustomComponentRendererType.MessageType == MessageType {
     
+    let customComponentRenderer: CustomComponentRendererType
     let children: [Component<MessageType>]
     let style: StyleSheet<EmptyStyleSheet>
     let layout: Layout
@@ -21,7 +23,8 @@ internal struct ContainerRenderer<MessageType>: UIKitRenderer {
         var afterLayoutTasks: [AfterLayoutTask] = []
         let mailbox = Mailbox<MessageType>()
         for child in children {
-            let renderResult = child.render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
+            let renderer = ComponentRenderer(component: child, customComponentRenderer: customComponentRenderer)
+            let renderResult = renderer.render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
             renderResult.view.managedByPortal = true
             view.addSubview(renderResult.view)
             renderResult.afterLayout    |> { afterLayoutTasks.append($0) }
