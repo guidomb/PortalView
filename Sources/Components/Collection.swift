@@ -9,25 +9,64 @@
 import Foundation
 import UIKit
 
+public class SectionInset {
+    public static let zero = SectionInset(top: 0, left: 0, bottom: 0, right: 0)
+    
+    public var bottom: UInt
+    public var top: UInt
+    public var left: UInt
+    public var right: UInt
+    
+    public init(top: UInt, left: UInt, bottom: UInt, right: UInt) {
+        self.bottom = bottom
+        self.top = top
+        self.left = left
+        self.right = right
+    }
+    
+}
+
+public enum CollectionScrollDirection {
+    case horizontal
+    case vertical
+}
+
 public struct CollectionProperties<MessageType> {
     
     public var items: [CollectionItemProperties<MessageType>]
-    public var layoutValues: CollectionViewLayoutValues
     public var showsVerticalScrollIndicator: Bool
     public var showsHorizontalScrollIndicator: Bool
     public var isSnapToCellEnabled: Bool
+    
+    // Layout properties
+    public var itemsWidth: UInt
+    public var itemsHeight: UInt
+    public var minimumInteritemSpacing: UInt
+    public var minimumLineSpacing: UInt
+    public var scrollDirection: CollectionScrollDirection
+    public var sectionInset: SectionInset
     
     fileprivate init(
         items: [CollectionItemProperties<MessageType>] = [],
         showsVerticalScrollIndicator: Bool = false,
         showsHorizontalScrollIndicator: Bool = false,
         isSnapToCellEnabled: Bool = false,
-        layoutValues: CollectionViewLayoutValues) {
+        itemsWidth: UInt,
+        itemsHeight: UInt,
+        minimumInteritemSpacing: UInt = 0,
+        minimumLineSpacing: UInt = 0,
+        scrollDirection: CollectionScrollDirection = .vertical,
+        sectionInset: SectionInset = .zero) {
         self.items = items
         self.showsVerticalScrollIndicator = showsVerticalScrollIndicator
         self.showsHorizontalScrollIndicator = showsHorizontalScrollIndicator
-        self.layoutValues = layoutValues
         self.isSnapToCellEnabled = isSnapToCellEnabled
+        self.itemsWidth = itemsWidth
+        self.itemsHeight = itemsHeight
+        self.minimumLineSpacing = minimumLineSpacing
+        self.minimumInteritemSpacing = minimumInteritemSpacing
+        self.sectionInset = sectionInset
+        self.scrollDirection = scrollDirection
     }
     
     public func map<NewMessageType>(_ transform: @escaping (MessageType) -> NewMessageType) -> CollectionProperties<NewMessageType> {
@@ -36,7 +75,12 @@ public struct CollectionProperties<MessageType> {
             showsVerticalScrollIndicator: self.showsVerticalScrollIndicator,
             showsHorizontalScrollIndicator: self.showsHorizontalScrollIndicator,
             isSnapToCellEnabled: self.isSnapToCellEnabled,
-            layoutValues: self.layoutValues)
+            itemsWidth: self.itemsWidth,
+            itemsHeight: self.itemsHeight,
+            minimumInteritemSpacing: self.minimumInteritemSpacing,
+            minimumLineSpacing: self.minimumLineSpacing,
+            scrollDirection: self.scrollDirection,
+            sectionInset: self.sectionInset)
     }
     
 }
@@ -86,8 +130,8 @@ public func collectionItem<MessageType>(
     return CollectionItemProperties(onTap: onTap, identifier: identifier, renderer: renderer)
 }
 
-public func properties<MessageType>(layoutValues: CollectionViewLayoutValues, configure: (inout CollectionProperties<MessageType>) -> ()) -> CollectionProperties<MessageType> {
-    var properties = CollectionProperties<MessageType>(layoutValues: layoutValues)
+public func properties<MessageType>(itemsWidth: UInt, itemsHeight: UInt, configure: (inout CollectionProperties<MessageType>) -> ()) -> CollectionProperties<MessageType> {
+    var properties = CollectionProperties<MessageType>(itemsWidth: itemsWidth, itemsHeight: itemsHeight)
     configure(&properties)
     return properties
 }

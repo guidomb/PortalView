@@ -19,16 +19,15 @@ public final class PortalCollectionView<MessageType>: UICollectionView, UICollec
     fileprivate var selected: Int = 0
     fileprivate var lastOffset: CGFloat = 0
     
-    public init(items: [CollectionItemProperties<MessageType>], layoutEngine: LayoutEngine, layoutValues: CollectionViewLayoutValues) {
+    public init(items: [CollectionItemProperties<MessageType>], layoutEngine: LayoutEngine, layout: UICollectionViewLayout) {
         self.items = items
         self.layoutEngine = layoutEngine
-        let layout = createFlowLayout(layoutValues: layoutValues)
         super.init(frame: .zero, collectionViewLayout: layout)
    
         self.dataSource = self
         self.delegate = self
         
-        let identifiers = Array(Set(items.map { $0.identifier }))
+        let identifiers = Set(items.map { $0.identifier })
         identifiers.forEach { register(PortalCollectionViewCell<MessageType>.self, forCellWithReuseIdentifier: $0) }
     }
     
@@ -92,10 +91,10 @@ public final class PortalCollectionView<MessageType>: UICollectionView, UICollec
 fileprivate extension PortalCollectionView {
     
     fileprivate func scrollToItem(_ position: Int, animated: Bool) {
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             let indexPath = IndexPath(item: position, section: 0)
             self.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animated)
-        })
+        }
     }
 
     fileprivate func dequeueReusableCell(with identifier: String, for indexPath: IndexPath) -> PortalCollectionViewCell<MessageType> {
@@ -126,37 +125,4 @@ fileprivate extension PortalCollectionView {
         return item.renderer()
     }
     
-}
-
-public struct CollectionViewLayoutValues {
-    public var itemsWidth: UInt
-    public var itemsHeight: UInt
-    public var minimumInteritemSpacing: UInt
-    public var minimumLineSpacing: UInt
-    public var scrollDirection: UICollectionViewScrollDirection
-    public var sectionInset: UIEdgeInsets
-    
-    public init(itemsWidth: UInt,
-                itemsHeight: UInt,
-                minimumInteritemSpacing: UInt = 0,
-                minimumLineSpacing: UInt = 0,
-                scrollDirection: UICollectionViewScrollDirection = .horizontal,
-                sectionInset: UIEdgeInsets = .zero) {
-        self.itemsWidth = itemsWidth
-        self.itemsHeight = itemsHeight
-        self.minimumInteritemSpacing = minimumInteritemSpacing
-        self.minimumLineSpacing = minimumLineSpacing
-        self.scrollDirection = scrollDirection
-        self.sectionInset = sectionInset
-    }
-}
-
-private func createFlowLayout(layoutValues: CollectionViewLayoutValues) -> UICollectionViewFlowLayout {
-    let layout = UICollectionViewFlowLayout()
-    layout.itemSize = CGSize(width: CGFloat(layoutValues.itemsWidth), height: CGFloat(layoutValues.itemsHeight))
-    layout.minimumInteritemSpacing = CGFloat(layoutValues.minimumInteritemSpacing)
-    layout.minimumLineSpacing = CGFloat(layoutValues.minimumLineSpacing)
-    layout.scrollDirection = layoutValues.scrollDirection
-    layout.sectionInset = layoutValues.sectionInset
-    return layout
 }
