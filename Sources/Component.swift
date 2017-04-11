@@ -42,6 +42,7 @@ public indirect enum Component<MessageType> {
     case imageView(Image, StyleSheet<EmptyStyleSheet>, Layout)
     case container([Component<MessageType>], StyleSheet<EmptyStyleSheet>, Layout)
     case table(TableProperties<MessageType>, StyleSheet<TableStyleSheet>, Layout)
+    case collection(CollectionProperties<MessageType>, StyleSheet<EmptyStyleSheet>, Layout)
     case touchable(gesture: Gesture<MessageType>, child: Component<MessageType>)
     case segmented(ZipList<SegmentProperties<MessageType>>, StyleSheet<SegmentedStyleSheet>, Layout)
     //    case custom(ComponentProtocol, ComponentRenderer)
@@ -73,6 +74,8 @@ public indirect enum Component<MessageType> {
         case .segmented(_, _, let layout):
             return layout
             
+        case .collection(_, _, let layout):
+            return layout
         }
     }
     
@@ -106,6 +109,9 @@ extension Component {
             
         case .segmented(let segments, let style, let layout):
             return .segmented(segments.map { $0.map(transform) }, style, layout)
+
+        case .collection(let properties, let style, let layout):
+            return .collection(properties.map(transform), style, layout)
         }
     }
     

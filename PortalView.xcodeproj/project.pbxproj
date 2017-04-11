@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		464F9E861E943D8E009F774A /* CollectionRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E851E943D8E009F774A /* CollectionRender.swift */; };
+		464F9E8A1E944051009F774A /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E891E944051009F774A /* Collection.swift */; };
+		464F9E8C1E944634009F774A /* PortalCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E8B1E944634009F774A /* PortalCollectionView.swift */; };
+		464F9E8E1E94464F009F774A /* PortalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E8D1E94464F009F774A /* PortalCollectionViewCell.swift */; };
 		9D66880E1E534BDE0090008B /* PortalView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D6688041E534BDE0090008B /* PortalView.framework */; };
 		9D6AD93E1E534C7600DDD9D8 /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9341E534C7600DDD9D8 /* StyleSheet.swift */; };
 		9D6AD93F1E534C7600DDD9D8 /* Portal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9351E534C7600DDD9D8 /* Portal.swift */; };
@@ -61,6 +65,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		464F9E851E943D8E009F774A /* CollectionRender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionRender.swift; path = Sources/UIKit/Renderers/CollectionRender.swift; sourceTree = "<group>"; };
+		464F9E891E944051009F774A /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Collection.swift; path = Sources/Components/Collection.swift; sourceTree = "<group>"; };
+		464F9E8B1E944634009F774A /* PortalCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PortalCollectionView.swift; path = Sources/UIKit/PortalCollectionView.swift; sourceTree = "<group>"; };
+		464F9E8D1E94464F009F774A /* PortalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PortalCollectionViewCell.swift; path = Sources/UIKit/PortalCollectionViewCell.swift; sourceTree = "<group>"; };
 		9D6688041E534BDE0090008B /* PortalView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PortalView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D66880D1E534BDE0090008B /* PortalViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PortalViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D6AD9341E534C7600DDD9D8 /* StyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StyleSheet.swift; path = Sources/StyleSheet.swift; sourceTree = "<group>"; };
@@ -172,6 +180,8 @@
 				9D6AD96C1E535ADB00DDD9D8 /* PortalTableViewCell.swift */,
 				9D6AD96E1E535B1E00DDD9D8 /* PortalViewController.swift */,
 				9D6AD97C1E535F7100DDD9D8 /* PortalNavigationController.swift */,
+				464F9E8B1E944634009F774A /* PortalCollectionView.swift */,
+				464F9E8D1E94464F009F774A /* PortalCollectionViewCell.swift */,
 				9D6AD9781E535E5100DDD9D8 /* UIKitRenderer.swift */,
 				9D6AD9801E53612500DDD9D8 /* UIKitComponentManager.swift */,
 				9D6AD9821E5362E900DDD9D8 /* UIViewExtensions.swift */,
@@ -190,6 +200,7 @@
 				9D6AD9511E534CAF00DDD9D8 /* Image.swift */,
 				9D6AD9521E534CAF00DDD9D8 /* Button.swift */,
 				D86738741E94374300B42F37 /* Segmented.swift */,
+				464F9E891E944051009F774A /* Collection.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -225,6 +236,7 @@
 				9D6AD97E1E535FE000DDD9D8 /* NavigationBarTitleRenderer.swift */,
 				9D7824021E92A27C004455B1 /* TouchableRenderer.swift */,
 				D86738761E9437F600B42F37 /* SegmentedRenderer.swift */,
+				464F9E851E943D8E009F774A /* CollectionRender.swift */,
 			);
 			name = Renderers;
 			sourceTree = "<group>";
@@ -284,7 +296,7 @@
 		9D6687FB1E534BDE0090008B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0820;
+				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Guido Marucci Blas";
 				TargetAttributes = {
@@ -305,6 +317,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 9D6687FA1E534BDE0090008B;
 			productRefGroup = 9D6688051E534BDE0090008B /* Products */;
@@ -357,10 +370,13 @@
 				9D6AD9571E534CAF00DDD9D8 /* Image.swift in Sources */,
 				9D6AD97D1E535F7100DDD9D8 /* PortalNavigationController.swift in Sources */,
 				9DDF07A11E97054A00ABEB33 /* ZipList.swift in Sources */,
+				464F9E8E1E94464F009F774A /* PortalCollectionViewCell.swift in Sources */,
 				9D6AD9671E53589600DDD9D8 /* ButtonRenderer.swift in Sources */,
 				9D6AD9791E535E5100DDD9D8 /* UIKitRenderer.swift in Sources */,
 				9D6AD9541E534CAF00DDD9D8 /* NavigationBar.swift in Sources */,
 				9D6AD9711E535B7600DDD9D8 /* TableRenderer.swift in Sources */,
+				464F9E8C1E944634009F774A /* PortalCollectionView.swift in Sources */,
+				464F9E8A1E944051009F774A /* Collection.swift in Sources */,
 				9D6AD9751E535D8000DDD9D8 /* ContainerRenderer.swift in Sources */,
 				9D6AD97F1E535FE000DDD9D8 /* NavigationBarTitleRenderer.swift in Sources */,
 				9D6AD94B1E534C9700DDD9D8 /* PortalMapView.swift in Sources */,
@@ -376,6 +392,7 @@
 				9D6AD9401E534C7600DDD9D8 /* Mailbox.swift in Sources */,
 				9D6AD96D1E535ADB00DDD9D8 /* PortalTableViewCell.swift in Sources */,
 				9D6AD93F1E534C7600DDD9D8 /* Portal.swift in Sources */,
+				464F9E861E943D8E009F774A /* CollectionRender.swift in Sources */,
 				9D6AD9691E535A2E00DDD9D8 /* FontRenderer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
