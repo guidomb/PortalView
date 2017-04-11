@@ -44,8 +44,11 @@ extension Component: UIKitRenderer {
     case .segmented(let segments, let style, let layout):
       return SegmentedRenderer(segments: segments, style: style, layout: layout)
         .render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
+        
+    case .progress(let progress, let style, let layout):
+      return ProgressRenderer(progress: progress, style: style, layout: layout)
+        .render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
     }
-    
     
   }
   
