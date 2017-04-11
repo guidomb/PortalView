@@ -44,7 +44,7 @@ public final class PortalCollectionView<MessageType>: UICollectionView, UICollec
         let cell = dequeueReusableCell(with: item.identifier, for: indexPath)
         cell.component = itemRender(at: indexPath)
         cell.isDebugModeEnabled = isDebugModeEnabled
-        cell.render()
+        cell.render(layoutEngine: layoutEngine)
         
         return cell
     }
@@ -99,7 +99,6 @@ fileprivate extension PortalCollectionView {
 
     fileprivate func dequeueReusableCell(with identifier: String, for indexPath: IndexPath) -> PortalCollectionViewCell<MessageType> {
         if let cell = dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? PortalCollectionViewCell<MessageType> {
-            cell.layoutEngine = layoutEngine
             return cell
         } else {
             let cell = PortalCollectionViewCell<MessageType>(layoutEngine: layoutEngine)

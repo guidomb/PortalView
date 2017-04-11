@@ -21,19 +21,11 @@ public final class PortalCollectionViewCell<MessageType>: UICollectionViewCell {
         }
     }
     
-    public var layoutEngine: LayoutEngine? = .none {
-        didSet {
-            if let layoutEngine = layoutEngine {
-                self.renderer = UIKitComponentRenderer(containerView: contentView, layoutEngine: layoutEngine)
-            }
-        }
-    }
-    
-    private var renderer: UIKitComponentRenderer<MessageType>? = .none
+    fileprivate var renderer: UIKitComponentRenderer<MessageType>? = .none
     
     public init(layoutEngine: LayoutEngine) {
         super.init(frame: .zero)
-        self.renderer = UIKitComponentRenderer(containerView: contentView, layoutEngine: layoutEngine)
+        createRenderer(layoutEngine: layoutEngine)
     }
     
     public override init(frame: CGRect) {
@@ -44,14 +36,26 @@ public final class PortalCollectionViewCell<MessageType>: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func render() {
+    public func render(layoutEngine: LayoutEngine) {
         // TODO check if we need to do something about after layout hooks
         // TODO improve rendering performance by avoiding allocations.
         // Renderers should be able to reuse view objects instead of having
         // to allocate new ones if possible.
+        if renderer == nil {
+            createRenderer(layoutEngine: layoutEngine)
+        }
+        
         if let component = self.component, let componentMailbox = renderer?.render(component: component) {
             componentMailbox.forward(to: mailbox)
         }
+    }
+    
+}
+
+fileprivate extension PortalCollectionViewCell {
+    
+    fileprivate func createRenderer(layoutEngine: LayoutEngine) {
+        renderer = UIKitComponentRenderer(containerView: contentView, layoutEngine: layoutEngine)
     }
     
 }
