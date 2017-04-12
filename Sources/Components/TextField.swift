@@ -10,23 +10,23 @@ import Foundation
 
 public struct TextFieldProperties<MessageType> {
     
-    public var text: String
-    public var textAfterLayout: String?
+    public var text: String?
+    public var placeholder: String?
     public var onEvents: OnTextFieldEvents<MessageType>
     
     fileprivate init(
-        text: String = "",
-        textAfterLayout: String? = .none,
+        text: String? = .none,
+        placeholder: String? = .none,
         onEvents: OnTextFieldEvents<MessageType> = OnTextFieldEvents() ) {
         self.text = text
-        self.textAfterLayout = textAfterLayout
+        self.placeholder = placeholder
         self.onEvents = onEvents
     }
     
     public func map<NewMessageType>(_ transform: (MessageType) -> NewMessageType) -> TextFieldProperties<NewMessageType> {
         return TextFieldProperties<NewMessageType>(
             text: self.text,
-            textAfterLayout: self.textAfterLayout,
+            placeholder: self.placeholder,
             onEvents: self.onEvents.map(transform)
         )
     }

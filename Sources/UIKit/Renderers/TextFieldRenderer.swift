@@ -16,6 +16,7 @@ internal struct TextFieldRenderer<MessageType>: UIKitRenderer {
     
     func render(with layoutEngine: LayoutEngine, isDebugModeEnabled: Bool) -> Render<MessageType> {
         let textField = UITextField()
+        textField.placeholder = properties.placeholder
         textField.text = properties.text
         
         textField.apply(style: style.base)
@@ -33,14 +34,7 @@ internal struct TextFieldRenderer<MessageType>: UIKitRenderer {
             properties.onEvents.onEditingEnd |> { _ = textField.dispatch(message: $0, for: .editingDidEnd, with: mailbox) }
         }
         
-        
-        return Render(view: textField, mailbox: mailbox) {
-            if let textAfterLayout = self.properties.textAfterLayout, let size = textField.maximumFontSizeForWidth() {
-                textField.text = textAfterLayout
-                textField.font = textField.font!.withSize(size)
-                textField.adjustsFontSizeToFitWidth = false
-            }
-        }
+        return Render(view: textField, mailbox: mailbox)
     }
     
 }
@@ -51,7 +45,7 @@ extension UITextField {
         let size = CGFloat(style.textSize)
         style.textFont.uiFont(withSize: size)     |> { self.font = $0 }
         style.textColor                           |> { self.textColor = $0.asUIColor }
-        self.textAlignment = style.textAligment.asNSTextAligment
+        style.textAligment                        |> { self.textAlignment = $0.asNSTextAligment }
     }
     
 }
@@ -65,13 +59,4 @@ extension UITextField {
         return dispatcher.mailbox
     }
     
-}
-
-extension UITextField {
-    
-    fileprivate func maximumFontSizeForWidth() -> CGFloat? {
-        guard let text = self.text else { return .none }
-        return text.maximumFontSize(forWidth: self.frame.width, font: self.font!)
-    }
-
 }
