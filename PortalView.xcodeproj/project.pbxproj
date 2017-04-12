@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		464F9E861E943D8E009F774A /* CollectionRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E851E943D8E009F774A /* CollectionRender.swift */; };
+		464F9E861E943D8E009F774A /* CollectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E851E943D8E009F774A /* CollectionRenderer.swift */; };
 		464F9E8A1E944051009F774A /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E891E944051009F774A /* Collection.swift */; };
 		464F9E8C1E944634009F774A /* PortalCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E8B1E944634009F774A /* PortalCollectionView.swift */; };
 		464F9E8E1E94464F009F774A /* PortalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E8D1E94464F009F774A /* PortalCollectionViewCell.swift */; };
@@ -65,7 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		464F9E851E943D8E009F774A /* CollectionRender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionRender.swift; path = Sources/UIKit/Renderers/CollectionRender.swift; sourceTree = "<group>"; };
+		464F9E851E943D8E009F774A /* CollectionRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionRenderer.swift; path = Sources/UIKit/Renderers/CollectionRenderer.swift; sourceTree = "<group>"; };
 		464F9E891E944051009F774A /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Collection.swift; path = Sources/Components/Collection.swift; sourceTree = "<group>"; };
 		464F9E8B1E944634009F774A /* PortalCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PortalCollectionView.swift; path = Sources/UIKit/PortalCollectionView.swift; sourceTree = "<group>"; };
 		464F9E8D1E94464F009F774A /* PortalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PortalCollectionViewCell.swift; path = Sources/UIKit/PortalCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -235,7 +235,7 @@
 				9D6AD97E1E535FE000DDD9D8 /* NavigationBarTitleRenderer.swift */,
 				9D7824021E92A27C004455B1 /* TouchableRenderer.swift */,
 				D86738761E9437F600B42F37 /* SegmentedRenderer.swift */,
-				464F9E851E943D8E009F774A /* CollectionRender.swift */,
+				464F9E851E943D8E009F774A /* CollectionRenderer.swift */,
 				9D93F21F1E9C4FBB00B36914 /* ComponentRenderer.swift */,
 			);
 			name = Renderers;
@@ -392,7 +392,7 @@
 				9D6AD9401E534C7600DDD9D8 /* Mailbox.swift in Sources */,
 				9D6AD96D1E535ADB00DDD9D8 /* PortalTableViewCell.swift in Sources */,
 				9D6AD93F1E534C7600DDD9D8 /* Portal.swift in Sources */,
-				464F9E861E943D8E009F774A /* CollectionRender.swift in Sources */,
+				464F9E861E943D8E009F774A /* CollectionRenderer.swift in Sources */,
 				9D6AD9691E535A2E00DDD9D8 /* FontRenderer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
