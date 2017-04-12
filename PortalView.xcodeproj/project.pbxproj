@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		52DB3C1B1E9BBD270078373D /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DB3C1A1E9BBD270078373D /* TextField.swift */; };
-		52DB3C1D1E9BBF0C0078373D /* TextFieldRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DB3C1C1E9BBF0C0078373D /* TextFieldRenderer.swift */; };
+		52DB3C1F1E9E483F0078373D /* TextFieldRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DB3C1E1E9E483F0078373D /* TextFieldRenderer.swift */; };
+		52DB3C211E9E48480078373D /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DB3C201E9E48480078373D /* TextField.swift */; };
 		9D66880E1E534BDE0090008B /* PortalView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D6688041E534BDE0090008B /* PortalView.framework */; };
 		9D6AD93E1E534C7600DDD9D8 /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9341E534C7600DDD9D8 /* StyleSheet.swift */; };
 		9D6AD93F1E534C7600DDD9D8 /* Portal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9351E534C7600DDD9D8 /* Portal.swift */; };
@@ -63,8 +63,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		52DB3C1A1E9BBD270078373D /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
-		52DB3C1C1E9BBF0C0078373D /* TextFieldRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldRenderer.swift; sourceTree = "<group>"; };
+		52DB3C1E1E9E483F0078373D /* TextFieldRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextFieldRenderer.swift; path = Sources/UIKit/Renderers/TextFieldRenderer.swift; sourceTree = "<group>"; };
+		52DB3C201E9E48480078373D /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = Sources/Components/TextField.swift; sourceTree = "<group>"; };
 		9D6688041E534BDE0090008B /* PortalView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PortalView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D66880D1E534BDE0090008B /* PortalViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PortalViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D6AD9341E534C7600DDD9D8 /* StyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StyleSheet.swift; path = Sources/StyleSheet.swift; sourceTree = "<group>"; };
@@ -192,9 +192,9 @@
 				9D6AD94F1E534CAF00DDD9D8 /* MapView.swift */,
 				9D6AD9501E534CAF00DDD9D8 /* Label.swift */,
 				9D6AD9511E534CAF00DDD9D8 /* Image.swift */,
+				52DB3C201E9E48480078373D /* TextField.swift */,
 				9D6AD9521E534CAF00DDD9D8 /* Button.swift */,
 				D86738741E94374300B42F37 /* Segmented.swift */,
-				52DB3C1A1E9BBD270078373D /* TextField.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -220,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				9D6AD9641E53581000DDD9D8 /* LabelRenderer.swift */,
+				52DB3C1E1E9E483F0078373D /* TextFieldRenderer.swift */,
 				9D6AD9661E53589600DDD9D8 /* ButtonRenderer.swift */,
 				9D6AD9681E535A2E00DDD9D8 /* FontRenderer.swift */,
 				9D6AD9701E535B7600DDD9D8 /* TableRenderer.swift */,
@@ -230,7 +231,6 @@
 				9D6AD97E1E535FE000DDD9D8 /* NavigationBarTitleRenderer.swift */,
 				9D7824021E92A27C004455B1 /* TouchableRenderer.swift */,
 				D86738761E9437F600B42F37 /* SegmentedRenderer.swift */,
-				52DB3C1C1E9BBF0C0078373D /* TextFieldRenderer.swift */,
 			);
 			name = Renderers;
 			sourceTree = "<group>";
@@ -358,6 +358,7 @@
 				9D6AD9561E534CAF00DDD9D8 /* Label.swift in Sources */,
 				9D6AD9411E534C7600DDD9D8 /* LayoutEngine.swift in Sources */,
 				9D6AD9811E53612500DDD9D8 /* UIKitComponentManager.swift in Sources */,
+				52DB3C211E9E48480078373D /* TextField.swift in Sources */,
 				9D6AD9771E535DDA00DDD9D8 /* ImageViewRenderer.swift in Sources */,
 				D86738751E94374300B42F37 /* Segmented.swift in Sources */,
 				9D6AD9571E534CAF00DDD9D8 /* Image.swift in Sources */,
@@ -367,14 +368,13 @@
 				9D6AD9791E535E5100DDD9D8 /* UIKitRenderer.swift in Sources */,
 				9D6AD9541E534CAF00DDD9D8 /* NavigationBar.swift in Sources */,
 				9D6AD9711E535B7600DDD9D8 /* TableRenderer.swift in Sources */,
-				52DB3C1D1E9BBF0C0078373D /* TextFieldRenderer.swift in Sources */,
 				9D6AD9751E535D8000DDD9D8 /* ContainerRenderer.swift in Sources */,
 				9D6AD97F1E535FE000DDD9D8 /* NavigationBarTitleRenderer.swift in Sources */,
 				9D6AD94B1E534C9700DDD9D8 /* PortalMapView.swift in Sources */,
 				9D6AD96B1E535A9B00DDD9D8 /* PortalTableView.swift in Sources */,
 				9D6AD9731E535C0300DDD9D8 /* MapViewRenderer.swift in Sources */,
 				9D6AD9581E534CAF00DDD9D8 /* Button.swift in Sources */,
-				52DB3C1B1E9BBD270078373D /* TextField.swift in Sources */,
+				52DB3C1F1E9E483F0078373D /* TextFieldRenderer.swift in Sources */,
 				9D6AD97B1E535F2000DDD9D8 /* ComponentRenderer.swift in Sources */,
 				9D6AD9531E534CAF00DDD9D8 /* Table.swift in Sources */,
 				9D6AD96F1E535B1E00DDD9D8 /* PortalViewController.swift in Sources */,
