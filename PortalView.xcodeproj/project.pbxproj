@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52DB3C1F1E9E483F0078373D /* TextFieldRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DB3C1E1E9E483F0078373D /* TextFieldRenderer.swift */; };
+		52DB3C211E9E48480078373D /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DB3C201E9E48480078373D /* TextField.swift */; };
 		464F9E861E943D8E009F774A /* CollectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E851E943D8E009F774A /* CollectionRenderer.swift */; };
 		464F9E8A1E944051009F774A /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E891E944051009F774A /* Collection.swift */; };
 		464F9E8C1E944634009F774A /* PortalCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E8B1E944634009F774A /* PortalCollectionView.swift */; };
@@ -65,6 +67,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		52DB3C1E1E9E483F0078373D /* TextFieldRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextFieldRenderer.swift; path = Sources/UIKit/Renderers/TextFieldRenderer.swift; sourceTree = "<group>"; };
+		52DB3C201E9E48480078373D /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = Sources/Components/TextField.swift; sourceTree = "<group>"; };
 		464F9E851E943D8E009F774A /* CollectionRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionRenderer.swift; path = Sources/UIKit/Renderers/CollectionRenderer.swift; sourceTree = "<group>"; };
 		464F9E891E944051009F774A /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Collection.swift; path = Sources/Components/Collection.swift; sourceTree = "<group>"; };
 		464F9E8B1E944634009F774A /* PortalCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PortalCollectionView.swift; path = Sources/UIKit/PortalCollectionView.swift; sourceTree = "<group>"; };
@@ -198,6 +202,7 @@
 				9D6AD94F1E534CAF00DDD9D8 /* MapView.swift */,
 				9D6AD9501E534CAF00DDD9D8 /* Label.swift */,
 				9D6AD9511E534CAF00DDD9D8 /* Image.swift */,
+				52DB3C201E9E48480078373D /* TextField.swift */,
 				9D6AD9521E534CAF00DDD9D8 /* Button.swift */,
 				D86738741E94374300B42F37 /* Segmented.swift */,
 				464F9E891E944051009F774A /* Collection.swift */,
@@ -226,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				9D6AD9641E53581000DDD9D8 /* LabelRenderer.swift */,
+				52DB3C1E1E9E483F0078373D /* TextFieldRenderer.swift */,
 				9D6AD9661E53589600DDD9D8 /* ButtonRenderer.swift */,
 				9D6AD9681E535A2E00DDD9D8 /* FontRenderer.swift */,
 				9D6AD9701E535B7600DDD9D8 /* TableRenderer.swift */,
@@ -365,6 +371,7 @@
 				9D6AD9561E534CAF00DDD9D8 /* Label.swift in Sources */,
 				9D6AD9411E534C7600DDD9D8 /* LayoutEngine.swift in Sources */,
 				9D6AD9811E53612500DDD9D8 /* UIKitComponentManager.swift in Sources */,
+				52DB3C211E9E48480078373D /* TextField.swift in Sources */,
 				9D6AD9771E535DDA00DDD9D8 /* ImageViewRenderer.swift in Sources */,
 				D86738751E94374300B42F37 /* Segmented.swift in Sources */,
 				9D6AD9571E534CAF00DDD9D8 /* Image.swift in Sources */,
@@ -383,6 +390,8 @@
 				9D6AD96B1E535A9B00DDD9D8 /* PortalTableView.swift in Sources */,
 				9D6AD9731E535C0300DDD9D8 /* MapViewRenderer.swift in Sources */,
 				9D6AD9581E534CAF00DDD9D8 /* Button.swift in Sources */,
+				52DB3C1F1E9E483F0078373D /* TextFieldRenderer.swift in Sources */,
+				9D6AD97B1E535F2000DDD9D8 /* ComponentRenderer.swift in Sources */,
 				9D6AD9531E534CAF00DDD9D8 /* Table.swift in Sources */,
 				9D6AD96F1E535B1E00DDD9D8 /* PortalViewController.swift in Sources */,
 				9D93F2201E9C4FBB00B36914 /* ComponentRenderer.swift in Sources */,
