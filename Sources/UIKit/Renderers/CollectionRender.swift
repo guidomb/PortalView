@@ -8,20 +8,21 @@
 
 import UIKit
 
-internal struct CollectionRenderer<MessageType>: UIKitRenderer {
+internal struct CollectionRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIKitRenderer
+    where CustomComponentRendererType.MessageType == MessageType {
     
+    let customComponentRenderer: CustomComponentRendererType
     let properties: CollectionProperties<MessageType>
     let style: StyleSheet<EmptyStyleSheet>
     let layout: Layout
     
     func render(with layoutEngine: LayoutEngine, isDebugModeEnabled: Bool) -> Render<MessageType> {
-        let collectionViewLayout = createFlowLayout(itemsWidth: properties.itemsWidth,
-                                      itemsHeight: properties.itemsHeight,
-                                      minimumInteritemSpacing: properties.minimumInteritemSpacing,
-                                      minimumLineSpacing: properties.minimumLineSpacing,
-                                      scrollDirection: properties.scrollDirection,
-                                      sectionInset: properties.sectionInset)
-        let collectionView = PortalCollectionView(items: properties.items, layoutEngine: layoutEngine, layout: collectionViewLayout)
+        let collectionView = PortalCollectionView(
+            items: properties.items,
+            customComponentRenderer: customComponentRenderer,
+            layoutEngine: layoutEngine,
+            layout: createFlowLayout()
+        )
         
         collectionView.isDebugModeEnabled = isDebugModeEnabled
         collectionView.isSnapToCellEnabled = properties.isSnapToCellEnabled
@@ -34,19 +35,19 @@ internal struct CollectionRenderer<MessageType>: UIKitRenderer {
         return Render(view: collectionView, mailbox: collectionView.mailbox)
     }
     
-    func createFlowLayout(itemsWidth: UInt,
-                          itemsHeight: UInt,
-                          minimumInteritemSpacing: UInt,
-                          minimumLineSpacing: UInt,
-                          scrollDirection: CollectionScrollDirection,
-                          sectionInset: SectionInset) -> UICollectionViewFlowLayout {
+    func createFlowLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: CGFloat(itemsWidth), height: CGFloat(itemsHeight))
-        layout.minimumInteritemSpacing = CGFloat(minimumInteritemSpacing)
-        layout.minimumLineSpacing = CGFloat(minimumLineSpacing)
-        layout.sectionInset = UIEdgeInsets(top: CGFloat(sectionInset.top), left: CGFloat(sectionInset.left), bottom: CGFloat(sectionInset.bottom), right: CGFloat(sectionInset.right))
+        layout.itemSize = CGSize(width: CGFloat(properties.itemsWidth), height: CGFloat(properties.itemsHeight))
+        layout.minimumInteritemSpacing = CGFloat(properties.minimumInteritemSpacing)
+        layout.minimumLineSpacing = CGFloat(properties.minimumLineSpacing)
+        layout.sectionInset = UIEdgeInsets(
+            top: CGFloat(properties.sectionInset.top),
+            left: CGFloat(properties.sectionInset.left),
+            bottom: CGFloat(properties.sectionInset.bottom),
+            right: CGFloat(properties.sectionInset.right)
+        )
         
-        switch scrollDirection {
+        switch properties.scrollDirection {
         case .horizontal:
             layout.scrollDirection = .horizontal
         default:

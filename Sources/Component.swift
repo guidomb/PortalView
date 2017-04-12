@@ -45,7 +45,7 @@ public indirect enum Component<MessageType> {
     case collection(CollectionProperties<MessageType>, StyleSheet<EmptyStyleSheet>, Layout)
     case touchable(gesture: Gesture<MessageType>, child: Component<MessageType>)
     case segmented(ZipList<SegmentProperties<MessageType>>, StyleSheet<SegmentedStyleSheet>, Layout)
-    //    case custom(ComponentProtocol, ComponentRenderer)
+    case custom(componentIdentifier: String, layout: Layout)
     
     public var layout: Layout {
         switch self {
@@ -76,6 +76,10 @@ public indirect enum Component<MessageType> {
             
         case .collection(_, _, let layout):
             return layout
+
+        case .custom(_, let layout):
+            return layout
+            
         }
     }
     
@@ -112,6 +116,25 @@ extension Component {
 
         case .collection(let properties, let style, let layout):
             return .collection(properties.map(transform), style, layout)
+            
+        case .custom(let componentIdentifier, let layout):
+            return .custom(componentIdentifier: componentIdentifier, layout: layout)
+            
+        }
+    }
+    
+    public var customComponentIdentifiers: [String] {
+        switch self {
+            
+        case .container(let children, _, _):
+            return children.flatMap { $0.customComponentIdentifiers }
+            
+        case .custom(let componentIdentifier, _):
+            return [componentIdentifier]
+            
+        default:
+            return []
+            
         }
     }
     

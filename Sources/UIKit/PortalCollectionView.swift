@@ -8,7 +8,8 @@
 
 import UIKit
 
-public final class PortalCollectionView<MessageType>: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate {
+public final class PortalCollectionView<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate
+    where CustomComponentRendererType.MessageType == MessageType {
     
     public let mailbox = Mailbox<MessageType>()
     public var isDebugModeEnabled: Bool = false
@@ -18,17 +19,19 @@ public final class PortalCollectionView<MessageType>: UICollectionView, UICollec
     fileprivate let items: [CollectionItemProperties<MessageType>]
     fileprivate var selected: Int = 0
     fileprivate var lastOffset: CGFloat = 0
+    fileprivate let customComponentRenderer: CustomComponentRendererType
     
-    public init(items: [CollectionItemProperties<MessageType>], layoutEngine: LayoutEngine, layout: UICollectionViewLayout) {
+    public init(items: [CollectionItemProperties<MessageType>], customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine, layout: UICollectionViewLayout) {
         self.items = items
         self.layoutEngine = layoutEngine
+        self.customComponentRenderer = customComponentRenderer
         super.init(frame: .zero, collectionViewLayout: layout)
    
         self.dataSource = self
         self.delegate = self
         
         let identifiers = Set(items.map { $0.identifier })
-        identifiers.forEach { register(PortalCollectionViewCell<MessageType>.self, forCellWithReuseIdentifier: $0) }
+        identifiers.forEach { register(PortalCollectionViewCell<MessageType, CustomComponentRendererType>.self, forCellWithReuseIdentifier: $0) }
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -41,12 +44,14 @@ public final class PortalCollectionView<MessageType>: UICollectionView, UICollec
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = items[indexPath.row]
-        let cell = dequeueReusableCell(with: item.identifier, for: indexPath)
-        cell.component = itemRender(at: indexPath)
-        cell.isDebugModeEnabled = isDebugModeEnabled
-        cell.render(layoutEngine: layoutEngine)
-        
-        return cell
+        if let cell = dequeueReusableCell(with: item.identifier, for: indexPath) {
+            cell.component = itemRender(at: indexPath)
+            cell.isDebugModeEnabled = isDebugModeEnabled
+            cell.render(customComponentRenderer: customComponentRenderer, layoutEngine: layoutEngine)
+            return cell
+        } else {
+            return UICollectionViewCell()
+        }
     }
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -97,13 +102,12 @@ fileprivate extension PortalCollectionView {
         }
     }
 
-    fileprivate func dequeueReusableCell(with identifier: String, for indexPath: IndexPath) -> PortalCollectionViewCell<MessageType> {
-        if let cell = dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? PortalCollectionViewCell<MessageType> {
+    fileprivate func dequeueReusableCell(with identifier: String, for indexPath: IndexPath) -> PortalCollectionViewCell<MessageType, CustomComponentRendererType>? {
+        if let cell = dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? PortalCollectionViewCell<MessageType, CustomComponentRendererType> {
+            cell.forward(to: mailbox)
             return cell
         } else {
-            let cell = PortalCollectionViewCell<MessageType>(layoutEngine: layoutEngine)
-            cell.mailbox.forward(to: mailbox)
-            return cell
+            return .none
         }
     }
     

@@ -8,13 +8,16 @@
 
 import UIKit
 
-internal struct TouchableRenderer<MessageType>: UIKitRenderer {
+internal struct TouchableRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIKitRenderer
+    where CustomComponentRendererType.MessageType == MessageType {
     
+    let customComponentRenderer: CustomComponentRendererType
     let child: Component<MessageType>
     let gesture: Gesture<MessageType>
     
     func render(with layoutEngine: LayoutEngine, isDebugModeEnabled: Bool) -> Render<MessageType> {
-        var result = child.render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
+        let renderer = ComponentRenderer(component: child, customComponentRenderer: customComponentRenderer)
+        var result = renderer.render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
         
         result.view.isUserInteractionEnabled = true
         

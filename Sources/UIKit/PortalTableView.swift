@@ -8,11 +8,13 @@
 
 import UIKit
 
-public final class PortalTableView<MessageType>: UITableView, UITableViewDataSource, UITableViewDelegate {
+public final class PortalTableView<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UITableView, UITableViewDataSource, UITableViewDelegate
+    where CustomComponentRendererType.MessageType == MessageType {
     
     public let mailbox = Mailbox<MessageType>()
     public var isDebugModeEnabled: Bool = false
     
+    fileprivate let customComponentRenderer: CustomComponentRendererType
     fileprivate let layoutEngine: LayoutEngine
     fileprivate let items: [TableItemProperties<MessageType>]
     
@@ -21,7 +23,8 @@ public final class PortalTableView<MessageType>: UITableView, UITableViewDataSou
     // cells have dynamic height.
     fileprivate var cellHeights: [CGFloat?]
     
-    public init(items: [TableItemProperties<MessageType>], layoutEngine: LayoutEngine) {
+    public init(items: [TableItemProperties<MessageType>], customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine) {
+        self.customComponentRenderer = customComponentRenderer
         self.items = items
         self.layoutEngine = layoutEngine
         self.cellHeights = Array(repeating: .none, count: items.count)
@@ -91,11 +94,15 @@ public final class PortalTableView<MessageType>: UITableView, UITableViewDataSou
 
 fileprivate extension PortalTableView {
     
-    fileprivate func dequeueReusableCell(with identifier: String) -> PortalTableViewCell<MessageType> {
-        if let cell = dequeueReusableCell(withIdentifier: identifier) as? PortalTableViewCell<MessageType> {
+    fileprivate func dequeueReusableCell(with identifier: String) -> PortalTableViewCell<MessageType, CustomComponentRendererType> {
+        if let cell = dequeueReusableCell(withIdentifier: identifier) as? PortalTableViewCell<MessageType, CustomComponentRendererType> {
             return cell
         } else {
-            let cell = PortalTableViewCell<MessageType>(reuseIdentifier: identifier, layoutEngine: layoutEngine)
+            let cell = PortalTableViewCell<MessageType, CustomComponentRendererType>(
+                reuseIdentifier: identifier,
+                customComponentRenderer: customComponentRenderer,
+                layoutEngine: layoutEngine
+            )
             cell.mailbox.forward(to: mailbox)
             return cell
         }

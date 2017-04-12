@@ -8,7 +8,8 @@
 
 import UIKit
 
-public final class PortalTableViewCell<MessageType>: UITableViewCell {
+public final class PortalTableViewCell<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UITableViewCell
+    where CustomComponentRendererType.MessageType == MessageType  {
     
     public let mailbox = Mailbox<MessageType>()
     public var component: Component<MessageType>? = .none
@@ -21,11 +22,15 @@ public final class PortalTableViewCell<MessageType>: UITableViewCell {
         }
     }
     
-    private var renderer: UIKitComponentRenderer<MessageType>? = .none
+    private var renderer: UIKitComponentRenderer<MessageType, CustomComponentRendererType>? = .none
     
-    public init(reuseIdentifier: String, layoutEngine: LayoutEngine) {
+    public init(reuseIdentifier: String, customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        self.renderer = UIKitComponentRenderer(containerView: contentView, layoutEngine: layoutEngine)
+        self.renderer = UIKitComponentRenderer(
+            containerView: contentView,
+            customComponentRenderer: customComponentRenderer,
+            layoutEngine: layoutEngine
+        )
     }
     
     required public init?(coder aDecoder: NSCoder) {

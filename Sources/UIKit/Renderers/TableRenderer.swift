@@ -8,14 +8,20 @@
 
 import UIKit
 
-internal struct TableRenderer<MessageType>: UIKitRenderer {
+internal struct TableRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIKitRenderer
+    where CustomComponentRendererType.MessageType == MessageType {
     
+    let customComponentRenderer: CustomComponentRendererType
     let properties: TableProperties<MessageType>
     let style: StyleSheet<TableStyleSheet>
     let layout: Layout
     
     func render(with layoutEngine: LayoutEngine, isDebugModeEnabled: Bool) -> Render<MessageType> {
-        let table = PortalTableView(items: properties.items, layoutEngine: layoutEngine)
+        let table = PortalTableView(
+            items: properties.items,
+            customComponentRenderer: customComponentRenderer,
+            layoutEngine: layoutEngine
+        )
         
         table.isDebugModeEnabled = isDebugModeEnabled
         table.showsVerticalScrollIndicator = properties.showsVerticalScrollIndicator

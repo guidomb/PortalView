@@ -8,10 +8,10 @@
 
 import UIKit
 
-public final class PortalViewController<MessageType, RendererType: Renderer>: UIViewController
-    where RendererType.MessageType == MessageType {
+public final class PortalViewController<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIViewController
+    where CustomComponentRendererType.MessageType == MessageType {
     
-    public typealias RendererFactory = (UIView) -> RendererType
+    public typealias RendererFactory = (UIView) -> UIKitComponentRenderer<MessageType, CustomComponentRendererType>
     
     public var component: Component<MessageType>
     public let mailbox = Mailbox<MessageType>()
@@ -26,6 +26,12 @@ public final class PortalViewController<MessageType, RendererType: Renderer>: UI
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func loadView() {
+        super.loadView()
+        let renderer = createRenderer(view).customComponentRenderer
+        component.customComponentIdentifiers.forEach { renderer.handleInitialization(of: self, forComponent: $0) }
     }
     
     public override func viewDidLoad() {

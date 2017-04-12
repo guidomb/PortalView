@@ -8,9 +8,9 @@
 
 import UIKit
 
-public final class PortalCollectionViewCell<MessageType>: UICollectionViewCell {
+public final class PortalCollectionViewCell<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UICollectionViewCell
+    where CustomComponentRendererType.MessageType == MessageType {
     
-    public let mailbox = Mailbox<MessageType>()
     public var component: Component<MessageType>? = .none
     public var isDebugModeEnabled: Bool {
         set {
@@ -21,12 +21,10 @@ public final class PortalCollectionViewCell<MessageType>: UICollectionViewCell {
         }
     }
     
-    fileprivate var renderer: UIKitComponentRenderer<MessageType>? = .none
+    fileprivate var renderer: UIKitComponentRenderer<MessageType, CustomComponentRendererType>? = .none
     
-    public init(layoutEngine: LayoutEngine) {
-        super.init(frame: .zero)
-        createRenderer(layoutEngine: layoutEngine)
-    }
+    private let mailbox = Mailbox<MessageType>()
+    private var mailboxForwarded = false
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,13 +34,13 @@ public final class PortalCollectionViewCell<MessageType>: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func render(layoutEngine: LayoutEngine) {
+    public func render(customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine) {
         // TODO check if we need to do something about after layout hooks
         // TODO improve rendering performance by avoiding allocations.
         // Renderers should be able to reuse view objects instead of having
         // to allocate new ones if possible.
         if renderer == nil {
-            createRenderer(layoutEngine: layoutEngine)
+            createRenderer(customComponentRenderer: customComponentRenderer, layoutEngine: layoutEngine)
         }
         
         if let component = self.component, let componentMailbox = renderer?.render(component: component) {
@@ -50,12 +48,23 @@ public final class PortalCollectionViewCell<MessageType>: UICollectionViewCell {
         }
     }
     
+    public func forward(to mailbox: Mailbox<MessageType>) {
+        guard !mailboxForwarded else { return }
+        
+        self.mailbox.forward(to: mailbox)
+        mailboxForwarded = true
+    }
+    
 }
 
 fileprivate extension PortalCollectionViewCell {
     
-    fileprivate func createRenderer(layoutEngine: LayoutEngine) {
-        renderer = UIKitComponentRenderer(containerView: contentView, layoutEngine: layoutEngine)
+    fileprivate func createRenderer(customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine) {
+        renderer = UIKitComponentRenderer(
+            containerView: contentView,
+            customComponentRenderer: customComponentRenderer,
+            layoutEngine: layoutEngine
+        )
     }
     
 }

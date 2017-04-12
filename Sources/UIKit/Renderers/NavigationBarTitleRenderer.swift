@@ -8,8 +8,10 @@
 
 import UIKit
 
-internal struct NavigationBarTitleRenderer<MessageType> {
+internal struct NavigationBarTitleRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>
+    where CustomComponentRendererType.MessageType == MessageType {
     
+    let customComponentRenderer: CustomComponentRendererType
     let navigationBarTitle: NavigationBarTitle<MessageType>
     let navigationItem: UINavigationItem
     let navigationBarSize: CGSize
@@ -28,7 +30,11 @@ internal struct NavigationBarTitleRenderer<MessageType> {
         case .component(let titleComponent):
             let titleView = UIView(frame: CGRect(origin: .zero, size: navigationBarSize))
             navigationItem.titleView = titleView
-            var renderer = UIKitComponentRenderer<MessageType>(containerView: titleView, layoutEngine: layoutEngine)
+            var renderer = UIKitComponentRenderer<MessageType, CustomComponentRendererType>(
+                containerView: titleView,
+                customComponentRenderer: customComponentRenderer,
+                layoutEngine: layoutEngine
+            )
             renderer.isDebugModeEnabled = isDebugModeEnabled
             return renderer.render(component: titleComponent)
         }
