@@ -12,12 +12,12 @@ public struct TextFieldProperties<MessageType> {
     
     public var text: String?
     public var placeholder: String?
-    public var onEvents: OnTextFieldEvents<MessageType>
+    public var onEvents: TextFieldEvents<MessageType>
     
     fileprivate init(
         text: String? = .none,
         placeholder: String? = .none,
-        onEvents: OnTextFieldEvents<MessageType> = OnTextFieldEvents() ) {
+        onEvents: TextFieldEvents<MessageType> = TextFieldEvents<MessageType>() ) {
         self.text = text
         self.placeholder = placeholder
         self.onEvents = onEvents
@@ -33,7 +33,7 @@ public struct TextFieldProperties<MessageType> {
     
 }
 
-public struct OnTextFieldEvents<MessageType> {
+public struct TextFieldEvents<MessageType> {
     
     public var onEditingBegin: MessageType?
     public var onEditingChanged: MessageType?
@@ -48,14 +48,20 @@ public struct OnTextFieldEvents<MessageType> {
         self.onEditingEnd = onEditingEnd
     }
     
-    public func map<NewMessageType>(_ transform: (MessageType) -> NewMessageType) -> OnTextFieldEvents<NewMessageType> {
-        return OnTextFieldEvents<NewMessageType>(
+    public func map<NewMessageType>(_ transform: (MessageType) -> NewMessageType) -> TextFieldEvents<NewMessageType> {
+        return TextFieldEvents<NewMessageType>(
             onEditingBegin: onEditingBegin.map(transform),
             onEditingChanged: onEditingChanged.map(transform),
             onEditingEnd: onEditingEnd.map(transform)
         )
     }
     
+}
+
+public func textFieldEvents<MessageType>(configure: (inout TextFieldEvents<MessageType>) -> ()) -> TextFieldEvents<MessageType> {
+    var events = TextFieldEvents<MessageType>()
+    configure(&events)
+    return events
 }
 
 public func textField<MessageType>(
