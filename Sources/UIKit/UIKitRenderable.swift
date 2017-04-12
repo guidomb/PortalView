@@ -30,6 +30,29 @@ public struct UIImageContainer: ImageType, UIImageConvertible {
         return Size(width: UInt(image.size.width), height: UInt(image.size.height))
     }
     
+    public func doMask(_ mask: UIImageContainer) -> UIImageContainer? {
+        guard let maskRef = mask.asUIImage.cgImage,
+            let provider = mask.asUIImage.cgImage?.dataProvider,
+            let cgImage = image.cgImage else { return .none }
+        
+        let mask = CGImage(
+            maskWidth: maskRef.width,
+            height: maskRef.height,
+            bitsPerComponent: maskRef.bitsPerComponent,
+            bitsPerPixel: maskRef.bitsPerPixel,
+            bytesPerRow: maskRef.bytesPerRow,
+            provider: provider,
+            decode: nil,
+            shouldInterpolate: false
+        )
+        let maskedImage = mask
+            .flatMap(cgImage.masking)
+            .map(UIImage.init)
+            .map(UIImageContainer.init)
+        
+        return maskedImage
+    }
+    
     var asUIImage: UIImage {
         return image
     }
