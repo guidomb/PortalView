@@ -114,6 +114,7 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
                                      didShow viewController: UIViewController, animated: Bool) {
         onControllerDidShow()
         onControllerDidShow = { }
+        onPop = { }
     }
     
 }
