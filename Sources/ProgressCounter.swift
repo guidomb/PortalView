@@ -8,6 +8,8 @@
 
 public struct ProgressCounter {
     
+    public static let initial = ProgressCounter()
+    
     public var partial: UInt
     public let total: UInt
     public var progress: Float {
@@ -15,6 +17,11 @@ public struct ProgressCounter {
     }
     public var remaining: UInt {
         return total - partial
+    }
+    
+    private init() {
+        partial = 0
+        total = 1
     }
     
     public init?(partial: UInt, total: UInt) {

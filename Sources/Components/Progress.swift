@@ -7,7 +7,7 @@
 //
 
 public func progress<MessageType>(
-    progress: ProgressCounter = ProgressCounter(partial: 0, total: 1)!,
+    progress: ProgressCounter = ProgressCounter.initial,
     style: StyleSheet<ProgressStyleSheet> = ProgressStyleSheet.defaultStyleSheet,
     layout: Layout = layout()) -> Component<MessageType> {
     return .progress(progress, style, layout)
