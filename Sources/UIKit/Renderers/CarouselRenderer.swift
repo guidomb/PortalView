@@ -1,37 +1,37 @@
 //
-//  PortalCollectionView.swift
+//  CarouselRenderer.swift
 //  PortalView
 //
-//  Created by Argentino Ducret on 4/4/17.
+//  Created by Cristian Ames on 4/17/17.
 //  Copyright © 2017 Guido Marucci Blas. All rights reserved.
 //
 
 import UIKit
 
-internal struct CollectionRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIKitRenderer
-    where CustomComponentRendererType.MessageType == MessageType {
+internal struct CarouselRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIKitRenderer
+where CustomComponentRendererType.MessageType == MessageType {
     
     let customComponentRenderer: CustomComponentRendererType
-    let properties: CollectionProperties<MessageType>
+    let properties: CarouselProperties<MessageType>
     let style: StyleSheet<EmptyStyleSheet>
     let layout: Layout
     
     func render(with layoutEngine: LayoutEngine, isDebugModeEnabled: Bool) -> Render<MessageType> {
-        let collectionView = PortalCollectionView(
+        let carouselView = PortalCarouselView(
             items: properties.items,
             customComponentRenderer: customComponentRenderer,
             layoutEngine: layoutEngine,
             layout: createFlowLayout()
         )
         
-        collectionView.isDebugModeEnabled = isDebugModeEnabled
-        collectionView.showsHorizontalScrollIndicator = properties.showsHorizontalScrollIndicator
-        collectionView.showsVerticalScrollIndicator = properties.showsVerticalScrollIndicator
+        carouselView.isDebugModeEnabled = isDebugModeEnabled
+        carouselView.isSnapToCellEnabled = properties.isSnapToCellEnabled
+        carouselView.showsHorizontalScrollIndicator = properties.showsScrollIndicator
         
-        collectionView.apply(style: style.base)
-        layoutEngine.apply(layout: layout, to: collectionView)
+        carouselView.apply(style: style.base)
+        layoutEngine.apply(layout: layout, to: carouselView)
         
-        return Render(view: collectionView, mailbox: collectionView.mailbox)
+        return Render(view: carouselView, mailbox: carouselView.mailbox)
     }
     
     func createFlowLayout() -> UICollectionViewFlowLayout {
@@ -46,14 +46,8 @@ internal struct CollectionRenderer<MessageType, CustomComponentRendererType: UIK
             right: CGFloat(properties.sectionInset.right)
         )
         
-        switch properties.scrollDirection {
-        case .horizontal:
-            layout.scrollDirection = .horizontal
-        default:
-            layout.scrollDirection = .vertical
-        }
+        layout.scrollDirection = .horizontal
         
         return layout
     }
 }
-

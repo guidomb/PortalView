@@ -36,7 +36,6 @@ public struct CollectionProperties<MessageType> {
     public var items: [CollectionItemProperties<MessageType>]
     public var showsVerticalScrollIndicator: Bool
     public var showsHorizontalScrollIndicator: Bool
-    public var isSnapToCellEnabled: Bool
     
     // Layout properties
     public var itemsWidth: UInt
@@ -50,7 +49,6 @@ public struct CollectionProperties<MessageType> {
         items: [CollectionItemProperties<MessageType>] = [],
         showsVerticalScrollIndicator: Bool = false,
         showsHorizontalScrollIndicator: Bool = false,
-        isSnapToCellEnabled: Bool = false,
         itemsWidth: UInt,
         itemsHeight: UInt,
         minimumInteritemSpacing: UInt = 0,
@@ -60,7 +58,6 @@ public struct CollectionProperties<MessageType> {
         self.items = items
         self.showsVerticalScrollIndicator = showsVerticalScrollIndicator
         self.showsHorizontalScrollIndicator = showsHorizontalScrollIndicator
-        self.isSnapToCellEnabled = isSnapToCellEnabled
         self.itemsWidth = itemsWidth
         self.itemsHeight = itemsHeight
         self.minimumLineSpacing = minimumLineSpacing
@@ -74,7 +71,6 @@ public struct CollectionProperties<MessageType> {
             items: self.items.map { $0.map(transform) },
             showsVerticalScrollIndicator: self.showsVerticalScrollIndicator,
             showsHorizontalScrollIndicator: self.showsHorizontalScrollIndicator,
-            isSnapToCellEnabled: self.isSnapToCellEnabled,
             itemsWidth: self.itemsWidth,
             itemsHeight: self.itemsHeight,
             minimumInteritemSpacing: self.minimumInteritemSpacing,

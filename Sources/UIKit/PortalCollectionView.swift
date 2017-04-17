@@ -8,18 +8,15 @@
 
 import UIKit
 
-public final class PortalCollectionView<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate
+public class PortalCollectionView<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate
     where CustomComponentRendererType.MessageType == MessageType {
     
     public let mailbox = Mailbox<MessageType>()
     public var isDebugModeEnabled: Bool = false
-    public var isSnapToCellEnabled: Bool = false
     
-    fileprivate let layoutEngine: LayoutEngine
-    fileprivate let items: [CollectionItemProperties<MessageType>]
-    fileprivate var selected: Int = 0
-    fileprivate var lastOffset: CGFloat = 0
-    fileprivate let customComponentRenderer: CustomComponentRendererType
+    let layoutEngine: LayoutEngine
+    let items: [CollectionItemProperties<MessageType>]
+    let customComponentRenderer: CustomComponentRendererType
     
     public init(items: [CollectionItemProperties<MessageType>], customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine, layout: UICollectionViewLayout) {
         self.items = items
@@ -63,44 +60,9 @@ public final class PortalCollectionView<MessageType, CustomComponentRendererType
         item.onTap |> { mailbox.dispatch(message: $0) }
     }
     
-    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        lastOffset = scrollView.contentOffset.x
-    }
-    
-    public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint,
-                                          targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        guard isSnapToCellEnabled else { return }
-        
-        let currentOffset = CGFloat(scrollView.contentOffset.x)
-        
-        if currentOffset == lastOffset {
-            return
-        }
-        
-        let lastPosition = selected
-        if currentOffset > lastOffset {
-            if lastPosition < items.count - 1 {
-                selected = lastPosition + 1 // Move to the right
-                scrollToItem(selected, animated: true)
-            }
-        } else if currentOffset < lastOffset {
-            if lastPosition >= 1 {
-                selected = lastPosition - 1
-                scrollToItem(selected, animated: true) // Move to the left
-            }
-        }
-    }
-    
 }
 
 fileprivate extension PortalCollectionView {
-    
-    fileprivate func scrollToItem(_ position: Int, animated: Bool) {
-        DispatchQueue.main.async {
-            let indexPath = IndexPath(item: position, section: 0)
-            self.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animated)
-        }
-    }
 
     fileprivate func dequeueReusableCell(with identifier: String, for indexPath: IndexPath) -> PortalCollectionViewCell<MessageType, CustomComponentRendererType>? {
         if let cell = dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? PortalCollectionViewCell<MessageType, CustomComponentRendererType> {
