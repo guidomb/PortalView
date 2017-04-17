@@ -8,17 +8,18 @@
 
 import UIKit
 
-public final class PortalNavigationController<MessageType, RendererType: Renderer>: UINavigationController, UINavigationControllerDelegate
-    where RendererType.MessageType == MessageType {
+public final class PortalNavigationController<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UINavigationController, UINavigationControllerDelegate
+    where CustomComponentRendererType.MessageType == MessageType {
     
     public let mailbox = Mailbox<MessageType>()
     public var isDebugModeEnabled: Bool = false
     
-    public var topController: PortalViewController<MessageType, RendererType>? {
-        return self.topViewController as? PortalViewController<MessageType, RendererType>
+    public var topController: PortalViewController<MessageType, CustomComponentRendererType>? {
+        return self.topViewController as? PortalViewController<MessageType, CustomComponentRendererType>
     }
 
     fileprivate let layoutEngine: LayoutEngine
+    fileprivate let customComponentRenderer: CustomComponentRendererType
     
     private let statusBarStyle: UIStatusBarStyle
     private var pushingViewController = false
@@ -26,7 +27,8 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
     private var onControllerDidShow: () -> Void = { }
     private var onPop: (() -> Void)? = .none
     
-    init(layoutEngine: LayoutEngine, statusBarStyle: UIStatusBarStyle = .`default`) {
+    init(customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine, statusBarStyle: UIStatusBarStyle = .`default`) {
+        self.customComponentRenderer = customComponentRenderer
         self.statusBarStyle = statusBarStyle
         self.layoutEngine = layoutEngine
         super.init(nibName: nil, bundle: nil)
@@ -41,7 +43,7 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
         return statusBarStyle
     }
     
-    public func push(controller: PortalViewController<MessageType, RendererType>,
+    public func push(controller: PortalViewController<MessageType, CustomComponentRendererType>,
               with navigationBar: NavigationBar<MessageType>, animated: Bool) {
         pushingViewController = true
         pushViewController(controller, animated: animated)
@@ -68,6 +70,7 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
         
         if let title = navigationBar.properties.title {
             let renderer = NavigationBarTitleRenderer(
+                customComponentRenderer: customComponentRenderer,
                 navigationBarTitle: title,
                 navigationItem: navigationItem,
                 navigationBarSize: self.navigationBar.bounds.size
@@ -111,6 +114,7 @@ public final class PortalNavigationController<MessageType, RendererType: Rendere
                                      didShow viewController: UIViewController, animated: Bool) {
         onControllerDidShow()
         onControllerDidShow = { }
+        onPop = { }
     }
     
 }

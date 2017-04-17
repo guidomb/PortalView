@@ -8,22 +8,54 @@
 
 import UIKit
 
-public struct UIKitComponentRenderer<MessageType>: Renderer {
+public protocol UIKitCustomComponentRenderer {
+    
+    associatedtype MessageType
+    
+    func handleInitialization(of parentController: UIViewController, forComponent componentIdentifier: String)
+    
+    func renderComponent(withIdentifier identifier: String, inside view: UIView, dispatcher: (MessageType) -> Void)
+    
+}
+
+public struct VoidCustomComponentRenderer<MessageType>: UIKitCustomComponentRenderer {
+    
+    public init() {
+        
+    }
+    
+    public func handleInitialization(of parentController: UIViewController, forComponent componentIdentifier: String) {
+        
+    }
+    
+    public func renderComponent(withIdentifier identifier: String, inside view: UIView, dispatcher: (MessageType) -> Void) {
+        
+    }
+}
+
+public struct UIKitComponentRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: Renderer
+    where CustomComponentRendererType.MessageType == MessageType {
     
     public var isDebugModeEnabled: Bool = false
     
-    private let containerView: UIView
-    private let layoutEngine: LayoutEngine
+    internal let layoutEngine: LayoutEngine
+    internal let customComponentRenderer: CustomComponentRendererType
     
-    public init(containerView: UIView, layoutEngine: LayoutEngine = YogaLayoutEngine()) {
+    private let containerView: UIView
+    
+    public init(
+        containerView: UIView,
+        customComponentRenderer: CustomComponentRendererType,
+        layoutEngine: LayoutEngine = YogaLayoutEngine()) {
         self.containerView = containerView
+        self.customComponentRenderer = customComponentRenderer
         self.layoutEngine = layoutEngine
     }
     
     public func render(component: Component<MessageType>) -> Mailbox<MessageType> {
-        
         containerView.subviews.forEach { $0.removeFromSuperview() }
-        let renderResult = component.render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
+        let renderer = ComponentRenderer(component: component, customComponentRenderer: customComponentRenderer)
+        let renderResult = renderer.render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
         renderResult.view.managedByPortal = true
         layoutEngine.layout(view: renderResult.view, inside: containerView)
         renderResult.afterLayout?()
