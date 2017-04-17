@@ -30,7 +30,7 @@ public struct UIImageContainer: ImageType, UIImageConvertible {
         return Size(width: UInt(image.size.width), height: UInt(image.size.height))
     }
     
-    public func doMask(_ mask: UIImageContainer) -> UIImageContainer? {
+    public func applyMask(_ mask: UIImageContainer) -> UIImageContainer? {
         guard let maskRef = mask.asUIImage.cgImage,
             let provider = mask.asUIImage.cgImage?.dataProvider,
             let cgImage = image.cgImage else { return .none }
