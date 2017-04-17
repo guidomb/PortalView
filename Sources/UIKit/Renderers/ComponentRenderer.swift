@@ -68,6 +68,10 @@ internal struct ComponentRenderer<MessageType, CustomComponentRendererType: UIKi
                 style: style,
                 layout: layout
             ).render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
+            
+        case .progress(let progress, let style, let layout):
+            return ProgressRenderer(progress: progress, style: style, layout: layout)
+                .render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
 
         case .custom(let componentIdentifier, let layout):
             let customComponentContainerView = UIView()
@@ -80,7 +84,7 @@ internal struct ComponentRenderer<MessageType, CustomComponentRendererType: UIKi
                     dispatcher: mailbox.dispatch
                 )
             }
-
+            
         }
     }
 
