@@ -9,11 +9,32 @@
 import Foundation
 import UIKit
 
+public enum ZipListShiftOperation {
+    
+    case left(count: UInt)
+    case right(count: UInt)
+    
+}
+
+public extension ZipList {
+    
+    func execute(shiftOperation: ZipListShiftOperation) -> ZipList<Element>? {
+        switch shiftOperation {
+        case .left(let count):
+            return self.shiftLeft(count: count)
+        case .right(let count):
+            return self.shiftRight(count: count)
+        }
+    }
+    
+}
+
 public struct CarouselProperties<MessageType> {
     
     public var items: ZipList<CarouselItemProperties<MessageType>>?
     public var showsScrollIndicator: Bool
     public var isSnapToCellEnabled: Bool
+    public var onSelectionChange: (ZipListShiftOperation) -> MessageType?
     
     // Layout properties
     public var itemsWidth: UInt
@@ -31,7 +52,8 @@ public struct CarouselProperties<MessageType> {
         minimumInteritemSpacing: UInt = 0,
         minimumLineSpacing: UInt = 0,
         sectionInset: SectionInset = .zero,
-        selected: UInt = 0) {
+        selected: UInt = 0,
+        onSelectionChange: @escaping (ZipListShiftOperation) -> MessageType? = { _ in .none }) {
         self.items = items
         self.showsScrollIndicator = showsScrollIndicator
         self.isSnapToCellEnabled = isSnapToCellEnabled
@@ -40,6 +62,7 @@ public struct CarouselProperties<MessageType> {
         self.minimumLineSpacing = minimumLineSpacing
         self.minimumInteritemSpacing = minimumInteritemSpacing
         self.sectionInset = sectionInset
+        self.onSelectionChange = onSelectionChange
     }
     
     public func map<NewMessageType>(_ transform: @escaping (MessageType) -> NewMessageType) -> CarouselProperties<NewMessageType> {
@@ -51,7 +74,9 @@ public struct CarouselProperties<MessageType> {
             itemsHeight: self.itemsHeight,
             minimumInteritemSpacing: self.minimumInteritemSpacing,
             minimumLineSpacing: self.minimumLineSpacing,
-            sectionInset: self.sectionInset)
+            sectionInset: self.sectionInset,
+            onSelectionChange: { self.onSelectionChange($0).map(transform) }
+        )
     }
     
 }
@@ -61,17 +86,14 @@ public struct CarouselItemProperties<MessageType> {
     public typealias Renderer = () -> Component<MessageType>
     
     public let onTap: MessageType?
-    public let onScrolled: MessageType?
     public let renderer: Renderer
     public let identifier: String
     
     fileprivate init(
         onTap: MessageType?,
-        onScrolled: MessageType?,
         identifier: String,
         renderer: @escaping Renderer) {
         self.onTap = onTap
-        self.onScrolled = onScrolled
         self.renderer = renderer
         self.identifier = identifier
     }
@@ -81,9 +103,9 @@ public struct CarouselItemProperties<MessageType> {
 extension CarouselItemProperties {
     
     public func map<NewMessageType>(_ transform: @escaping (MessageType) -> NewMessageType) -> CarouselItemProperties<NewMessageType> {
+        
         return CarouselItemProperties<NewMessageType>(
             onTap: self.onTap.map(transform),
-            onScrolled: self.onScrolled.map(transform),
             identifier: self.identifier,
             renderer: { self.renderer().map(transform) }
         )
@@ -100,10 +122,9 @@ public func carousel<MessageType>(
 
 public func carouselItem<MessageType>(
     onTap: MessageType? = .none,
-    onScrolled: MessageType? = .none,
     identifier: String,
     renderer: @escaping CarouselItemProperties<MessageType>.Renderer) -> CarouselItemProperties<MessageType> {
-    return CarouselItemProperties(onTap: onTap, onScrolled: onScrolled, identifier: identifier, renderer: renderer)
+    return CarouselItemProperties(onTap: onTap, identifier: identifier, renderer: renderer)
 }
 
 public func properties<MessageType>(itemsWidth: UInt, itemsHeight: UInt, items: ZipList<CarouselItemProperties<MessageType>>?, configure: (inout CarouselProperties<MessageType>) -> ()) -> CarouselProperties<MessageType> {

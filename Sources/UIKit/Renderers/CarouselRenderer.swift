@@ -21,7 +21,8 @@ where CustomComponentRendererType.MessageType == MessageType {
             items: properties.items,
             customComponentRenderer: customComponentRenderer,
             layoutEngine: layoutEngine,
-            layout: createFlowLayout()
+            layout: createFlowLayout(),
+            onSelectionChange: properties.onSelectionChange
         )
         
         carouselView.isDebugModeEnabled = isDebugModeEnabled

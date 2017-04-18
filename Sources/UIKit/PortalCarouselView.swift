@@ -12,19 +12,16 @@ public final class PortalCarouselView<MessageType, CustomComponentRendererType: 
     
     public var isSnapToCellEnabled: Bool = false
     
-    fileprivate let scrolledMessages: [MessageType?]
+    fileprivate let onSelectionChange: (ZipListShiftOperation) -> MessageType?
     fileprivate var lastOffset: CGFloat = 0
-    fileprivate var selected: Int = 0 { didSet {
-            scrolledMessages[selected] |> { mailbox.dispatch(message: $0) }
-        }
-    }
+    fileprivate var selected: Int = 0
     
     public override init(items: [CollectionItemProperties<MessageType>], customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine, layout: UICollectionViewLayout) {
-        scrolledMessages = items.map { _ in .none }
+        onSelectionChange = { _ in .none }
         super.init(items: items, customComponentRenderer: customComponentRenderer, layoutEngine: layoutEngine, layout: layout)
     }
     
-    public init(items: ZipList<CarouselItemProperties<MessageType>>?, customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine, layout: UICollectionViewLayout) {
+    public init(items: ZipList<CarouselItemProperties<MessageType>>?, customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine, layout: UICollectionViewLayout, onSelectionChange: @escaping (ZipListShiftOperation) -> MessageType?) {
         if let items = items {
             let transform = { (item: CarouselItemProperties) -> CollectionItemProperties<MessageType> in
                 return collectionItem(
@@ -33,11 +30,11 @@ public final class PortalCarouselView<MessageType, CustomComponentRendererType: 
                     renderer: item.renderer)
             }
             selected = Int(items.centerIndex)
-            scrolledMessages = items.map { $0.onScrolled }
+            self.onSelectionChange = onSelectionChange
             super.init(items: items.map(transform), customComponentRenderer: customComponentRenderer, layoutEngine: layoutEngine, layout: layout)
             scrollToItem(self.selected, animated: false)
         } else {
-            scrolledMessages = []
+            self.onSelectionChange = onSelectionChange
             super.init(items: [], customComponentRenderer: customComponentRenderer, layoutEngine: layoutEngine, layout: layout)
         }
         
@@ -73,6 +70,8 @@ public final class PortalCarouselView<MessageType, CustomComponentRendererType: 
                 scrollToItem(selected, animated: true) // Move to the left
             }
         }
+        let shift = shiftDirection(actual: selected, old: lastPosition)
+        shift.flatMap(onSelectionChange) |> { mailbox.dispatch(message: $0) }
     }
     
 }
@@ -83,6 +82,16 @@ fileprivate extension PortalCarouselView {
         DispatchQueue.main.async {
             let indexPath = IndexPath(item: position, section: 0)
             self.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animated)
+        }
+    }
+    
+    fileprivate func shiftDirection(actual: Int, old: Int) -> ZipListShiftOperation? {
+        if actual < old {
+            return ZipListShiftOperation.left(count: UInt(old - actual))
+        } else if actual > old {
+            return ZipListShiftOperation.right(count: UInt(actual - old))
+        } else {
+            return .none
         }
     }
     
