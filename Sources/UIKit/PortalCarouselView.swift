@@ -14,7 +14,7 @@ public final class PortalCarouselView<MessageType, CustomComponentRendererType: 
     
     fileprivate let onSelectionChange: (ZipListShiftOperation) -> MessageType?
     fileprivate var lastOffset: CGFloat = 0
-    fileprivate var selected: Int = 0
+    fileprivate var selectedIndex: Int = 0
     
     public override init(items: [CollectionItemProperties<MessageType>], customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine, layout: UICollectionViewLayout) {
         onSelectionChange = { _ in .none }
@@ -29,10 +29,10 @@ public final class PortalCarouselView<MessageType, CustomComponentRendererType: 
                     identifier: item.identifier,
                     renderer: item.renderer)
             }
-            selected = Int(items.centerIndex)
+            selectedIndex = Int(items.centerIndex)
             self.onSelectionChange = onSelectionChange
             super.init(items: items.map(transform), customComponentRenderer: customComponentRenderer, layoutEngine: layoutEngine, layout: layout)
-            scrollToItem(self.selected, animated: false)
+            scrollToItem(self.selectedIndex, animated: false)
         } else {
             self.onSelectionChange = onSelectionChange
             super.init(items: [], customComponentRenderer: customComponentRenderer, layoutEngine: layoutEngine, layout: layout)
@@ -58,19 +58,19 @@ public final class PortalCarouselView<MessageType, CustomComponentRendererType: 
             return
         }
         
-        let lastPosition = selected
+        let lastPosition = selectedIndex
         if currentOffset > lastOffset {
             if lastPosition < items.count - 1 {
-                selected = lastPosition + 1 // Move to the right
-                scrollToItem(selected, animated: true)
+                selectedIndex = lastPosition + 1 // Move to the right
+                scrollToItem(selectedIndex, animated: true)
             }
         } else if currentOffset < lastOffset {
             if lastPosition >= 1 {
-                selected = lastPosition - 1
-                scrollToItem(selected, animated: true) // Move to the left
+                selectedIndex = lastPosition - 1
+                scrollToItem(selectedIndex, animated: true) // Move to the left
             }
         }
-        let shift = shiftDirection(actual: selected, old: lastPosition)
+        let shift = shiftDirection(actual: selectedIndex, old: lastPosition)
         shift.flatMap(onSelectionChange) |> { mailbox.dispatch(message: $0) }
     }
     
