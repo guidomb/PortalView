@@ -61,17 +61,17 @@ public final class PortalCarouselView<MessageType, CustomComponentRendererType: 
         let lastPosition = selectedIndex
         if currentOffset > lastOffset {
             if lastPosition < items.count - 1 {
-                selectedIndex = lastPosition + 1 // Move to the right
-                scrollToItem(selectedIndex, animated: true)
+                selectedIndex = lastPosition + 1
+                scrollToItem(selectedIndex, animated: true) // Move to the right
+                onSelectionChange(.left(count: 1)) |> { mailbox.dispatch(message: $0) }
             }
         } else if currentOffset < lastOffset {
             if lastPosition >= 1 {
                 selectedIndex = lastPosition - 1
                 scrollToItem(selectedIndex, animated: true) // Move to the left
+                onSelectionChange(.right(count: 1)) |> { mailbox.dispatch(message: $0) }
             }
         }
-        let shift = shiftDirection(actual: selectedIndex, old: lastPosition)
-        shift.flatMap(onSelectionChange) |> { mailbox.dispatch(message: $0) }
     }
     
 }
