@@ -50,6 +50,12 @@ public final class PortalCarouselView<MessageType, CustomComponentRendererType: 
     
     public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint,
                                           targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        // At this moment we only support the message feature with the snap mode on.
+        // TODO: Add support for messaging regardless the snap mode. 
+        // To do this feature we should detect the item selected not by adding or 
+        // supressing one to the index but searching the active item in the screen 
+        // at that moment. We could use `indexPathForItemAtPoint` for this purpose.
         guard isSnapToCellEnabled else { return }
         
         let currentOffset = CGFloat(scrollView.contentOffset.x)
