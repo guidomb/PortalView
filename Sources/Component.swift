@@ -43,6 +43,7 @@ public indirect enum Component<MessageType> {
     case container([Component<MessageType>], StyleSheet<EmptyStyleSheet>, Layout)
     case table(TableProperties<MessageType>, StyleSheet<TableStyleSheet>, Layout)
     case collection(CollectionProperties<MessageType>, StyleSheet<EmptyStyleSheet>, Layout)
+    case carousel(CarouselProperties<MessageType>, StyleSheet<EmptyStyleSheet>, Layout)
     case touchable(gesture: Gesture<MessageType>, child: Component<MessageType>)
     case segmented(ZipList<SegmentProperties<MessageType>>, StyleSheet<SegmentedStyleSheet>, Layout)
     case progress(ProgressCounter, StyleSheet<ProgressStyleSheet>, Layout)
@@ -83,6 +84,9 @@ public indirect enum Component<MessageType> {
             return layout
             
         case .collection(_, _, let layout):
+            return layout
+            
+        case .carousel(_, _, let layout):
             return layout
 
         case .custom(_, let layout):
@@ -130,6 +134,9 @@ extension Component {
 
         case .collection(let properties, let style, let layout):
             return .collection(properties.map(transform), style, layout)
+            
+        case .carousel(let properties, let style, let layout):
+            return .carousel(properties.map(transform), style, layout)
 
         case .custom(let componentIdentifier, let layout):
             return .custom(componentIdentifier: componentIdentifier, layout: layout)

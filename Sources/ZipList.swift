@@ -60,14 +60,20 @@ public struct ZipList<Element>: Collection, CustomDebugStringConvertible {
         return i + 1
     }
     
-    public func shiftLeft() -> ZipList<Element>? {
-        guard let newCenter = right.first else { return .none }
-        return ZipList(left: left + [center], center: newCenter, right: Array(right.dropFirst()))
+    public func shiftLeft(count: UInt) -> ZipList<Element>? {
+        guard count <= UInt(right.count) else { return .none }
+        if count == 0 { return self }
+        let newLeft = left + [center] + Array(right.dropLast(right.count + 1 - Int(count)))
+        let newRight = Array(right.dropFirst(Int(count)))
+        return ZipList(left: newLeft, center: right[Int(count) - 1], right: newRight)
     }
     
-    public func shiftRight() -> ZipList<Element>? {
-        guard let newCenter = left.last else { return .none }
-        return ZipList(left: Array(left.dropLast()), center: newCenter, right: [center] + right)
+    public func shiftRight(count: UInt) -> ZipList<Element>? {
+        guard count <= UInt(left.count) else { return .none }
+        if count == 0 { return self }
+        let newLeft = Array(left.dropLast(Int(count)))
+        let newRight = Array(left.dropFirst(left.count + 1 - Int(count))) + [center] + right
+        return ZipList(left: newLeft, center: left[left.count - Int(count)], right: newRight)
     }
     
 }

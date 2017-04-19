@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		52DB3C1F1E9E483F0078373D /* TextFieldRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DB3C1E1E9E483F0078373D /* TextFieldRenderer.swift */; };
-		52DB3C211E9E48480078373D /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DB3C201E9E48480078373D /* TextField.swift */; };
 		464F9E861E943D8E009F774A /* CollectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E851E943D8E009F774A /* CollectionRenderer.swift */; };
 		464F9E8A1E944051009F774A /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E891E944051009F774A /* Collection.swift */; };
 		464F9E8C1E944634009F774A /* PortalCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E8B1E944634009F774A /* PortalCollectionView.swift */; };
 		464F9E8E1E94464F009F774A /* PortalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464F9E8D1E94464F009F774A /* PortalCollectionViewCell.swift */; };
+		52DB3C1F1E9E483F0078373D /* TextFieldRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DB3C1E1E9E483F0078373D /* TextFieldRenderer.swift */; };
+		52DB3C211E9E48480078373D /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DB3C201E9E48480078373D /* TextField.swift */; };
 		9D66880E1E534BDE0090008B /* PortalView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D6688041E534BDE0090008B /* PortalView.framework */; };
 		9D6AD93E1E534C7600DDD9D8 /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9341E534C7600DDD9D8 /* StyleSheet.swift */; };
 		9D6AD93F1E534C7600DDD9D8 /* Portal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AD9351E534C7600DDD9D8 /* Portal.swift */; };
@@ -55,6 +55,9 @@
 		D862D1A51E9D16CC00FAAF0D /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D1A41E9D16CC00FAAF0D /* Progress.swift */; };
 		D862D1A71E9D16E300FAAF0D /* ProgressRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D1A61E9D16E300FAAF0D /* ProgressRenderer.swift */; };
 		D862D1A91E9D1B7600FAAF0D /* ProgressCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D1A81E9D1B7600FAAF0D /* ProgressCounter.swift */; };
+		D859EF4E1EA5165E002701E1 /* Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D859EF4D1EA5165E002701E1 /* Carousel.swift */; };
+		D859EF521EA51E8C002701E1 /* PortalCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D859EF511EA51E8C002701E1 /* PortalCarouselView.swift */; };
+		D859EF541EA54162002701E1 /* CarouselRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D859EF531EA54162002701E1 /* CarouselRenderer.swift */; };
 		D86738751E94374300B42F37 /* Segmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86738741E94374300B42F37 /* Segmented.swift */; };
 		D86738771E9437F600B42F37 /* SegmentedRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86738761E9437F600B42F37 /* SegmentedRenderer.swift */; };
 /* End PBXBuildFile section */
@@ -70,12 +73,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		52DB3C1E1E9E483F0078373D /* TextFieldRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextFieldRenderer.swift; path = Sources/UIKit/Renderers/TextFieldRenderer.swift; sourceTree = "<group>"; };
-		52DB3C201E9E48480078373D /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = Sources/Components/TextField.swift; sourceTree = "<group>"; };
 		464F9E851E943D8E009F774A /* CollectionRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionRenderer.swift; path = Sources/UIKit/Renderers/CollectionRenderer.swift; sourceTree = "<group>"; };
 		464F9E891E944051009F774A /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Collection.swift; path = Sources/Components/Collection.swift; sourceTree = "<group>"; };
 		464F9E8B1E944634009F774A /* PortalCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PortalCollectionView.swift; path = Sources/UIKit/PortalCollectionView.swift; sourceTree = "<group>"; };
 		464F9E8D1E94464F009F774A /* PortalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PortalCollectionViewCell.swift; path = Sources/UIKit/PortalCollectionViewCell.swift; sourceTree = "<group>"; };
+		52DB3C1E1E9E483F0078373D /* TextFieldRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextFieldRenderer.swift; path = Sources/UIKit/Renderers/TextFieldRenderer.swift; sourceTree = "<group>"; };
+		52DB3C201E9E48480078373D /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = Sources/Components/TextField.swift; sourceTree = "<group>"; };
 		9D6688041E534BDE0090008B /* PortalView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PortalView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D66880D1E534BDE0090008B /* PortalViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PortalViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D6AD9341E534C7600DDD9D8 /* StyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StyleSheet.swift; path = Sources/StyleSheet.swift; sourceTree = "<group>"; };
@@ -119,6 +122,9 @@
 		D862D1A41E9D16CC00FAAF0D /* Progress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Progress.swift; path = Sources/Components/Progress.swift; sourceTree = "<group>"; };
 		D862D1A61E9D16E300FAAF0D /* ProgressRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressRenderer.swift; path = Sources/UIKit/Renderers/ProgressRenderer.swift; sourceTree = "<group>"; };
 		D862D1A81E9D1B7600FAAF0D /* ProgressCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressCounter.swift; path = Sources/ProgressCounter.swift; sourceTree = "<group>"; };
+		D859EF4D1EA5165E002701E1 /* Carousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Carousel.swift; path = Sources/Components/Carousel.swift; sourceTree = "<group>"; };
+		D859EF511EA51E8C002701E1 /* PortalCarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PortalCarouselView.swift; path = Sources/UIKit/PortalCarouselView.swift; sourceTree = "<group>"; };
+		D859EF531EA54162002701E1 /* CarouselRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarouselRenderer.swift; path = Sources/UIKit/Renderers/CarouselRenderer.swift; sourceTree = "<group>"; };
 		D86738741E94374300B42F37 /* Segmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Segmented.swift; path = Sources/Components/Segmented.swift; sourceTree = "<group>"; };
 		D86738761E9437F600B42F37 /* SegmentedRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegmentedRenderer.swift; path = Sources/UIKit/Renderers/SegmentedRenderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -192,6 +198,7 @@
 				9D6AD96E1E535B1E00DDD9D8 /* PortalViewController.swift */,
 				9D6AD97C1E535F7100DDD9D8 /* PortalNavigationController.swift */,
 				464F9E8B1E944634009F774A /* PortalCollectionView.swift */,
+				D859EF511EA51E8C002701E1 /* PortalCarouselView.swift */,
 				464F9E8D1E94464F009F774A /* PortalCollectionViewCell.swift */,
 				9D6AD9781E535E5100DDD9D8 /* UIKitRenderer.swift */,
 				9D6AD9801E53612500DDD9D8 /* UIKitComponentManager.swift */,
@@ -213,7 +220,8 @@
 				9D6AD9521E534CAF00DDD9D8 /* Button.swift */,
 				D86738741E94374300B42F37 /* Segmented.swift */,
 				D862D1A41E9D16CC00FAAF0D /* Progress.swift */,
-				464F9E891E944051009F774A /* Collection.swift */
+				464F9E891E944051009F774A /* Collection.swift */,
+				D859EF4D1EA5165E002701E1 /* Carousel.swift */
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -251,7 +259,8 @@
 				D86738761E9437F600B42F37 /* SegmentedRenderer.swift */,
 				D862D1A61E9D16E300FAAF0D /* ProgressRenderer.swift */,
 				464F9E851E943D8E009F774A /* CollectionRenderer.swift */,
-				9D93F21F1E9C4FBB00B36914 /* ComponentRenderer.swift */
+				9D93F21F1E9C4FBB00B36914 /* ComponentRenderer.swift */,
+				D859EF531EA54162002701E1 /* CarouselRenderer.swift */,
 			);
 			name = Renderers;
 			sourceTree = "<group>";
@@ -380,6 +389,8 @@
 				9D6AD9561E534CAF00DDD9D8 /* Label.swift in Sources */,
 				D862D1A71E9D16E300FAAF0D /* ProgressRenderer.swift in Sources */,
 				9D6AD9411E534C7600DDD9D8 /* LayoutEngine.swift in Sources */,
+				D859EF521EA51E8C002701E1 /* PortalCarouselView.swift in Sources */,
+				D859EF4E1EA5165E002701E1 /* Carousel.swift in Sources */,
 				9D6AD9811E53612500DDD9D8 /* UIKitComponentManager.swift in Sources */,
 				52DB3C211E9E48480078373D /* TextField.swift in Sources */,
 				9D6AD9771E535DDA00DDD9D8 /* ImageViewRenderer.swift in Sources */,
@@ -391,6 +402,7 @@
 				9D6AD9671E53589600DDD9D8 /* ButtonRenderer.swift in Sources */,
 				9D6AD9791E535E5100DDD9D8 /* UIKitRenderer.swift in Sources */,
 				9D6AD9541E534CAF00DDD9D8 /* NavigationBar.swift in Sources */,
+				D859EF541EA54162002701E1 /* CarouselRenderer.swift in Sources */,
 				9D6AD9711E535B7600DDD9D8 /* TableRenderer.swift in Sources */,
 				D862D1A91E9D1B7600FAAF0D /* ProgressCounter.swift in Sources */,
 				464F9E8C1E944634009F774A /* PortalCollectionView.swift in Sources */,
@@ -403,7 +415,6 @@
 				9D6AD9731E535C0300DDD9D8 /* MapViewRenderer.swift in Sources */,
 				9D6AD9581E534CAF00DDD9D8 /* Button.swift in Sources */,
 				52DB3C1F1E9E483F0078373D /* TextFieldRenderer.swift in Sources */,
-				9D6AD97B1E535F2000DDD9D8 /* ComponentRenderer.swift in Sources */,
 				9D6AD9531E534CAF00DDD9D8 /* Table.swift in Sources */,
 				9D6AD96F1E535B1E00DDD9D8 /* PortalViewController.swift in Sources */,
 				9D93F2201E9C4FBB00B36914 /* ComponentRenderer.swift in Sources */,
