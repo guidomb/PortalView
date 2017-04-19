@@ -9,7 +9,7 @@
 import UIKit
 
 internal struct CarouselRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIKitRenderer
-where CustomComponentRendererType.MessageType == MessageType {
+    where CustomComponentRendererType.MessageType == MessageType {
     
     let customComponentRenderer: CustomComponentRendererType
     let properties: CarouselProperties<MessageType>

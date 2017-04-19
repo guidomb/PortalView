@@ -43,7 +43,7 @@ where CustomComponentRendererType.MessageType == MessageType {
                 children: children,
                 style: style,
                 layout: layout
-                ).render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
+            ).render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
             
         case .table(let properties, let style, let layout):
             return TableRenderer(
@@ -51,7 +51,7 @@ where CustomComponentRendererType.MessageType == MessageType {
                 properties: properties,
                 style: style,
                 layout: layout
-                ).render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
+            ).render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
             
         case .touchable(let gesture, let child):
             return TouchableRenderer(customComponentRenderer: customComponentRenderer, child: child, gesture: gesture)
@@ -67,7 +67,7 @@ where CustomComponentRendererType.MessageType == MessageType {
                 properties: properties,
                 style: style,
                 layout: layout
-                ).render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
+            ).render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
             
         case .carousel(let properties, let style, let layout):
             return CarouselRenderer(
@@ -75,7 +75,7 @@ where CustomComponentRendererType.MessageType == MessageType {
                 properties: properties,
                 style: style,
                 layout: layout
-                ).render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
+            ).render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
             
         case .progress(let progress, let style, let layout):
             return ProgressRenderer(progress: progress, style: style, layout: layout)
