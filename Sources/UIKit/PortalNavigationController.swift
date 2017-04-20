@@ -112,9 +112,7 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
     
     public func navigationController(_ navigationController: UINavigationController,
                                      didShow viewController: UIViewController, animated: Bool) {
-        if let onControllerDidShow = onControllerDidShow {
-            onControllerDidShow()
-        }
+        onControllerDidShow?()
         onControllerDidShow = .none
         onPop = .none
     }
