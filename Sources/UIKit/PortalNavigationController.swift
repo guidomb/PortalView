@@ -24,7 +24,7 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
     private let statusBarStyle: UIStatusBarStyle
     private var pushingViewController = false
     private var currentNavigationBarOnBack: MessageType? = .none
-    private var onControllerDidShow: () -> Void = { }
+    private var onControllerDidShow: (() -> Void)? = .none
     private var onPop: (() -> Void)? = .none
     
     init(customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine, statusBarStyle: UIStatusBarStyle = .`default`) {
@@ -83,7 +83,7 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
                                      willShow viewController: UIViewController, animated: Bool) {
         if pushingViewController {
             pushingViewController = false
-            onControllerDidShow = { }
+            onControllerDidShow = .none
         } else if !pushingViewController && topViewController != .none {
             // If a controller is not being pushed and the top view controller
             // is not nil then the navigation controller is poping the top view controller.
@@ -105,16 +105,18 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
             } else if let message = currentNavigationBarOnBack {
                 onControllerDidShow = { self.mailbox.dispatch(message: message) }
             } else {
-                onControllerDidShow = { }
+                onControllerDidShow = .none
             }
         }
     }
     
     public func navigationController(_ navigationController: UINavigationController,
                                      didShow viewController: UIViewController, animated: Bool) {
-        onControllerDidShow()
-        onControllerDidShow = { }
-        onPop = { }
+        if let onControllerDidShow = onControllerDidShow {
+            onControllerDidShow()
+        }
+        onControllerDidShow = .none
+        onPop = .none
     }
     
 }
