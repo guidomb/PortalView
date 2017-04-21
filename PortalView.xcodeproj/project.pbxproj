@@ -52,14 +52,16 @@
 		9D7824031E92A27C004455B1 /* TouchableRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7824021E92A27C004455B1 /* TouchableRenderer.swift */; };
 		9D93F2201E9C4FBB00B36914 /* ComponentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D93F21F1E9C4FBB00B36914 /* ComponentRenderer.swift */; };
 		9DDF07A11E97054A00ABEB33 /* ZipList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDF07A01E97054A00ABEB33 /* ZipList.swift */; };
-		D862D1A51E9D16CC00FAAF0D /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D1A41E9D16CC00FAAF0D /* Progress.swift */; };
-		D862D1A71E9D16E300FAAF0D /* ProgressRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D1A61E9D16E300FAAF0D /* ProgressRenderer.swift */; };
-		D862D1A91E9D1B7600FAAF0D /* ProgressCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D1A81E9D1B7600FAAF0D /* ProgressCounter.swift */; };
 		D859EF4E1EA5165E002701E1 /* Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D859EF4D1EA5165E002701E1 /* Carousel.swift */; };
 		D859EF521EA51E8C002701E1 /* PortalCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D859EF511EA51E8C002701E1 /* PortalCarouselView.swift */; };
 		D859EF541EA54162002701E1 /* CarouselRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D859EF531EA54162002701E1 /* CarouselRenderer.swift */; };
+		D862D1A51E9D16CC00FAAF0D /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D1A41E9D16CC00FAAF0D /* Progress.swift */; };
+		D862D1A71E9D16E300FAAF0D /* ProgressRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D1A61E9D16E300FAAF0D /* ProgressRenderer.swift */; };
+		D862D1A91E9D1B7600FAAF0D /* ProgressCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D1A81E9D1B7600FAAF0D /* ProgressCounter.swift */; };
 		D86738751E94374300B42F37 /* Segmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86738741E94374300B42F37 /* Segmented.swift */; };
 		D86738771E9437F600B42F37 /* SegmentedRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86738761E9437F600B42F37 /* SegmentedRenderer.swift */; };
+		D8A0DC091EAA711D004041EB /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A0DC081EAA711D004041EB /* Spinner.swift */; };
+		D8A0DC0B1EAA713E004041EB /* SpinnerRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A0DC0A1EAA713E004041EB /* SpinnerRenderer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,14 +121,16 @@
 		9D7824021E92A27C004455B1 /* TouchableRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TouchableRenderer.swift; path = Sources/UIKit/Renderers/TouchableRenderer.swift; sourceTree = "<group>"; };
 		9D93F21F1E9C4FBB00B36914 /* ComponentRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ComponentRenderer.swift; path = Sources/UIKit/Renderers/ComponentRenderer.swift; sourceTree = "<group>"; };
 		9DDF07A01E97054A00ABEB33 /* ZipList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZipList.swift; path = Sources/ZipList.swift; sourceTree = "<group>"; };
-		D862D1A41E9D16CC00FAAF0D /* Progress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Progress.swift; path = Sources/Components/Progress.swift; sourceTree = "<group>"; };
-		D862D1A61E9D16E300FAAF0D /* ProgressRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressRenderer.swift; path = Sources/UIKit/Renderers/ProgressRenderer.swift; sourceTree = "<group>"; };
-		D862D1A81E9D1B7600FAAF0D /* ProgressCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressCounter.swift; path = Sources/ProgressCounter.swift; sourceTree = "<group>"; };
 		D859EF4D1EA5165E002701E1 /* Carousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Carousel.swift; path = Sources/Components/Carousel.swift; sourceTree = "<group>"; };
 		D859EF511EA51E8C002701E1 /* PortalCarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PortalCarouselView.swift; path = Sources/UIKit/PortalCarouselView.swift; sourceTree = "<group>"; };
 		D859EF531EA54162002701E1 /* CarouselRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarouselRenderer.swift; path = Sources/UIKit/Renderers/CarouselRenderer.swift; sourceTree = "<group>"; };
+		D862D1A41E9D16CC00FAAF0D /* Progress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Progress.swift; path = Sources/Components/Progress.swift; sourceTree = "<group>"; };
+		D862D1A61E9D16E300FAAF0D /* ProgressRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressRenderer.swift; path = Sources/UIKit/Renderers/ProgressRenderer.swift; sourceTree = "<group>"; };
+		D862D1A81E9D1B7600FAAF0D /* ProgressCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressCounter.swift; path = Sources/ProgressCounter.swift; sourceTree = "<group>"; };
 		D86738741E94374300B42F37 /* Segmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Segmented.swift; path = Sources/Components/Segmented.swift; sourceTree = "<group>"; };
 		D86738761E9437F600B42F37 /* SegmentedRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegmentedRenderer.swift; path = Sources/UIKit/Renderers/SegmentedRenderer.swift; sourceTree = "<group>"; };
+		D8A0DC081EAA711D004041EB /* Spinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Spinner.swift; path = Sources/Components/Spinner.swift; sourceTree = "<group>"; };
+		D8A0DC0A1EAA713E004041EB /* SpinnerRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpinnerRenderer.swift; path = Sources/UIKit/Renderers/SpinnerRenderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,7 +225,8 @@
 				D86738741E94374300B42F37 /* Segmented.swift */,
 				D862D1A41E9D16CC00FAAF0D /* Progress.swift */,
 				464F9E891E944051009F774A /* Collection.swift */,
-				D859EF4D1EA5165E002701E1 /* Carousel.swift */
+				D859EF4D1EA5165E002701E1 /* Carousel.swift */,
+				D8A0DC081EAA711D004041EB /* Spinner.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -261,6 +266,7 @@
 				464F9E851E943D8E009F774A /* CollectionRenderer.swift */,
 				9D93F21F1E9C4FBB00B36914 /* ComponentRenderer.swift */,
 				D859EF531EA54162002701E1 /* CarouselRenderer.swift */,
+				D8A0DC0A1EAA713E004041EB /* SpinnerRenderer.swift */,
 			);
 			name = Renderers;
 			sourceTree = "<group>";
@@ -402,6 +408,7 @@
 				9D6AD9671E53589600DDD9D8 /* ButtonRenderer.swift in Sources */,
 				9D6AD9791E535E5100DDD9D8 /* UIKitRenderer.swift in Sources */,
 				9D6AD9541E534CAF00DDD9D8 /* NavigationBar.swift in Sources */,
+				D8A0DC0B1EAA713E004041EB /* SpinnerRenderer.swift in Sources */,
 				D859EF541EA54162002701E1 /* CarouselRenderer.swift in Sources */,
 				9D6AD9711E535B7600DDD9D8 /* TableRenderer.swift in Sources */,
 				D862D1A91E9D1B7600FAAF0D /* ProgressCounter.swift in Sources */,
@@ -409,6 +416,7 @@
 				464F9E8A1E944051009F774A /* Collection.swift in Sources */,
 				9D6AD9751E535D8000DDD9D8 /* ContainerRenderer.swift in Sources */,
 				9D6AD97F1E535FE000DDD9D8 /* NavigationBarTitleRenderer.swift in Sources */,
+				D8A0DC091EAA711D004041EB /* Spinner.swift in Sources */,
 				9D6AD94B1E534C9700DDD9D8 /* PortalMapView.swift in Sources */,
 				9D6AD96B1E535A9B00DDD9D8 /* PortalTableView.swift in Sources */,
 				D862D1A51E9D16CC00FAAF0D /* Progress.swift in Sources */,
