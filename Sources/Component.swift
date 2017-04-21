@@ -49,6 +49,7 @@ public indirect enum Component<MessageType> {
     case progress(ProgressCounter, StyleSheet<ProgressStyleSheet>, Layout)
     case textField(TextFieldProperties<MessageType>, StyleSheet<TextFieldStyleSheet>, Layout)
     case custom(componentIdentifier: String, layout: Layout)
+    case spinner(Bool, StyleSheet<SpinnerStyleSheet>, Layout)
 
     public var layout: Layout {
         switch self {
@@ -92,6 +93,9 @@ public indirect enum Component<MessageType> {
         case .custom(_, let layout):
             return layout
 
+        case .spinner(_, _, let layout):
+            return layout
+            
         }
     }
 
@@ -140,6 +144,9 @@ extension Component {
 
         case .custom(let componentIdentifier, let layout):
             return .custom(componentIdentifier: componentIdentifier, layout: layout)
+            
+        case .spinner(let isActive, let style, let layout):
+            return .spinner(isActive, style, layout)
 
         }
     }

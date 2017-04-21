@@ -93,6 +93,13 @@ where CustomComponentRendererType.MessageType == MessageType {
                 )
             }
             
+        case .spinner(let isActive, let style, let layout):
+            return SpinnerRenderer(
+                isActive: isActive,
+                style: style,
+                layout: layout
+            ).render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
+            
         }
     }
     
