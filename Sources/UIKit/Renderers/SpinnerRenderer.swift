@@ -15,10 +15,12 @@ internal struct SpinnerRenderer<MessageType>: UIKitRenderer {
     let layout: Layout
     
     func render(with layoutEngine: LayoutEngine, isDebugModeEnabled: Bool) -> Render<MessageType> {
-        let spinner = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         
         spinner.hidesWhenStopped = false
-        isActive ? spinner.startAnimating() : spinner.stopAnimating()
+        if isActive {
+            spinner.startAnimating()
+        }
         
         spinner.apply(style: style.base)
         spinner.apply(style: style.component)
