@@ -8,7 +8,7 @@
 
 import UIKit
 
-public final class PortalViewController<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIViewController
+public final class PortalViewController<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIViewController, UINavigationControllerDelegate
     where CustomComponentRendererType.MessageType == MessageType {
     
     public typealias RendererFactory = (UIView) -> UIKitComponentRenderer<MessageType, CustomComponentRendererType>
@@ -17,10 +17,27 @@ public final class PortalViewController<MessageType, CustomComponentRendererType
     public let mailbox = Mailbox<MessageType>()
     
     private let createRenderer: RendererFactory
+    private let orientation: SupportedOrientations
     
-    public init(component: Component<MessageType>, factory createRenderer: @escaping RendererFactory) {
+    public override var shouldAutorotate: Bool {
+        return true
+    }
+    
+    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        switch orientation {
+        case .all:
+            return .all
+        case .landscape:
+            return .landscape
+        case .portrait:
+            return .portrait
+        }
+    }
+    
+    public init(component: Component<MessageType>, orientation: SupportedOrientations, factory createRenderer: @escaping RendererFactory) {
         self.component = component
         self.createRenderer = createRenderer
+        self.orientation = orientation
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -42,6 +59,7 @@ public final class PortalViewController<MessageType, CustomComponentRendererType
         // even weirder was that this did not happend for all users.
         // This setting seems to fix the issue.
         edgesForExtendedLayout = []
+        navigationController?.delegate = self
         render()
     }
     

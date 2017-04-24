@@ -5,6 +5,7 @@
 //  Created by Guido Marucci Blas on 1/27/17.
 //
 //
+
 import Foundation
 
 public enum RootComponent<MessageType> {
@@ -13,6 +14,14 @@ public enum RootComponent<MessageType> {
     case stack(NavigationBar<MessageType>)
     case tab(TabBar<MessageType>)
 
+}
+
+public enum SupportedOrientations {
+    
+    case portrait
+    case landscape
+    case all
+    
 }
 
 public enum Gesture<MessageType> {
