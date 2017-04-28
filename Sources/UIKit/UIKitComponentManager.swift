@@ -17,8 +17,8 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
     
     public let mailbox = Mailbox<MessageType>()
     
-    public var rootController: RootController<MessageType, CustomComponentRendererType>? {
-        return window.rootController
+    public var visibleController: ComponentController<MessageType, CustomComponentRendererType>? {
+        return window.visibleController
     }
     
     fileprivate let layoutEngine: LayoutEngine
@@ -31,30 +31,28 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
         self.layoutEngine = layoutEngine
     }
     
-    public func present(component: Component<MessageType>, with root: RootComponent<MessageType>, modally: Bool) -> UIViewController {
-        switch (window.rootController, root, modally) {
+    public func present(component: Component<MessageType>, with root: RootComponent<MessageType>, modally: Bool) {
+        switch (window.visibleController, root, modally) {
         
         case (.some(.single(let presenter)), _, true):
-            return presentModally(component: component, root: root, onTopOf: presenter)
+            presentModally(component: component, root: root, onTopOf: presenter)
         
         case (.some(.navigationController(let presenter)), _, true):
-            return presentModally(component: component, root: root, onTopOf: presenter)
+            presentModally(component: component, root: root, onTopOf: presenter)
         
         case (.some(.navigationController(let navigationController)), .stack(let navigationBar), false):
             let containedController = controller(for: component)
             navigationController.push(controller: containedController, with: navigationBar, animated: true)
-            return navigationController
             
         default:
             let rootController = controller(for: component, root: root)
             window.rootController = rootController
             rootController.mailbox.forward(to: mailbox)
-            return rootController.renderableController
         }
     }
     
     public func render(component: Component<MessageType>) -> Mailbox<MessageType> {
-        switch window.rootController {
+        switch window.visibleController {
             
         case .some(.single(let controller)):
             controller.component = component
@@ -80,7 +78,7 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
     }
     
     public func render(component: Component<MessageType>, with root: RootComponent<MessageType>) {
-        switch (window.rootController, root) {
+        switch (window.visibleController, root) {
             
         case (.some(.single(let controller)), .simple):
             controller.component = component
@@ -102,20 +100,31 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
         }
     }
     
+    public func dismissCurrentModal(completion: @escaping () -> Void) {
+        window.currentModal?.renderableController.dismiss(animated: true) {
+            self.window.currentModal = .none
+            completion()
+        }
+    }
+    
 }
 
 fileprivate extension UIKitComponentManager {
     
     fileprivate func presentModally(component: Component<MessageType>, root: RootComponent<MessageType>,
-                                    onTopOf presenter: UIViewController) -> UIViewController {
+                                    onTopOf presenter: UIViewController) {
+        if let currentModal = window.currentModal {
+            currentModal.renderableController.dismiss(animated: false, completion: .none)
+        }
+        
         let rootController = controller(for: component, root: root)
         rootController.mailbox.forward(to: mailbox)
         presenter.present(rootController.renderableController, animated: true, completion: nil)
-        return rootController.renderableController
+        window.currentModal = rootController
     }
     
     fileprivate func controller(for component: Component<MessageType>, root: RootComponent<MessageType>)
-        -> RootController<MessageType, CustomComponentRendererType> {
+        -> ComponentController<MessageType, CustomComponentRendererType> {
         switch root {
         
         case .simple:
@@ -152,7 +161,7 @@ fileprivate extension UIKitComponentManager {
     
 }
 
-public enum RootController<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>
+public enum ComponentController<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>
     where CustomComponentRendererType.MessageType == MessageType {
     
     case navigationController(PortalNavigationController<MessageType, CustomComponentRendererType>)
@@ -181,7 +190,7 @@ public enum RootController<MessageType, CustomComponentRendererType: UIKitCustom
 fileprivate struct WindowManager<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>
     where CustomComponentRendererType.MessageType == MessageType {
     
-    fileprivate var rootController: RootController<MessageType, CustomComponentRendererType>? {
+    fileprivate var rootController: ComponentController<MessageType, CustomComponentRendererType>? {
         set {
             window.rootViewController = newValue?.renderableController
             _rootController = newValue
@@ -191,13 +200,20 @@ fileprivate struct WindowManager<MessageType, CustomComponentRendererType: UIKit
         }
     }
     
+    fileprivate var visibleController: ComponentController<MessageType, CustomComponentRendererType>? {
+        return currentModal ?? rootController
+    }
+    
+    fileprivate var currentModal: ComponentController<MessageType, CustomComponentRendererType>?
+    
     private let window: UIWindow
-    private var _rootController: RootController<MessageType, CustomComponentRendererType>?
+    private var _rootController: ComponentController<MessageType, CustomComponentRendererType>?
     
     init(window: UIWindow) {
         self.window = window
         self._rootController = .none
         self.rootController = .none
+        self.currentModal = .none
     }
     
 }
