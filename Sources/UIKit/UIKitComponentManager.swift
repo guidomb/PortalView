@@ -31,21 +31,21 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
         self.layoutEngine = layoutEngine
     }
     
-    public func present(component: Component<MessageType>, with root: RootComponent<MessageType>, modally: Bool) {
+    public func present(component: Component<MessageType>, with root: RootComponent<MessageType>, modally: Bool, orientation: SupportedOrientations) {
         switch (window.visibleController, root, modally) {
         
         case (.some(.single(let presenter)), _, true):
-            presentModally(component: component, root: root, onTopOf: presenter)
+            presentModally(component: component, root: root, onTopOf: presenter, orientation: orientation)
         
         case (.some(.navigationController(let presenter)), _, true):
-            presentModally(component: component, root: root, onTopOf: presenter)
+            presentModally(component: component, root: root, onTopOf: presenter, orientation: orientation)
         
         case (.some(.navigationController(let navigationController)), .stack(let navigationBar), false):
-            let containedController = controller(for: component)
+            let containedController = controller(for: component, orientation: orientation)
             navigationController.push(controller: containedController, with: navigationBar, animated: true)
             
         default:
-            let rootController = controller(for: component, root: root)
+            let rootController = controller(for: component, root: root, orientation: orientation)
             window.rootController = rootController
             rootController.mailbox.forward(to: mailbox)
         }
@@ -69,15 +69,14 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
             return topController.mailbox
             
         default:
-            let rootController = controller(for: component)
+            let rootController = controller(for: component, orientation: .all)
             window.rootController = .single(rootController)
             rootController.mailbox.forward(to: mailbox)
             return rootController.mailbox
-            
         }
     }
     
-    public func render(component: Component<MessageType>, with root: RootComponent<MessageType>) {
+    public func render(component: Component<MessageType>, with root: RootComponent<MessageType>, orientation: SupportedOrientations) {
         switch (window.visibleController, root) {
             
         case (.some(.single(let controller)), .simple):
@@ -94,7 +93,7 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
             navigationController.render(navigationBar: navigationBar, inside: topController.navigationItem)
             
         default:
-            let rootController = controller(for: component, root: root)
+            let rootController = controller(for: component, root: root, orientation: orientation)
             window.rootController = rootController
             rootController.mailbox.forward(to: mailbox)
         }
@@ -112,32 +111,33 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
 fileprivate extension UIKitComponentManager {
     
     fileprivate func presentModally(component: Component<MessageType>, root: RootComponent<MessageType>,
-                                    onTopOf presenter: UIViewController) {
+                                    onTopOf presenter: UIViewController, orientation: SupportedOrientations) {
         if let currentModal = window.currentModal {
             currentModal.renderableController.dismiss(animated: false, completion: .none)
         }
         
-        let rootController = controller(for: component, root: root)
+        let rootController = controller(for: component, root: root, orientation: orientation)
         rootController.mailbox.forward(to: mailbox)
         presenter.present(rootController.renderableController, animated: true, completion: nil)
         window.currentModal = rootController
     }
     
-    fileprivate func controller(for component: Component<MessageType>, root: RootComponent<MessageType>)
+    fileprivate func controller(for component: Component<MessageType>, root: RootComponent<MessageType>, orientation: SupportedOrientations)
         -> ComponentController<MessageType, CustomComponentRendererType> {
         switch root {
         
         case .simple:
-            return .single(controller(for: component))
+            return .single(controller(for: component, orientation: orientation))
             
         case .stack(let navigationBar):
             let navigationController = PortalNavigationController<MessageType, CustomComponentRendererType>(
                 customComponentRenderer: customComponentRenderer,
                 layoutEngine: layoutEngine,
-                statusBarStyle: navigationBar.style.component.statusBarStyle.asUIStatusBarStyle
+                statusBarStyle: navigationBar.style.component.statusBarStyle.asUIStatusBarStyle,
+                orientation: orientation
             )
             navigationController.isDebugModeEnabled = isDebugModeEnabled
-            let containedController = controller(for: component)
+            let containedController = controller(for: component, orientation: orientation)
             navigationController.push(controller: containedController, with: navigationBar, animated: false)
             return .navigationController(navigationController)
             
@@ -146,9 +146,9 @@ fileprivate extension UIKitComponentManager {
         }
     }
     
-    fileprivate func controller(for component: Component<MessageType>) -> PortalViewController<MessageType, CustomComponentRendererType> {
+    fileprivate func controller(for component: Component<MessageType>, orientation: SupportedOrientations) -> PortalViewController<MessageType, CustomComponentRendererType> {
         
-        return PortalViewController(component: component) {
+        let controller: PortalViewController<MessageType, CustomComponentRendererType> =  PortalViewController(component: component) {
             var renderer = ComponentRenderer(
                 containerView: $0,
                 customComponentRenderer: self.customComponentRenderer,
@@ -157,6 +157,9 @@ fileprivate extension UIKitComponentManager {
             renderer.isDebugModeEnabled = self.isDebugModeEnabled
             return renderer
         }
+        controller.orientation = orientation
+        
+        return controller
     }
     
 }

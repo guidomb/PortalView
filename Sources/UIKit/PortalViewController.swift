@@ -15,8 +15,20 @@ public final class PortalViewController<MessageType, CustomComponentRendererType
     
     public var component: Component<MessageType>
     public let mailbox = Mailbox<MessageType>()
+    public var orientation: SupportedOrientations = .all
     
     private let createRenderer: RendererFactory
+    
+    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        switch orientation {
+        case .all:
+            return .all
+        case .landscape:
+            return .landscape
+        case .portrait:
+            return .portrait
+        }
+    }
     
     public init(component: Component<MessageType>, factory createRenderer: @escaping RendererFactory) {
         self.component = component

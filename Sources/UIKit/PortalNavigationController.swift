@@ -20,6 +20,7 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
 
     fileprivate let layoutEngine: LayoutEngine
     fileprivate let customComponentRenderer: CustomComponentRendererType
+    fileprivate let orientation: SupportedOrientations
     
     private let statusBarStyle: UIStatusBarStyle
     private var pushingViewController = false
@@ -27,10 +28,22 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
     private var onControllerDidShow: (() -> Void)? = .none
     private var onPop: (() -> Void)? = .none
     
-    init(customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine, statusBarStyle: UIStatusBarStyle = .`default`) {
+    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        switch orientation {
+        case .all:
+            return .all
+        case .landscape:
+            return .landscape
+        case .portrait:
+            return .portrait
+        }
+    }
+    
+    init(customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine, statusBarStyle: UIStatusBarStyle = .`default`, orientation: SupportedOrientations) {
         self.customComponentRenderer = customComponentRenderer
         self.statusBarStyle = statusBarStyle
         self.layoutEngine = layoutEngine
+        self.orientation = orientation
         super.init(nibName: nil, bundle: nil)
         self.delegate = self
     }
