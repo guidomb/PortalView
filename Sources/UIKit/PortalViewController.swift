@@ -15,9 +15,9 @@ public final class PortalViewController<MessageType, CustomComponentRendererType
     
     public var component: Component<MessageType>
     public let mailbox = Mailbox<MessageType>()
+    public var orientation: SupportedOrientations = .all
     
     private let createRenderer: RendererFactory
-    private let orientation: SupportedOrientations
     
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         switch orientation {
@@ -30,10 +30,9 @@ public final class PortalViewController<MessageType, CustomComponentRendererType
         }
     }
     
-    public init(component: Component<MessageType>, orientation: SupportedOrientations, factory createRenderer: @escaping RendererFactory) {
+    public init(component: Component<MessageType>, factory createRenderer: @escaping RendererFactory) {
         self.component = component
         self.createRenderer = createRenderer
-        self.orientation = orientation
         super.init(nibName: nil, bundle: nil)
     }
     

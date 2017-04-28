@@ -148,7 +148,7 @@ fileprivate extension UIKitComponentManager {
     
     fileprivate func controller(for component: Component<MessageType>, orientation: SupportedOrientations) -> PortalViewController<MessageType, CustomComponentRendererType> {
         
-        return PortalViewController(component: component, orientation: orientation) {
+        let controller: PortalViewController<MessageType, CustomComponentRendererType> =  PortalViewController(component: component) {
             var renderer = ComponentRenderer(
                 containerView: $0,
                 customComponentRenderer: self.customComponentRenderer,
@@ -157,6 +157,9 @@ fileprivate extension UIKitComponentManager {
             renderer.isDebugModeEnabled = self.isDebugModeEnabled
             return renderer
         }
+        controller.orientation = orientation
+        
+        return controller
     }
     
 }
