@@ -32,15 +32,19 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
     }
     
     public func present(component: Component<MessageType>, with root: RootComponent<MessageType>, modally: Bool, orientation: SupportedOrientations) {
-        switch (window.visibleController, root, modally) {
+        if modally {
+            if window.currentModal != nil {
+                dismissCurrentModal {
+                    self.presentModally(component: component, root: root, orientation: orientation)
+                }
+            } else {
+                presentModally(component: component, root: root, orientation: orientation)
+            }
+            return
+        }
         
-        case (.some(.single(let presenter)), _, true):
-            presentModally(component: component, root: root, onTopOf: presenter, orientation: orientation)
-        
-        case (.some(.navigationController(let presenter)), _, true):
-            presentModally(component: component, root: root, onTopOf: presenter, orientation: orientation)
-        
-        case (.some(.navigationController(let navigationController)), .stack(let navigationBar), false):
+        switch (window.visibleController, root) {
+        case (.some(.navigationController(let navigationController)), .stack(let navigationBar)):
             let containedController = controller(for: component, orientation: orientation)
             navigationController.push(controller: containedController, with: navigationBar, animated: true)
             
@@ -110,11 +114,8 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
 
 fileprivate extension UIKitComponentManager {
     
-    fileprivate func presentModally(component: Component<MessageType>, root: RootComponent<MessageType>,
-                                    onTopOf presenter: UIViewController, orientation: SupportedOrientations) {
-        if let currentModal = window.currentModal {
-            currentModal.renderableController.dismiss(animated: false, completion: .none)
-        }
+    fileprivate func presentModally(component: Component<MessageType>, root: RootComponent<MessageType>, orientation: SupportedOrientations) {
+        guard let presenter = window.visibleController?.renderableController else { return }
         
         let rootController = controller(for: component, root: root, orientation: orientation)
         rootController.mailbox.forward(to: mailbox)
