@@ -8,7 +8,7 @@
 
 import UIKit
 
-public final class PortalViewController<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIViewController, UINavigationControllerDelegate
+public final class PortalViewController<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIViewController
     where CustomComponentRendererType.MessageType == MessageType {
     
     public typealias RendererFactory = (UIView) -> UIKitComponentRenderer<MessageType, CustomComponentRendererType>
@@ -55,7 +55,6 @@ public final class PortalViewController<MessageType, CustomComponentRendererType
         // even weirder was that this did not happend for all users.
         // This setting seems to fix the issue.
         edgesForExtendedLayout = []
-        navigationController?.delegate = self
         render()
     }
     
