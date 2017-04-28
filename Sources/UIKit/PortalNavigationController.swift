@@ -28,10 +28,6 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
     private var onControllerDidShow: (() -> Void)? = .none
     private var onPop: (() -> Void)? = .none
     
-    public override var shouldAutorotate: Bool {
-        return true
-    }
-    
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         switch orientation {
         case .all:

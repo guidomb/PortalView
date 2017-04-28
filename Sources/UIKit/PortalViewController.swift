@@ -19,10 +19,6 @@ public final class PortalViewController<MessageType, CustomComponentRendererType
     private let createRenderer: RendererFactory
     private let orientation: SupportedOrientations
     
-    public override var shouldAutorotate: Bool {
-        return true
-    }
-    
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         switch orientation {
         case .all:
