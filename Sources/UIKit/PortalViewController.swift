@@ -20,14 +20,7 @@ public final class PortalViewController<MessageType, CustomComponentRendererType
     private let createRenderer: RendererFactory
     
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        switch orientation {
-        case .all:
-            return .all
-        case .landscape:
-            return .landscape
-        case .portrait:
-            return .portrait
-        }
+        return orientation.uiInterfaceOrientation
     }
     
     public init(component: Component<MessageType>, factory createRenderer: @escaping RendererFactory) {
@@ -84,6 +77,10 @@ fileprivate extension PortalViewController {
     /// to be equal to the screen's frame. Which does not take into account the status bar
     /// nor the navigation bar if the controllers is embeded inside a navigation controller.
     ///
+    /// Also the supported orientation should be taken into account in order to define the bound's
+    /// width and height. The supported orientation has higher priority to the device's orientation
+    /// unless the supported orientation is all.
+    ///
     /// The funny thing is that if you ask for the controller's view bounds inside viewWillAppear
     /// the bounds are properly set but the component needs to be rendered cannot be rendered in
     /// viewWillAppear because some views, like UITableView have unexpected behavior.
@@ -91,13 +88,52 @@ fileprivate extension PortalViewController {
     /// - Returns: The view bounds that should be used to render the component's view
     fileprivate func calculateViewFrame() -> CGRect {
         var bounds = UIScreen.main.bounds
-        
-        if let navBarBounds = navigationController?.navigationBar.bounds {
+        if isViewInLandscapeOrientation() {
+            bounds.size = bounds.size.swapped()
+            if let navBarBounds = navigationController?.navigationBar.bounds {
+                bounds.size.width -= statusBarHeight + navBarBounds.size.height
+                bounds.origin.x += statusBarHeight + navBarBounds.size.height
+            }
+        } else if let navBarBounds = navigationController?.navigationBar.bounds {
+            // FIXME There is a bug that needs to be solved regarding the status
+            // bug. When a modal landscape controller is being presented on top
+            // of a portrait navigation controller, because in landscape mode the 
+            // status bar is not present, UIKit decides to hide the status bar before
+            // performing the transition animation to present the modal controller.
+            //
+            // This has the effect of making the view bounds bigger because the 
+            // status bar is not visible anymore and because we do not perform
+            // a re-layout, the view endups being moved to the new origin and
+            // a black space appears at the bottom of the view.
+            //
+            // A possible solution would be to detect when a modal landscape
+            // controller is being presented and then re-render the view which
+            // would trigger a calculation of the layout that would take 
+            // into account the update view's bounds.
             bounds.size.height -= statusBarHeight + navBarBounds.size.height
             bounds.origin.y += statusBarHeight + navBarBounds.size.height
         }
-        
         return bounds
     }
     
+    fileprivate func isViewInLandscapeOrientation() -> Bool {
+        switch orientation {
+        case .landscape:
+            return true
+        case .portrait:
+            return false
+        case .all:
+            return UIDevice.current.orientation.isLandscape
+        }
+    }
+    
 }
+
+fileprivate extension CGSize {
+
+    func swapped() -> CGSize {
+        return CGSize(width: height, height: width)
+    }
+    
+}
+

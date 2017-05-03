@@ -106,3 +106,17 @@ extension UIView {
     
 }
 
+extension SupportedOrientations {
+    
+    var uiInterfaceOrientation: UIInterfaceOrientationMask {
+        switch self {
+        case .all:
+            return .all
+        case .landscape:
+            return .landscape
+        case .portrait:
+            return .portrait
+        }
+    }
+    
+}

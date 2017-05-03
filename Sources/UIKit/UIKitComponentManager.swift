@@ -101,6 +101,8 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
             window.rootController = rootController
             rootController.mailbox.forward(to: mailbox)
         }
+        
+        // TODO Handle case where window.visibleController.orientation != orientation
     }
     
     public func dismissCurrentModal(completion: @escaping () -> Void) {
