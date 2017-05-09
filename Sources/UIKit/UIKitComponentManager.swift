@@ -31,14 +31,14 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
         self.layoutEngine = layoutEngine
     }
     
-    public func present(component: Component<MessageType>, with root: RootComponent<MessageType>, modally: Bool, orientation: SupportedOrientations) {
+    public func present(component: Component<MessageType>, with root: RootComponent<MessageType>, modally: Bool, orientation: SupportedOrientations, completion: @escaping () -> Void) {
         if modally {
             if window.currentModal != nil {
                 dismissCurrentModal {
-                    self.presentModally(component: component, root: root, orientation: orientation)
+                    self.presentModally(component: component, root: root, orientation: orientation, completion: completion)
                 }
             } else {
-                presentModally(component: component, root: root, orientation: orientation)
+                presentModally(component: component, root: root, orientation: orientation, completion: completion)
             }
             return
         }
@@ -46,7 +46,7 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
         switch (window.visibleController, root) {
         case (.some(.navigationController(let navigationController)), .stack(let navigationBar)):
             let containedController = controller(for: component, orientation: orientation)
-            navigationController.push(controller: containedController, with: navigationBar, animated: true)
+            navigationController.push(controller: containedController, with: navigationBar, animated: true, completion: completion)
             
         default:
             let rootController = controller(for: component, root: root, orientation: orientation)
@@ -64,6 +64,10 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
             return controller.mailbox
             
         case .some(.navigationController(let navigationController)):
+            guard !navigationController.isPopingTopController else {
+                print("Rendering skipped because controller is being poped")
+                return Mailbox()
+            }
             guard let topController = navigationController.topController else {
                 // TODO better handle this case
                 return Mailbox()
@@ -88,6 +92,10 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
             controller.render()
             
         case (.some(.navigationController(let navigationController)), .stack(let navigationBar)):
+            guard !navigationController.isPopingTopController else {
+                print("Rendering skipped because controller is being poped")
+                return
+            }
             guard let topController = navigationController.topController else {
                 // TODO better handle this case
                 return
@@ -116,12 +124,12 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
 
 fileprivate extension UIKitComponentManager {
     
-    fileprivate func presentModally(component: Component<MessageType>, root: RootComponent<MessageType>, orientation: SupportedOrientations) {
+    fileprivate func presentModally(component: Component<MessageType>, root: RootComponent<MessageType>, orientation: SupportedOrientations, completion: @escaping () -> Void) {
         guard let presenter = window.visibleController?.renderableController else { return }
         
         let rootController = controller(for: component, root: root, orientation: orientation)
         rootController.mailbox.forward(to: mailbox)
-        presenter.present(rootController.renderableController, animated: true, completion: nil)
+        presenter.present(rootController.renderableController, animated: true, completion: completion)
         window.currentModal = rootController
     }
     
@@ -141,7 +149,7 @@ fileprivate extension UIKitComponentManager {
             )
             navigationController.isDebugModeEnabled = isDebugModeEnabled
             let containedController = controller(for: component, orientation: orientation)
-            navigationController.push(controller: containedController, with: navigationBar, animated: false)
+            navigationController.push(controller: containedController, with: navigationBar, animated: false) { }
             return .navigationController(navigationController)
             
         case .tab(_):

@@ -17,6 +17,8 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
     public var topController: PortalViewController<MessageType, CustomComponentRendererType>? {
         return self.topViewController as? PortalViewController<MessageType, CustomComponentRendererType>
     }
+    
+    public private(set) var isPopingTopController = false
 
     fileprivate let layoutEngine: LayoutEngine
     fileprivate let customComponentRenderer: CustomComponentRendererType
@@ -57,8 +59,9 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
     }
     
     public func push(controller: PortalViewController<MessageType, CustomComponentRendererType>,
-              with navigationBar: NavigationBar<MessageType>, animated: Bool) {
+              with navigationBar: NavigationBar<MessageType>, animated: Bool, completion: @escaping () -> Void) {
         pushingViewController = true
+        onControllerDidShow = completion
         pushViewController(controller, animated: animated)
         render(navigationBar: navigationBar, inside: controller.navigationItem)
         controller.mailbox.forward(to: mailbox)
@@ -96,7 +99,6 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
                                      willShow viewController: UIViewController, animated: Bool) {
         if pushingViewController {
             pushingViewController = false
-            onControllerDidShow = .none
         } else if !pushingViewController && topViewController != .none {
             // If a controller is not being pushed and the top view controller
             // is not nil then the navigation controller is poping the top view controller.
@@ -113,6 +115,7 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
             // app can crash. 
             //
             // To sumarize DO NOT dispatch a message inside this delegate's method. Do not trust UIKit.
+            isPopingTopController = true
             if let onPop = self.onPop {
                 onControllerDidShow = onPop
             } else if let message = currentNavigationBarOnBack {
@@ -128,6 +131,7 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
         onControllerDidShow?()
         onControllerDidShow = .none
         onPop = .none
+        isPopingTopController = false
     }
     
 }
