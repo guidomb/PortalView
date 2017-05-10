@@ -89,7 +89,14 @@ fileprivate extension PortalViewController {
     fileprivate func calculateViewFrame() -> CGRect {
         var bounds = UIScreen.main.bounds
         if isViewInLandscapeOrientation() {
-            bounds.size = bounds.size.swapped()
+            // We need to check if the bounds has already been swapped.
+            // After the device has been effectively been set in landscape mode
+            // either by rotation the device of by forcing the supported orientation
+            // UIKit returns the bounds size already swapped but the first time we
+            // are forcing a landscape orientation we need to swap them manually.
+            if bounds.size.width < bounds.height {
+                bounds.size = bounds.size.swapped()
+            }
             if let navBarBounds = navigationController?.navigationBar.bounds {
                 bounds.size.width -= statusBarHeight + navBarBounds.size.height
                 bounds.origin.x += statusBarHeight + navBarBounds.size.height
