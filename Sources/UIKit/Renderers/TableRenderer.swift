@@ -10,17 +10,19 @@ import UIKit
 
 internal struct TableRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIKitRenderer
     where CustomComponentRendererType.MessageType == MessageType {
+
+    typealias CustomComponentRendererFactory = () -> CustomComponentRendererType
     
-    let customComponentRenderer: CustomComponentRendererType
     let properties: TableProperties<MessageType>
     let style: StyleSheet<TableStyleSheet>
     let layout: Layout
+    let rendererFactory: CustomComponentRendererFactory
     
     func render(with layoutEngine: LayoutEngine, isDebugModeEnabled: Bool) -> Render<MessageType> {
         let table = PortalTableView(
             items: properties.items,
-            customComponentRenderer: customComponentRenderer,
-            layoutEngine: layoutEngine
+            layoutEngine: layoutEngine,
+            rendererFactory: rendererFactory
         )
         
         table.isDebugModeEnabled = isDebugModeEnabled

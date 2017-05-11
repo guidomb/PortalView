@@ -11,6 +11,8 @@ import UIKit
 public final class PortalCollectionViewCell<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UICollectionViewCell
     where CustomComponentRendererType.MessageType == MessageType {
     
+    public typealias CustomComponentRendererFactory = () -> CustomComponentRendererType
+    
     public var component: Component<MessageType>? = .none
     public var isDebugModeEnabled: Bool {
         set {
@@ -34,13 +36,17 @@ public final class PortalCollectionViewCell<MessageType, CustomComponentRenderer
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func render(customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine) {
+    public func render(layoutEngine: LayoutEngine, rendererFactory: @escaping CustomComponentRendererFactory) {
         // TODO check if we need to do something about after layout hooks
         // TODO improve rendering performance by avoiding allocations.
         // Renderers should be able to reuse view objects instead of having
         // to allocate new ones if possible.
         if renderer == nil {
-            createRenderer(customComponentRenderer: customComponentRenderer, layoutEngine: layoutEngine)
+            renderer = UIKitComponentRenderer(
+                containerView: contentView,
+                layoutEngine: layoutEngine,
+                rendererFactory: rendererFactory
+            )
         }
         
         if let component = self.component, let componentMailbox = renderer?.render(component: component) {
@@ -53,18 +59,6 @@ public final class PortalCollectionViewCell<MessageType, CustomComponentRenderer
         
         self.mailbox.forward(to: mailbox)
         mailboxForwarded = true
-    }
-    
-}
-
-fileprivate extension PortalCollectionViewCell {
-    
-    fileprivate func createRenderer(customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine) {
-        renderer = UIKitComponentRenderer(
-            containerView: contentView,
-            customComponentRenderer: customComponentRenderer,
-            layoutEngine: layoutEngine
-        )
     }
     
 }

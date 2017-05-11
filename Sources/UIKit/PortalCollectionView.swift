@@ -11,17 +11,19 @@ import UIKit
 public class PortalCollectionView<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate
     where CustomComponentRendererType.MessageType == MessageType {
     
+    public typealias CustomComponentRendererFactory = () -> CustomComponentRendererType
+    
     public let mailbox = Mailbox<MessageType>()
     public var isDebugModeEnabled: Bool = false
     
     let layoutEngine: LayoutEngine
     let items: [CollectionItemProperties<MessageType>]
-    let customComponentRenderer: CustomComponentRendererType
+    let rendererFactory: CustomComponentRendererFactory
     
-    public init(items: [CollectionItemProperties<MessageType>], customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine, layout: UICollectionViewLayout) {
+    public init(items: [CollectionItemProperties<MessageType>], layoutEngine: LayoutEngine, layout: UICollectionViewLayout, rendererFactory: @escaping CustomComponentRendererFactory) {
         self.items = items
         self.layoutEngine = layoutEngine
-        self.customComponentRenderer = customComponentRenderer
+        self.rendererFactory = rendererFactory
         super.init(frame: .zero, collectionViewLayout: layout)
    
         self.dataSource = self
@@ -44,7 +46,7 @@ public class PortalCollectionView<MessageType, CustomComponentRendererType: UIKi
         if let cell = dequeueReusableCell(with: item.identifier, for: indexPath) {
             cell.component = itemRender(at: indexPath)
             cell.isDebugModeEnabled = isDebugModeEnabled
-            cell.render(customComponentRenderer: customComponentRenderer, layoutEngine: layoutEngine)
+            cell.render(layoutEngine: layoutEngine, rendererFactory: rendererFactory)
             return cell
         } else {
             return UICollectionViewCell()

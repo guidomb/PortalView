@@ -11,10 +11,12 @@ import UIKit
 public final class PortalTableView<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UITableView, UITableViewDataSource, UITableViewDelegate
     where CustomComponentRendererType.MessageType == MessageType {
     
+    public typealias CustomComponentRendererFactory = () -> CustomComponentRendererType
+    
     public let mailbox = Mailbox<MessageType>()
     public var isDebugModeEnabled: Bool = false
     
-    fileprivate let customComponentRenderer: CustomComponentRendererType
+    fileprivate let rendererFactory: CustomComponentRendererFactory
     fileprivate let layoutEngine: LayoutEngine
     fileprivate let items: [TableItemProperties<MessageType>]
     
@@ -23,8 +25,8 @@ public final class PortalTableView<MessageType, CustomComponentRendererType: UIK
     // cells have dynamic height.
     fileprivate var cellHeights: [CGFloat?]
     
-    public init(items: [TableItemProperties<MessageType>], customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine) {
-        self.customComponentRenderer = customComponentRenderer
+    public init(items: [TableItemProperties<MessageType>], layoutEngine: LayoutEngine, rendererFactory: @escaping CustomComponentRendererFactory) {
+        self.rendererFactory = rendererFactory
         self.items = items
         self.layoutEngine = layoutEngine
         self.cellHeights = Array(repeating: .none, count: items.count)
@@ -100,8 +102,8 @@ fileprivate extension PortalTableView {
         } else {
             let cell = PortalTableViewCell<MessageType, CustomComponentRendererType>(
                 reuseIdentifier: identifier,
-                customComponentRenderer: customComponentRenderer,
-                layoutEngine: layoutEngine
+                layoutEngine: layoutEngine,
+                rendererFactory: rendererFactory
             )
             cell.mailbox.forward(to: mailbox)
             return cell

@@ -9,10 +9,12 @@
 import UIKit
 
 internal struct ComponentRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIKitRenderer
-where CustomComponentRendererType.MessageType == MessageType {
+    where CustomComponentRendererType.MessageType == MessageType {
+    
+    typealias CustomComponentRendererFactory = () -> CustomComponentRendererType
     
     let component: Component<MessageType>
-    let customComponentRenderer: CustomComponentRendererType
+    let rendererFactory: CustomComponentRendererFactory
     
     func render(with layoutEngine: LayoutEngine, isDebugModeEnabled: Bool) -> Render<MessageType> {
         switch component {
@@ -39,22 +41,22 @@ where CustomComponentRendererType.MessageType == MessageType {
             
         case .container(let children, let style, let layout):
             return ContainerRenderer(
-                customComponentRenderer: customComponentRenderer,
                 children: children,
                 style: style,
-                layout: layout
+                layout: layout,
+                rendererFactory: rendererFactory
             ).render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
             
         case .table(let properties, let style, let layout):
             return TableRenderer(
-                customComponentRenderer: customComponentRenderer,
                 properties: properties,
                 style: style,
-                layout: layout
+                layout: layout,
+                rendererFactory: rendererFactory
             ).render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
             
         case .touchable(let gesture, let child):
-            return TouchableRenderer(customComponentRenderer: customComponentRenderer, child: child, gesture: gesture)
+            return TouchableRenderer(child: child, gesture: gesture, rendererFactory: rendererFactory)
                 .render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
             
         case .segmented(let segments, let style, let layout):
@@ -63,18 +65,18 @@ where CustomComponentRendererType.MessageType == MessageType {
             
         case .collection(let properties, let style, let layout):
             return CollectionRenderer(
-                customComponentRenderer: customComponentRenderer,
                 properties: properties,
                 style: style,
-                layout: layout
+                layout: layout,
+                rendererFactory: rendererFactory
             ).render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
             
         case .carousel(let properties, let style, let layout):
             return CarouselRenderer(
-                customComponentRenderer: customComponentRenderer,
                 properties: properties,
                 style: style,
-                layout: layout
+                layout: layout,
+                rendererFactory: rendererFactory
             ).render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
             
         case .progress(let progress, let style, let layout):
@@ -86,7 +88,7 @@ where CustomComponentRendererType.MessageType == MessageType {
             layoutEngine.apply(layout: layout, to: customComponentContainerView)
             let mailbox = Mailbox<MessageType>()
             return Render(view: customComponentContainerView, mailbox: mailbox) {
-                self.customComponentRenderer.renderComponent(
+                self.rendererFactory().renderComponent(
                     withIdentifier: componentIdentifier,
                     inside: customComponentContainerView,
                     dispatcher: mailbox.dispatch

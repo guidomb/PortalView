@@ -12,6 +12,7 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
     where CustomComponentRendererType.MessageType == MessageType {
     
     public typealias ComponentRenderer = UIKitComponentRenderer<MessageType, CustomComponentRendererType>
+    public typealias CustomComponentRendererFactory = (UIViewController) -> CustomComponentRendererType
     
     public var isDebugModeEnabled: Bool = false
     
@@ -22,12 +23,12 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
     }
     
     fileprivate let layoutEngine: LayoutEngine
-    fileprivate let customComponentRenderer: CustomComponentRendererType
+    fileprivate let rendererFactory: CustomComponentRendererFactory
     fileprivate var window: WindowManager<MessageType, CustomComponentRendererType>
     
-    public init(window: UIWindow, customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine = YogaLayoutEngine()) {
+    public init(window: UIWindow, layoutEngine: LayoutEngine = YogaLayoutEngine(), rendererFactory: @escaping CustomComponentRendererFactory) {
         self.window = WindowManager(window: window)
-        self.customComponentRenderer = customComponentRenderer
+        self.rendererFactory = rendererFactory
         self.layoutEngine = layoutEngine
     }
     
@@ -142,11 +143,11 @@ fileprivate extension UIKitComponentManager {
             
         case .stack(let navigationBar):
             let navigationController = PortalNavigationController<MessageType, CustomComponentRendererType>(
-                customComponentRenderer: customComponentRenderer,
                 layoutEngine: layoutEngine,
                 statusBarStyle: navigationBar.style.component.statusBarStyle.asUIStatusBarStyle,
-                orientation: orientation
+                rendererFactory: rendererFactory
             )
+            navigationController.orientation = orientation
             navigationController.isDebugModeEnabled = isDebugModeEnabled
             let containedController = controller(for: component, orientation: orientation)
             navigationController.push(controller: containedController, with: navigationBar, animated: false) { }
@@ -159,11 +160,11 @@ fileprivate extension UIKitComponentManager {
     
     fileprivate func controller(for component: Component<MessageType>, orientation: SupportedOrientations) -> PortalViewController<MessageType, CustomComponentRendererType> {
         
-        let controller: PortalViewController<MessageType, CustomComponentRendererType> =  PortalViewController(component: component) {
+        let controller: PortalViewController<MessageType, CustomComponentRendererType> =  PortalViewController(component: component) { container in
             var renderer = ComponentRenderer(
-                containerView: $0,
-                customComponentRenderer: self.customComponentRenderer,
-                layoutEngine: self.layoutEngine
+                containerView: container.view,
+                layoutEngine: self.layoutEngine,
+                rendererFactory: { self.rendererFactory(container) }
             )
             renderer.isDebugModeEnabled = self.isDebugModeEnabled
             return renderer

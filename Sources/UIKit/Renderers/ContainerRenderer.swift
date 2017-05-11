@@ -10,11 +10,13 @@ import UIKit
 
 internal struct ContainerRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIKitRenderer
     where CustomComponentRendererType.MessageType == MessageType {
-    
-    let customComponentRenderer: CustomComponentRendererType
+
+    typealias CustomComponentRendererFactory = () -> CustomComponentRendererType
+
     let children: [Component<MessageType>]
     let style: StyleSheet<EmptyStyleSheet>
     let layout: Layout
+    let rendererFactory: CustomComponentRendererFactory
     
     func render(with layoutEngine: LayoutEngine, isDebugModeEnabled: Bool) -> Render<MessageType> {
         let view = UIView()
@@ -23,7 +25,7 @@ internal struct ContainerRenderer<MessageType, CustomComponentRendererType: UIKi
         var afterLayoutTasks: [AfterLayoutTask] = []
         let mailbox = Mailbox<MessageType>()
         for child in children {
-            let renderer = ComponentRenderer(component: child, customComponentRenderer: customComponentRenderer)
+            let renderer = ComponentRenderer(component: child, rendererFactory: rendererFactory)
             let renderResult = renderer.render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
             renderResult.view.managedByPortal = true
             view.addSubview(renderResult.view)

@@ -11,7 +11,7 @@ import UIKit
 public final class PortalViewController<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIViewController
     where CustomComponentRendererType.MessageType == MessageType {
     
-    public typealias RendererFactory = (UIView) -> UIKitComponentRenderer<MessageType, CustomComponentRendererType>
+    public typealias RendererFactory = (UIViewController) -> UIKitComponentRenderer<MessageType, CustomComponentRendererType>
     
     public var component: Component<MessageType>
     public let mailbox = Mailbox<MessageType>()
@@ -35,8 +35,6 @@ public final class PortalViewController<MessageType, CustomComponentRendererType
     
     public override func loadView() {
         super.loadView()
-        let renderer = createRenderer(view).customComponentRenderer
-        component.customComponentIdentifiers.forEach { renderer.handleInitialization(of: self, forComponent: $0) }
     }
     
     public override func viewDidLoad() {
@@ -57,7 +55,7 @@ public final class PortalViewController<MessageType, CustomComponentRendererType
         // does not take into account the navigation and status bar in order
         // to sets its visible size.
         view.frame = calculateViewFrame()
-        let renderer = createRenderer(view)
+        let renderer = createRenderer(self)
         let componentMailbox = renderer.render(component: component)
         componentMailbox.forward(to: mailbox)
     }

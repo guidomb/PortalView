@@ -11,6 +11,8 @@ import UIKit
 public final class PortalTableViewCell<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UITableViewCell
     where CustomComponentRendererType.MessageType == MessageType  {
     
+    public typealias CustomComponentRendererFactory = () -> CustomComponentRendererType
+    
     public let mailbox = Mailbox<MessageType>()
     public var component: Component<MessageType>? = .none
     public var isDebugModeEnabled: Bool {
@@ -24,12 +26,12 @@ public final class PortalTableViewCell<MessageType, CustomComponentRendererType:
     
     private var renderer: UIKitComponentRenderer<MessageType, CustomComponentRendererType>? = .none
     
-    public init(reuseIdentifier: String, customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine) {
+    public init(reuseIdentifier: String, layoutEngine: LayoutEngine, rendererFactory: @escaping CustomComponentRendererFactory) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         self.renderer = UIKitComponentRenderer(
             containerView: contentView,
-            customComponentRenderer: customComponentRenderer,
-            layoutEngine: layoutEngine
+            layoutEngine: layoutEngine,
+            rendererFactory: rendererFactory
         )
     }
     

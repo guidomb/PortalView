@@ -11,17 +11,19 @@ import UIKit
 internal struct CollectionRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIKitRenderer
     where CustomComponentRendererType.MessageType == MessageType {
     
-    let customComponentRenderer: CustomComponentRendererType
+    typealias CustomComponentRendererFactory = () -> CustomComponentRendererType
+    
     let properties: CollectionProperties<MessageType>
     let style: StyleSheet<EmptyStyleSheet>
     let layout: Layout
+    let rendererFactory: CustomComponentRendererFactory
     
     func render(with layoutEngine: LayoutEngine, isDebugModeEnabled: Bool) -> Render<MessageType> {
         let collectionView = PortalCollectionView(
             items: properties.items,
-            customComponentRenderer: customComponentRenderer,
             layoutEngine: layoutEngine,
-            layout: createFlowLayout()
+            layout: createFlowLayout(),
+            rendererFactory: rendererFactory
         )
         
         collectionView.isDebugModeEnabled = isDebugModeEnabled

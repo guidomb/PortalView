@@ -11,17 +11,19 @@ import UIKit
 internal struct CarouselRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIKitRenderer
     where CustomComponentRendererType.MessageType == MessageType {
     
-    let customComponentRenderer: CustomComponentRendererType
+    typealias CustomComponentRendererFactory = () -> CustomComponentRendererType
+    
     let properties: CarouselProperties<MessageType>
     let style: StyleSheet<EmptyStyleSheet>
     let layout: Layout
+    let rendererFactory: CustomComponentRendererFactory
     
     func render(with layoutEngine: LayoutEngine, isDebugModeEnabled: Bool) -> Render<MessageType> {
         let carouselView = PortalCarouselView(
             items: properties.items,
-            customComponentRenderer: customComponentRenderer,
             layoutEngine: layoutEngine,
             layout: createFlowLayout(),
+            rendererFactory: rendererFactory,
             onSelectionChange: properties.onSelectionChange
         )
         

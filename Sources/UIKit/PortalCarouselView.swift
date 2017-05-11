@@ -16,12 +16,17 @@ public final class PortalCarouselView<MessageType, CustomComponentRendererType: 
     fileprivate var lastOffset: CGFloat = 0
     fileprivate var selectedIndex: Int = 0
     
-    public override init(items: [CollectionItemProperties<MessageType>], customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine, layout: UICollectionViewLayout) {
+    public override init(items: [CollectionItemProperties<MessageType>], layoutEngine: LayoutEngine, layout: UICollectionViewLayout, rendererFactory: @escaping CustomComponentRendererFactory) {
         onSelectionChange = { _ in .none }
-        super.init(items: items, customComponentRenderer: customComponentRenderer, layoutEngine: layoutEngine, layout: layout)
+        super.init(
+            items: items,
+            layoutEngine: layoutEngine,
+            layout: layout,
+            rendererFactory: rendererFactory
+        )
     }
     
-    public init(items: ZipList<CarouselItemProperties<MessageType>>?, customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine, layout: UICollectionViewLayout, onSelectionChange: @escaping (ZipListShiftOperation) -> MessageType?) {
+    public init(items: ZipList<CarouselItemProperties<MessageType>>?, layoutEngine: LayoutEngine, layout: UICollectionViewLayout, rendererFactory: @escaping CustomComponentRendererFactory, onSelectionChange: @escaping (ZipListShiftOperation) -> MessageType?) {
         if let items = items {
             let transform = { (item: CarouselItemProperties) -> CollectionItemProperties<MessageType> in
                 return collectionItem(
@@ -31,11 +36,11 @@ public final class PortalCarouselView<MessageType, CustomComponentRendererType: 
             }
             selectedIndex = Int(items.centerIndex)
             self.onSelectionChange = onSelectionChange
-            super.init(items: items.map(transform), customComponentRenderer: customComponentRenderer, layoutEngine: layoutEngine, layout: layout)
+            super.init(items: items.map(transform), layoutEngine: layoutEngine, layout: layout, rendererFactory: rendererFactory)
             scrollToItem(self.selectedIndex, animated: false)
         } else {
             self.onSelectionChange = onSelectionChange
-            super.init(items: [], customComponentRenderer: customComponentRenderer, layoutEngine: layoutEngine, layout: layout)
+            super.init(items: [], layoutEngine: layoutEngine, layout: layout, rendererFactory: rendererFactory)
         }
         
     }

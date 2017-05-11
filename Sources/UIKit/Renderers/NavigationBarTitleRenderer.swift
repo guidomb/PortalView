@@ -11,10 +11,12 @@ import UIKit
 internal struct NavigationBarTitleRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>
     where CustomComponentRendererType.MessageType == MessageType {
     
-    let customComponentRenderer: CustomComponentRendererType
+    typealias CustomComponentRendererFactory = () -> CustomComponentRendererType
+    
     let navigationBarTitle: NavigationBarTitle<MessageType>
     let navigationItem: UINavigationItem
     let navigationBarSize: CGSize
+    let rendererFactory: CustomComponentRendererFactory
     
     func render(with layoutEngine: LayoutEngine, isDebugModeEnabled: Bool) -> Mailbox<MessageType>? {
         switch navigationBarTitle {
@@ -32,8 +34,8 @@ internal struct NavigationBarTitleRenderer<MessageType, CustomComponentRendererT
             navigationItem.titleView = titleView
             var renderer = UIKitComponentRenderer<MessageType, CustomComponentRendererType>(
                 containerView: titleView,
-                customComponentRenderer: customComponentRenderer,
-                layoutEngine: layoutEngine
+                layoutEngine: layoutEngine,
+                rendererFactory: rendererFactory
             )
             renderer.isDebugModeEnabled = isDebugModeEnabled
             return renderer.render(component: titleComponent)

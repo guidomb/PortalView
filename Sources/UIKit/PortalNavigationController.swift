@@ -11,8 +11,11 @@ import UIKit
 public final class PortalNavigationController<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UINavigationController, UINavigationControllerDelegate
     where CustomComponentRendererType.MessageType == MessageType {
     
+    public typealias CustomComponentRendererFactory = (UIViewController) -> CustomComponentRendererType
+    
     public let mailbox = Mailbox<MessageType>()
     public var isDebugModeEnabled: Bool = false
+    public var orientation: SupportedOrientations = .all
     
     public var topController: PortalViewController<MessageType, CustomComponentRendererType>? {
         return self.topViewController as? PortalViewController<MessageType, CustomComponentRendererType>
@@ -21,8 +24,7 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
     public private(set) var isPopingTopController = false
 
     fileprivate let layoutEngine: LayoutEngine
-    fileprivate let customComponentRenderer: CustomComponentRendererType
-    fileprivate let orientation: SupportedOrientations
+    fileprivate let rendererFactory: CustomComponentRendererFactory
     
     private let statusBarStyle: UIStatusBarStyle
     private var pushingViewController = false
@@ -41,11 +43,10 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
         }
     }
     
-    init(customComponentRenderer: CustomComponentRendererType, layoutEngine: LayoutEngine, statusBarStyle: UIStatusBarStyle = .`default`, orientation: SupportedOrientations) {
-        self.customComponentRenderer = customComponentRenderer
+    init(layoutEngine: LayoutEngine, statusBarStyle: UIStatusBarStyle = .`default`, rendererFactory: @escaping CustomComponentRendererFactory) {
+        self.rendererFactory = rendererFactory
         self.statusBarStyle = statusBarStyle
         self.layoutEngine = layoutEngine
-        self.orientation = orientation
         super.init(nibName: nil, bundle: nil)
         self.delegate = self
     }
@@ -86,10 +87,10 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
         
         if let title = navigationBar.properties.title {
             let renderer = NavigationBarTitleRenderer(
-                customComponentRenderer: customComponentRenderer,
                 navigationBarTitle: title,
                 navigationItem: navigationItem,
-                navigationBarSize: self.navigationBar.bounds.size
+                navigationBarSize: self.navigationBar.bounds.size,
+                rendererFactory: { self.rendererFactory(self) }
             )
             renderer.render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled) |> { $0.forward(to: mailbox) }
         }

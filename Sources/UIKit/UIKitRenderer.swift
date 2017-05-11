@@ -12,7 +12,7 @@ public protocol UIKitCustomComponentRenderer {
     
     associatedtype MessageType
     
-    func handleInitialization(of parentController: UIViewController, forComponent componentIdentifier: String)
+    init(container: UIViewController)
     
     func renderComponent(withIdentifier identifier: String, inside view: UIView, dispatcher: (MessageType) -> Void)
     
@@ -20,14 +20,10 @@ public protocol UIKitCustomComponentRenderer {
 
 public struct VoidCustomComponentRenderer<MessageType>: UIKitCustomComponentRenderer {
     
-    public init() {
+    public init(container: UIViewController) {
         
     }
-    
-    public func handleInitialization(of parentController: UIViewController, forComponent componentIdentifier: String) {
         
-    }
-    
     public func renderComponent(withIdentifier identifier: String, inside view: UIView, dispatcher: (MessageType) -> Void) {
         
     }
@@ -36,25 +32,27 @@ public struct VoidCustomComponentRenderer<MessageType>: UIKitCustomComponentRend
 public struct UIKitComponentRenderer<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: Renderer
     where CustomComponentRendererType.MessageType == MessageType {
     
+    public typealias CustomComponentRendererFactory = () -> CustomComponentRendererType
+    
     public var isDebugModeEnabled: Bool = false
     
     internal let layoutEngine: LayoutEngine
-    internal let customComponentRenderer: CustomComponentRendererType
+    internal let rendererFactory: CustomComponentRendererFactory
     
     private let containerView: UIView
     
     public init(
         containerView: UIView,
-        customComponentRenderer: CustomComponentRendererType,
-        layoutEngine: LayoutEngine = YogaLayoutEngine()) {
+        layoutEngine: LayoutEngine = YogaLayoutEngine(),
+        rendererFactory: @escaping CustomComponentRendererFactory) {
         self.containerView = containerView
-        self.customComponentRenderer = customComponentRenderer
+        self.rendererFactory = rendererFactory
         self.layoutEngine = layoutEngine
     }
     
     public func render(component: Component<MessageType>) -> Mailbox<MessageType> {
         containerView.subviews.forEach { $0.removeFromSuperview() }
-        let renderer = ComponentRenderer(component: component, customComponentRenderer: customComponentRenderer)
+        let renderer = ComponentRenderer(component: component, rendererFactory: rendererFactory)
         let renderResult = renderer.render(with: layoutEngine, isDebugModeEnabled: isDebugModeEnabled)
         renderResult.view.managedByPortal = true
         layoutEngine.layout(view: renderResult.view, inside: containerView)
