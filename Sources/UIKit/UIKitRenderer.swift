@@ -14,7 +14,7 @@ public protocol UIKitCustomComponentRenderer {
     
     init(container: UIViewController)
     
-    func renderComponent(withIdentifier identifier: String, inside view: UIView, dispatcher: (MessageType) -> Void)
+    func renderComponent(withIdentifier identifier: String, inside view: UIView, dispatcher: @escaping (MessageType) -> Void)
     
 }
 
@@ -24,7 +24,7 @@ public struct VoidCustomComponentRenderer<MessageType>: UIKitCustomComponentRend
         
     }
         
-    public func renderComponent(withIdentifier identifier: String, inside view: UIView, dispatcher: (MessageType) -> Void) {
+    public func renderComponent(withIdentifier identifier: String, inside view: UIView, dispatcher: @escaping (MessageType) -> Void) {
         
     }
 }
