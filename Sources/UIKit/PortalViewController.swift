@@ -11,11 +11,13 @@ import UIKit
 public final class PortalViewController<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UIViewController
     where CustomComponentRendererType.MessageType == MessageType {
     
-    public typealias RendererFactory = (UIViewController) -> UIKitComponentRenderer<MessageType, CustomComponentRendererType>
+    public typealias RendererFactory = (ContainerController) -> UIKitComponentRenderer<MessageType, CustomComponentRendererType>
     
     public var component: Component<MessageType>
     public let mailbox = Mailbox<MessageType>()
     public var orientation: SupportedOrientations = .all
+    
+    fileprivate var disposers: [String : () -> Void] = [:]
     
     private let createRenderer: RendererFactory
     
@@ -31,6 +33,10 @@ public final class PortalViewController<MessageType, CustomComponentRendererType
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        disposers.values.forEach { $0() }
     }
     
     public override func loadView() {
@@ -58,6 +64,14 @@ public final class PortalViewController<MessageType, CustomComponentRendererType
         let renderer = createRenderer(self)
         let componentMailbox = renderer.render(component: component)
         componentMailbox.forward(to: mailbox)
+    }
+    
+}
+
+extension PortalViewController: ContainerController {
+    
+    public func registerDisposer(for identifier: String, disposer: @escaping () -> Void) {
+        disposers[identifier] = disposer
     }
     
 }

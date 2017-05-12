@@ -8,11 +8,35 @@
 
 import UIKit
 
+public protocol ContainerController {
+    
+    var containerView: UIView { get }
+    
+    func attachChildController(_ controller: UIViewController)
+    
+    func registerDisposer(for identifier: String, disposer: @escaping () -> Void)
+    
+}
+
+extension ContainerController where Self: UIViewController {
+    
+    public var containerView: UIView {
+        return self.view
+    }
+    
+    public func attachChildController(_ controller: UIViewController) {
+        controller.willMove(toParentViewController: self)
+        self.addChildViewController(controller)
+        controller.didMove(toParentViewController: self)
+    }
+    
+}
+
 public protocol UIKitCustomComponentRenderer {
     
     associatedtype MessageType
     
-    init(container: UIViewController)
+    init(container: ContainerController)
     
     func renderComponent(withIdentifier identifier: String, inside view: UIView, dispatcher: @escaping (MessageType) -> Void)
     
@@ -20,7 +44,7 @@ public protocol UIKitCustomComponentRenderer {
 
 public struct VoidCustomComponentRenderer<MessageType>: UIKitCustomComponentRenderer {
     
-    public init(container: UIViewController) {
+    public init(container: ContainerController) {
         
     }
         

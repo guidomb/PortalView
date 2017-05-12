@@ -11,7 +11,7 @@ import UIKit
 public final class PortalNavigationController<MessageType, CustomComponentRendererType: UIKitCustomComponentRenderer>: UINavigationController, UINavigationControllerDelegate
     where CustomComponentRendererType.MessageType == MessageType {
     
-    public typealias CustomComponentRendererFactory = (UIViewController) -> CustomComponentRendererType
+    public typealias CustomComponentRendererFactory = (ContainerController) -> CustomComponentRendererType
     
     public let mailbox = Mailbox<MessageType>()
     public var isDebugModeEnabled: Bool = false
@@ -25,7 +25,8 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
 
     fileprivate let layoutEngine: LayoutEngine
     fileprivate let rendererFactory: CustomComponentRendererFactory
-    
+    fileprivate var disposers: [String : () -> Void] = [:]
+
     private let statusBarStyle: UIStatusBarStyle
     private var pushingViewController = false
     private var currentNavigationBarOnBack: MessageType? = .none
@@ -42,6 +43,10 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
             return .portrait
         }
     }
+
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
+        return statusBarStyle
+    }
     
     init(layoutEngine: LayoutEngine, statusBarStyle: UIStatusBarStyle = .`default`, rendererFactory: @escaping CustomComponentRendererFactory) {
         self.rendererFactory = rendererFactory
@@ -55,8 +60,8 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public var preferredStatusBarStyle: UIStatusBarStyle {
-        return statusBarStyle
+    deinit {
+        disposers.values.forEach { $0() }
     }
     
     public func push(controller: PortalViewController<MessageType, CustomComponentRendererType>,
@@ -133,6 +138,14 @@ public final class PortalNavigationController<MessageType, CustomComponentRender
         onControllerDidShow = .none
         onPop = .none
         isPopingTopController = false
+    }
+    
+}
+
+extension PortalNavigationController: ContainerController {
+    
+    public func registerDisposer(for identifier: String, disposer: @escaping () -> Void) {
+        disposers[identifier] = disposer
     }
     
 }

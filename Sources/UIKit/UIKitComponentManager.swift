@@ -12,7 +12,7 @@ public final class UIKitComponentManager<MessageType, CustomComponentRendererTyp
     where CustomComponentRendererType.MessageType == MessageType {
     
     public typealias ComponentRenderer = UIKitComponentRenderer<MessageType, CustomComponentRendererType>
-    public typealias CustomComponentRendererFactory = (UIViewController) -> CustomComponentRendererType
+    public typealias CustomComponentRendererFactory = (ContainerController) -> CustomComponentRendererType
     
     public var isDebugModeEnabled: Bool = false
     
@@ -162,7 +162,7 @@ fileprivate extension UIKitComponentManager {
         
         let controller: PortalViewController<MessageType, CustomComponentRendererType> =  PortalViewController(component: component) { container in
             var renderer = ComponentRenderer(
-                containerView: container.view,
+                containerView: container.containerView,
                 layoutEngine: self.layoutEngine,
                 rendererFactory: { self.rendererFactory(container) }
             )
